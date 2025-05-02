@@ -28,7 +28,21 @@ void free_variables_struct(Variables* variables){
     }
 */
 
-void init_road(Node* from, Node* to, int distance, bool usable)
+Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacity) {
+    Road* r = malloc(sizeof(Road));
+    r->from = from;
+    r->to = to;
+    r->distance = distance;
+    r->usable = usable;
+    r->current_capacity = max_capacity;
+    r->max_capacity = max_capacity;
+
+    return r;
+}
+
+void free_road(Road* r) {
+    free(r);
+}
 
 void print_road(Road* road){
     printf("Road from %s%d to %s%d :\n",
@@ -51,6 +65,29 @@ void print_roads(Matrix* matrix){
             }
         }
     }
+}
+
+Node* init_node(Variables* variables, char type) {
+    Node* n = malloc(sizeof(Node));
+    switch (type) {
+        case 'C':
+            n->ID = variables->city_ids;
+            break;
+        case 'H':
+            n->ID = variables->hospital_ids;
+            break;
+        case 'W':
+            n->ID = variables->warehouse_ids;
+            break;
+    }
+
+    unsigned int distance_to_origin = -1;
+
+    return r;
+}
+
+void free_road(Road* r) {
+    free(r);
 }
 
 void print_damage(Matrix* matrix){

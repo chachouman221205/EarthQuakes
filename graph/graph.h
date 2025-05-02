@@ -12,7 +12,7 @@ typedef struct Node{
     int ID;
     char type;
 
-    int distance_to_origin;
+    unsigned int distance_to_origin;
     int max_capacity_to_origin;
     Road* towards_origin;
 }Node;
@@ -23,14 +23,16 @@ typedef struct Road{
     Node* to;
 
     int distance;
-    bool state;
+    bool usable;
 
     int current_capacity;
     int max_capacity;
 }Road;
 
 typedef struct Variables{
-    int* node_type_ids;
+    int city_ids;
+    int hospital_ids;
+    int warehouse_ids;
 
 }Variables;
 

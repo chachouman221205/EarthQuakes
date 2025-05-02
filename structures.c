@@ -4,6 +4,7 @@
 
 typedef struct Truck{
     // int ID ?
+    
     int current_capacity;
     int max_capacity;
 }Truck;

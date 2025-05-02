@@ -99,10 +99,25 @@ void print_damage(Matrix* matrix){
             }
         }
     }
-    printf("There were %d accessible roads before the earthquake.\n", destroyed + accessible);
+    printf("There were %d accessible roads before the earthquake\n", destroyed + accessible);
     printf("There are now %d accessible roads and %d destroyed roads\n", accessible, destroyed);
 }
 
-void print_unaccessible_nodes(Matrix* matrix){
-    
+/* nassim : 
+- fonction d'exloration qui print les chemins
+- qui me rempli un tableau de taille matrix->size :
+    -> 1 si tu as exploré le sommet, touche pas sinon (0)
+
+(option) tu peux remplir la distance from origin ici
+*/
+void print_all_path_from_origin(Matrix* matrix, Node** tab);
+
+void print_unaccessible_nodes(Matrix* matrix, Node** tab){
+    printf("The unaccessible nodes are :\n  -> ");
+    for(int i = 0; i < matrix->size; i++){
+        if(matrix->nodes[i] == 0){
+            printf("%s%s ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+        }
+    }
+    printf("\n");
 }

@@ -4,14 +4,13 @@
 
 #include "graph.h"
 
-
 Matrix* init_empty_matrix(int size) {
     Matrix* mat = malloc(1*sizeof(Matrix));
     mat->size = size;
 
     mat->nodes = malloc(size*sizeof(Node*));
     if (mat->grid == NULL) {
-        printf(stderr, "Allocation ERROR in \"init_empty_matrix (1)\"\n");
+        printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (1)\"\033[0m\n");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < size; i++) {
@@ -20,14 +19,14 @@ Matrix* init_empty_matrix(int size) {
 
     mat->grid = malloc(size * sizeof(Road**));
     if (mat->grid == NULL) {
-        printf(stderr, "Allocation ERROR in \"init_empty_matrix (2)\"\n");
+        printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (2)\"\033[0m\n");
         exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < size; i++) {
         mat->grid[i] = malloc(size * sizeof(Road*));
         if (mat->grid[i] == NULL) {
-            printf(stderr, "Allocation ERROR in \"init_empty_matrix (3)\"\n");
+            printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (3)\"\033[0m\n");
             exit(EXIT_FAILURE);
         }
 

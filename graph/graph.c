@@ -12,11 +12,21 @@ void init_variables(Variables* variables){
     }
 }
 
-void free_data(Variables* variables){
+void free_variables_struct(Variables* variables){
     free(variables->node_type_ids);
 
     free(variables);
 }
+
+/*
+    void graph_exploration(Matrix* matrix){
+        for(int line = 0; line < matrix->size; line++){
+            for(int column = 0; column < matrix->size; column++){
+                pass();
+            }
+        }
+    }
+*/
 
 void print_road(Road* road){
     printf("Road from %s%d to %s%d :\n",
@@ -30,15 +40,6 @@ void print_road(Road* road){
     printf("  -> Maximum capacity : %d\n", road->max_capacity);
     printf("\n");
 }
-/*
-void graph_exploration(Matrix* matrix){
-    for(int line = 0; line < matrix->size; line++){
-        for(int column = 0; column < matrix->size; column++){
-            pass();
-        }
-    }
-}
-*/
 
 void print_roads(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
@@ -53,7 +54,7 @@ void print_roads(Matrix* matrix){
 void print_unaccessible_nodes(Matrix* matrix){
     // inverse l'ordre de recherche pour voir si un noeud n'a aucune route en état qui va vers lui
     bool has_accessible_roads;
-    printf("The now unaccessible roads are :\n");
+    printf("The now unaccessible roads are :\n  -> ");
     for(int column = 0; column < matrix->size; column++){
         has_accessible_roads = false;
         for(int line = 0; line < matrix->size; line++){
@@ -67,4 +68,5 @@ void print_unaccessible_nodes(Matrix* matrix){
             printf("  -> %d ", column);
         }
     }
+    printf("\n");
 }

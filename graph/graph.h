@@ -32,8 +32,8 @@ typedef struct Variables{
 
 }Variables;
 
-void init_Data(Variables* data);
+void init_variables(Variables* variables);
 
-void free_data(Variables* data);
+void free_variables_struct(Variables* variables);
 
 void print_road(Road* road);

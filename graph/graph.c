@@ -54,7 +54,7 @@ void print_roads(Matrix* matrix){
 void print_unaccessible_nodes(Matrix* matrix){
     // inverse l'ordre de recherche pour voir si un noeud n'a aucune route en état qui va vers lui
     bool has_accessible_roads;
-    printf("The now unaccessible roads are :\n");
+    printf("The now unaccessible roads are :\n  -> ");
     for(int column = 0; column < matrix->size; column++){
         has_accessible_roads = false;
         for(int line = 0; line < matrix->size; line++){
@@ -65,7 +65,7 @@ void print_unaccessible_nodes(Matrix* matrix){
             }
         }
         if(has_accessible_roads == false){
-            print("  -> %d ", column);
+            print("%d ", column);
         }
     }
 }

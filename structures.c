@@ -5,3 +5,6 @@ typedef struct Truck{
     int a;
 }Truck;
 
+int main(){
+    int a = 1;
+}

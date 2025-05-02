@@ -13,6 +13,8 @@ typedef struct Node{
     int ID;
     char type;
 
+    bool explored;
+    
     unsigned int distance_to_origin;
     int max_capacity_to_origin;
     Road* towards_origin;
@@ -51,6 +53,6 @@ void free_node(Node* n);
 
 void print_damage(Matrix* matrix);
 
-void print_all_path_from_origin(Matrix* matrix, int* tab);
-void print_unaccessible_nodes(Matrix* matrix, int* tab);
+void print_all_path_from_origin(Matrix* matrix);
+void print_unaccessible_nodes(Matrix* matrix);
 #endif

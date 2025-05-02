@@ -9,6 +9,7 @@
 
 typedef struct Matrix {
     int size;
+    Node** nodes;
     Road*** grid;
 } Matrix;
 

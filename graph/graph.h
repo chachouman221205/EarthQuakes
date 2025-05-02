@@ -9,6 +9,7 @@
 
 typedef struct Road Road;
 typedef struct Matrix Matrix;
+
 typedef struct Node{
     int ID;
     char type;

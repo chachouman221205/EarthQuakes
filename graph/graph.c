@@ -68,4 +68,5 @@ void print_unaccessible_nodes(Matrix* matrix){
             print("%d ", column);
         }
     }
+    printf("\n");
 }

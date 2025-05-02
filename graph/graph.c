@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "graph.h"
 
@@ -53,11 +54,34 @@ void free_road(Road* r) {
 }
 
 void print_road(Road* road){
-    printf("Road from %s%d to %s%d :\n",
-        (road->from->type == 'C')? "City" : ((road->from->type == 'H')? "Hospital" : "Warehouse"),
-        road->from->ID,
-        (road->from->type == 'C')? "City" : ((road->from->type == 'H')? "Hospital" : "Warehouse"),
-        road->from->ID);
+    char type1[20], type2[20];
+    switch (road->from->type) {
+        case 'C':
+            strcpy(type1, "City");
+            break;
+        case 'H':
+            strcpy(type1, "Hospital");
+            break;
+        case 'W':
+            strcpy(type1, "Warehouse");
+            break;
+        default:
+            strcpy(type1, "Unknown");
+    }
+    switch (road->to->type) {
+        case 'C':
+            strcpy(type2, "City");
+            break;
+        case 'H':
+            strcpy(type2, "Hospital");
+            break;
+        case 'W':
+            strcpy(type2, "Warehouse");
+            break;
+        default:
+            strcpy(type2, "Unknown");
+    }
+    printf("Road from %s%d to %s%d :\n", type1, road->from->ID, type2, road->to->ID);
     printf("  -> State : %s\n", 
         (road->usable)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
     printf("  -> Current capacity : %d\n", road->current_capacity);
@@ -83,18 +107,19 @@ Node* init_node(Variables* variables, char type) {
     }
     switch (type) {
         case 'C':
-            n->ID = variables->city_ids;
+            n->ID = variables->city_ids++;
             break;
         case 'H':
-            n->ID = variables->hospital_ids;
+            n->ID = variables->hospital_ids++;
             break;
         case 'W':
-            n->ID = variables->warehouse_ids;
+            n->ID = variables->warehouse_ids++;
             break;
     }
 
-    n->distance_to_origin = -1;
+    n->type = type;
 
+    n->distance_to_origin = -1;
     n->explored = 0;
 
     return n;

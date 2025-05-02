@@ -14,7 +14,7 @@ typedef struct Matrix {
 } Matrix;
 
 Matrix* init_empty_matrix(int size);
-Matrix* init_matrix_from_file(char* fp);
+Matrix* init_matrix_from_file(Variables* variables, char* fp);
 
 void free_matrix_content(Matrix* matrix);
 void free_matrix(Matrix* matrix);

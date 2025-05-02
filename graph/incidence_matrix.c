@@ -38,15 +38,15 @@ Matrix* init_empty_matrix(int size) {
     return mat;
 }
 
-Matrix* init_matrix_from_file(char* fp) {
+Matrix* init_matrix_from_file(Variables* variables, char* fp) {
     /* Format de fichier :
      * ---------
      * size
-     * A B poids
-     * A C poids
+     * A B poids capacité
+     * A C poids capacité
      * ...
      * ...
-     * Z Z poids
+     * Z Y poids capacité
      * ---------
      *
      * ordre des connexions non important
@@ -57,6 +57,15 @@ Matrix* init_matrix_from_file(char* fp) {
     fscanf(f, "%d", &size);
 
     Matrix* mat = init_empty_matrix(size);
+    for (int i = 0; i < size; i++) {
+        mat->nodes[i] = init_node(variables, 'C');
+    }
+
+    int A, B, cap;
+    unsigned int dist;
+    while (fscanf(f, "%d %d %u %d", &A, &B, &dist, &cap) != EOF) {
+        mat->grid[A-1][B-1] = init_road(mat->nodes[A-1], mat->nodes[B-1], dist, true, cap);
+    }
 
     return mat;
 }

@@ -51,22 +51,19 @@ void print_roads(Matrix* matrix){
     }
 }
 
-void print_unaccessible_nodes(Matrix* matrix){
-    // inverse l'ordre de recherche pour voir si un noeud n'a aucune route en état qui va vers lui
-    bool has_accessible_roads;
-    printf("The now unaccessible roads are :\n  -> ");
-    for(int column = 0; column < matrix->size; column++){
-        has_accessible_roads = false;
-        for(int line = 0; line < matrix->size; line++){
+void print_damage(Matrix* matrix){
+    int accessible = 0, destroyed = 0;
+    for(int line = 0; line < matrix->size; line++){
+        for(int column = 0; column < matrix->size; column++){
             if(matrix->grid[line][column] != NULL){
-                if(matrix->grid[line][column]->state == true){
-                    has_accessible_roads = true;
-                }
+                (matrix->grid[line][column]->state)? destroyed++ : accessible++;
             }
         }
-        if(has_accessible_roads == false){
-            printf("  -> %d ", column);
-        }
     }
-    printf("\n");
+    printf("There were %d roads before the earthquake.\n", destroyed + accessible);
+    printf("There are now %d accessible roads and %d destroyed roads\n", accessible, destroyed);
+}
+
+void print_unaccessible_nodes(Matrix* matrix){
+    pass();
 }

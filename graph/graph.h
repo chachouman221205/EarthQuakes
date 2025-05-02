@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "incidence_matrix.h"
+
 typedef struct Node{
     int ID;
     char type;

@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "graph.h"
+
 typedef struct Node{
     int ID;
     char type;

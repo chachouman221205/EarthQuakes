@@ -1,6 +1,6 @@
 *.o
 *.exe
-
+*.out
 
 # Nassim
 test.c

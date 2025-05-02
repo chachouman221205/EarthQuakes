@@ -30,6 +30,10 @@ void free_variables_struct(Variables* variables){
 
 Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacity) {
     Road* r = malloc(sizeof(Road));
+    if(r == NULL){
+        printf("\033[1;31mAllocation ERROR in \"init_road\"\033[1;0m\n");
+        exit(1);
+    }
     r->from = from;
     r->to = to;
     r->distance = distance;
@@ -69,6 +73,10 @@ void print_roads(Matrix* matrix){
 
 Node* init_node(Variables* variables, char type) {
     Node* n = malloc(sizeof(Node));
+    if(n == NULL){
+        printf("\033[1;31mAllocation ERROR in \"init_node\"\033[1;0m\n");
+        exit(1);
+    }
     switch (type) {
         case 'C':
             n->ID = variables->city_ids;
@@ -83,7 +91,9 @@ Node* init_node(Variables* variables, char type) {
 
     unsigned int distance_to_origin = -1;
 
-    return r;
+    n->explored = 0;
+
+    return n;
 }
 
 void free_road(Road* r) {
@@ -105,17 +115,16 @@ void print_damage(Matrix* matrix){
 
 /* nassim : 
 - fonction d'exloration qui print les chemins
-- qui me rempli un tableau de taille matrix->size :
-    -> 1 si tu as exploré le sommet, touche pas sinon (0)
+- node->explored = 1 si tu as exploré le sommet, touche pas sinon (0)
 
 (option) tu peux remplir la distance from origin ici
 */
-void print_all_path_from_origin(Matrix* matrix, int* tab);
+void print_all_path_from_origin(Matrix* matrix);
 
-void print_unaccessible_nodes(Matrix* matrix, int* tab){
+void print_unaccessible_nodes(Matrix* matrix){
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
-        if(tab[i] == 0){
+        if(matrix->nodes[i]->explored == 0){
             printf("%s%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }

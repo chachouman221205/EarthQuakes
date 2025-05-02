@@ -12,6 +12,8 @@ typedef struct Node{
     int ID;
     char type;
 
+    bool explored;
+    
     unsigned int distance_to_origin;
     int max_capacity_to_origin;
     Road* towards_origin;

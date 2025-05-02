@@ -29,14 +29,14 @@ Matrix* init_empty_matrix(int size) {
         exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < size; i++) {
         mat->grid[i] = malloc(size * sizeof(Road*));
         if (mat->grid[i] == NULL) {
             printf(stderr, "Allocation ERROR in \"init_empty_matrix (3)\"\n");
             exit(EXIT_FAILURE);
         }
 
-        for (int j = 0 ; j < n; j++) {
+        for (int j = 0 ; j < size; j++) {
             mat->grid[i][j] = NULL;
         }
     }

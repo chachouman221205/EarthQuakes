@@ -54,14 +54,15 @@ void print_road(Road* road){
     printf("  -> Maximum capacity : %d\n", road->max_capacity);
     printf("\n");
 }
-
-void graph_exploration(Matrix* matrix){     // pour pouvoir copier-coller facilement
+/*
+void graph_exploration(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
             pass();
         }
     }
 }
+*/
 
 void print_roads(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){

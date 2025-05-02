@@ -52,6 +52,10 @@ void free_matrix_content(Matrix* matrix) {
             }
         }
     }
+
+    for (int i = 0; i < matrix->size; i++) {
+        free_node(matrix->nodes[i]);
+    }
 }
 
 void free_matrix(Matrix* matrix) {

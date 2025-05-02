@@ -83,13 +83,13 @@ Node* init_node(Variables* variables, char type) {
     }
     switch (type) {
         case 'C':
-            n->ID = variables->city_ids;
+            n->ID = variables->city_ids++;
             break;
         case 'H':
-            n->ID = variables->hospital_ids;
+            n->ID = variables->hospital_ids++;
             break;
         case 'W':
-            n->ID = variables->warehouse_ids;
+            n->ID = variables->warehouse_ids++;
             break;
     }
 

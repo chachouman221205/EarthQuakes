@@ -85,9 +85,6 @@ void print_unaccessible_nodes(Matrix* matrix){
                     has_accessible_roads = true;
                 }
             }
-            else{
-                has_accessible_roads == true;
-            }
         }
         if(has_accessible_roads == false){
             print("  -> %d ", column);

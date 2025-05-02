@@ -110,9 +110,9 @@ void print_damage(Matrix* matrix){
 
 (option) tu peux remplir la distance from origin ici
 */
-void print_all_path_from_origin(Matrix* matrix, Node** tab);
+void print_all_path_from_origin(Matrix* matrix, int* tab);
 
-void print_unaccessible_nodes(Matrix* matrix, Node** tab){
+void print_unaccessible_nodes(Matrix* matrix, int* tab){
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(tab[i] == 0){

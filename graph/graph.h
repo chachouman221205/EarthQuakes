@@ -8,6 +8,7 @@
 #define GRAPH
 
 typedef struct Road Road;
+typedef struct Matrix Matrix;
 typedef struct Node{
     int ID;
     char type;
@@ -36,10 +37,20 @@ typedef struct Variables{
 
 }Variables;
 
-void init_variables(Variables* variables);
+Variables* init_variables();
 
 void free_variables_struct(Variables* variables);
 
+Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacity);
+void free_road(Road* r);
 void print_road(Road* road);
+void print_roads(Matrix* matrix);
 
+Node* init_node(Variables* variables, char type);
+void free_node(Node* n);
+
+void print_damage(Matrix* matrix);
+
+void print_all_path_from_origin(Matrix* matrix, int* tab);
+void print_unaccessible_nodes(Matrix* matrix, int* tab);
 #endif

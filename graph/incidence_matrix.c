@@ -9,7 +9,7 @@ Matrix* init_empty_matrix(int size) {
     mat->size = size;
 
     mat->nodes = malloc(size*sizeof(Node*));
-    if (mat->grid == NULL) {
+    if (mat->nodes == NULL) {
         fprintf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (1)\"\033[0m\n");
         exit(EXIT_FAILURE);
     }

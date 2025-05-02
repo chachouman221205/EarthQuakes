@@ -4,17 +4,21 @@
 
 #include "graph.h"
 
-void init_variables(Variables* variables){
-    variables->node_type_ids = calloc(3, sizeof(int));
-    if(variables->node_type_ids == NULL){
-        printf("\033[1;31mAllocation ERROR in \"init_data\"\033[1;0m\n");
+Variables* init_variables(){
+    Variables* variables = malloc(1*sizeof(Variables));
+    if(variables == NULL){
+        fprintf(stderr, "\033[1;31mAllocation ERROR in \"init_data\"\033[1;0m\n");
         exit(1);
     }
+
+    variables->city_ids = 0;
+    variables->hospital_ids = 0;
+    variables->warehouse_ids = 0;
+
+    return variables;
 }
 
 void free_variables_struct(Variables* variables){
-    free(variables->node_type_ids);
-
     free(variables);
 }
 
@@ -51,7 +55,7 @@ void print_road(Road* road){
         (road->from->type == 'C')? "City" : ((road->from->type == 'H')? "Hospital" : "Warehouse"),
         road->from->ID);
     printf("  -> State : %s\n", 
-        (road->state)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
+        (road->usable)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
     printf("  -> Current capacity : %d\n", road->current_capacity);
     printf("  -> Maximum capacity : %d\n", road->max_capacity);
     printf("\n");
@@ -81,13 +85,13 @@ Node* init_node(Variables* variables, char type) {
             break;
     }
 
-    unsigned int distance_to_origin = -1;
+    n->distance_to_origin = -1;
 
-    return r;
+    return n;
 }
 
-void free_road(Road* r) {
-    free(r);
+void free_node(Node* n) {
+    free(n);
 }
 
 void print_damage(Matrix* matrix){
@@ -95,7 +99,7 @@ void print_damage(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
             if(matrix->grid[line][column] != NULL){
-                (matrix->grid[line][column]->state)? destroyed++ : accessible++;
+                (matrix->grid[line][column]->usable)? destroyed++ : accessible++;
             }
         }
     }
@@ -116,7 +120,7 @@ void print_unaccessible_nodes(Matrix* matrix, int* tab){
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(tab[i] == 0){
-            printf("%s%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+            printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }
     printf("\n");

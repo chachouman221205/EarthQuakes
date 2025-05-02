@@ -55,7 +55,7 @@ void print_road(Road* road){
         (road->from->type == 'C')? "City" : ((road->from->type == 'H')? "Hospital" : "Warehouse"),
         road->from->ID);
     printf("  -> State : %s\n", 
-        (road->state)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
+        (road->usable)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
     printf("  -> Current capacity : %d\n", road->current_capacity);
     printf("  -> Maximum capacity : %d\n", road->max_capacity);
     printf("\n");
@@ -105,7 +105,7 @@ void print_damage(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
             if(matrix->grid[line][column] != NULL){
-                (matrix->grid[line][column]->state)? destroyed++ : accessible++;
+                (matrix->grid[line][column]->usable)? destroyed++ : accessible++;
             }
         }
     }

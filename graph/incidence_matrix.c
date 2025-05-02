@@ -10,7 +10,7 @@ Matrix* init_empty_matrix(int size) {
 
     mat->nodes = malloc(size*sizeof(Node*));
     if (mat->grid == NULL) {
-        printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (1)\"\033[0m\n");
+        fprintf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (1)\"\033[0m\n");
         exit(EXIT_FAILURE);
     }
     for (int i = 0; i < size; i++) {
@@ -19,14 +19,14 @@ Matrix* init_empty_matrix(int size) {
 
     mat->grid = malloc(size * sizeof(Road**));
     if (mat->grid == NULL) {
-        printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (2)\"\033[0m\n");
+        fprintf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (2)\"\033[0m\n");
         exit(EXIT_FAILURE);
     }
 
     for (int i = 0; i < size; i++) {
         mat->grid[i] = malloc(size * sizeof(Road*));
         if (mat->grid[i] == NULL) {
-            printf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (3)\"\033[0m\n");
+            fprintf(stderr, "\033[1;31mAllocation ERROR in \"init_empty_matrix (3)\"\033[0m\n");
             exit(EXIT_FAILURE);
         }
 
@@ -34,6 +34,29 @@ Matrix* init_empty_matrix(int size) {
             mat->grid[i][j] = NULL;
         }
     }
+
+    return mat;
+}
+
+Matrix* init_matrix_from_file(char* fp) {
+    /* Format de fichier :
+     * ---------
+     * size
+     * A B poids
+     * A C poids
+     * ...
+     * ...
+     * Z Z poids
+     * ---------
+     *
+     * ordre des connexions non important
+     */
+
+    FILE* f = fopen(fp, "r");
+    int size;
+    fscanf(f, "%d", &size);
+
+    Matrix* mat = init_empty_matrix(size);
 
     return mat;
 }

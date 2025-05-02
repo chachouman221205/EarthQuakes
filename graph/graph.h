@@ -22,7 +22,6 @@ typedef struct Road{
     Node* from;
     Node* to;
 
-    bool direction;
     int distance;
     bool state;
 

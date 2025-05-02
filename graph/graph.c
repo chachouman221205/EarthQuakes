@@ -28,6 +28,8 @@ void free_variables_struct(Variables* variables){
     }
 */
 
+void init_road(Node* from, Node* to, int distance, bool usable)
+
 void print_road(Road* road){
     printf("Road from %s%d to %s%d :\n",
         (road->from->type == 'C')? "City" : ((road->from->type == 'H')? "Hospital" : "Warehouse"),

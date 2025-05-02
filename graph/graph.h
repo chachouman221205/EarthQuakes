@@ -4,6 +4,7 @@
 
 #include "incidence_matrix.h"
 
+typedef struct Road;
 typedef struct Node{
     int ID;
     char type;

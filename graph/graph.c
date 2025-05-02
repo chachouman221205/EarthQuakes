@@ -4,32 +4,6 @@
 
 #include "graph.h"
 
-typedef struct Node{
-    int ID;
-    char type;
-
-    int distance_to_origin;
-    int max_capacity_to_origin;
-    Road* towards_origin;
-}Node;
-
-typedef struct Road{
-    // int ID ?
-    Node* from;
-    Node* to;
-
-    bool direction;
-    int distance;
-    bool state;
-
-    int current_capacity;
-    int max_capacity;
-}Road;
-
-typedef struct Variables{
-    int* node_type_ids;
-}Variables;
-
 void init_variables(Variables* variables){
     variables->node_type_ids = calloc(3, sizeof(int));
     if(variables->node_type_ids == NULL){
@@ -90,7 +64,7 @@ void print_unaccessible_nodes(Matrix* matrix){
             }
         }
         if(has_accessible_roads == false){
-            print("  -> %d ", column);
+            printf("  -> %d ", column);
         }
     }
 }

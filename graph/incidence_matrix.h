@@ -9,7 +9,8 @@
 
 typedef struct Matrix {
     int size;
-    Road** grid;
+    Node** nodes;
+    Road*** grid;
 } Matrix;
 
 Matrix* init_empty_matrix(int size);

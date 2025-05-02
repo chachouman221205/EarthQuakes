@@ -4,11 +4,6 @@
 
 #include "graph.h"
 
-typedef struct Matrix {
-    int size;
-    Node** nodes;
-    Road*** grid;
-} Matrix;
 
 Matrix* init_empty_matrix(int size) {
     Matrix* mat = malloc(1*sizeof(Matrix));

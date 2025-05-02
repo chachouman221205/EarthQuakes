@@ -115,7 +115,7 @@ void print_all_path_from_origin(Matrix* matrix, Node** tab);
 void print_unaccessible_nodes(Matrix* matrix, Node** tab){
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
-        if(matrix->nodes[i] == 0){
+        if(tab[i] == 0){
             printf("%s%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }

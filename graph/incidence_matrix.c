@@ -6,23 +6,33 @@
 
 typedef struct Matrix {
     int size;
-    Road** grid;
+    Node** nodes;
+    Road*** grid;
 } Matrix;
 
 Matrix* init_empty_matrix(int size) {
     Matrix* mat = malloc(1*sizeof(Matrix));
     mat->size = size;
 
-    mat->grid = malloc(size * sizeof(Road*));
+    mat->nodes = malloc(size*sizeof(Node*));
     if (mat->grid == NULL) {
         printf(stderr, "Allocation ERROR in \"init_empty_matrix (1)\"\n");
         exit(EXIT_FAILURE);
     }
+    for (int i = 0; i < size; i++) {
+        mat->nodes[i] = NULL;
+    }
+
+    mat->grid = malloc(size * sizeof(Road**));
+    if (mat->grid == NULL) {
+        printf(stderr, "Allocation ERROR in \"init_empty_matrix (2)\"\n");
+        exit(EXIT_FAILURE);
+    }
 
     for (int i = 0; i < n; i++) {
-        mat->grid[i] = malloc(size * sizeof(Road));
+        mat->grid[i] = malloc(size * sizeof(Road*));
         if (mat->grid[i] == NULL) {
-            printf(stderr, "Allocation ERROR in \"init_empty_matrix (2)\"\n");
+            printf(stderr, "Allocation ERROR in \"init_empty_matrix (3)\"\n");
             exit(EXIT_FAILURE);
         }
 

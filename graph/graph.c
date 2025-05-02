@@ -60,10 +60,10 @@ void print_damage(Matrix* matrix){
             }
         }
     }
-    printf("There were %d roads before the earthquake.\n", destroyed + accessible);
+    printf("There were %d accessible roads before the earthquake.\n", destroyed + accessible);
     printf("There are now %d accessible roads and %d destroyed roads\n", accessible, destroyed);
 }
 
 void print_unaccessible_nodes(Matrix* matrix){
-    pass();
+    
 }

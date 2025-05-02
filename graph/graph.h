@@ -4,7 +4,10 @@
 
 #include "incidence_matrix.h"
 
-typedef struct Road;
+#ifndef GRAPH
+#define GRAPH
+
+typedef struct Road Road;
 typedef struct Node{
     int ID;
     char type;
@@ -37,3 +40,5 @@ void init_variables(Variables* variables);
 void free_variables_struct(Variables* variables);
 
 void print_road(Road* road);
+
+#endif

@@ -6,14 +6,18 @@ PARAMS = -Wall -Wfatal-errors -Werror -g -o $(OUTPUT)
 
 OBJ_DIR = obj
 
-EarthQuake.exe: graph/graph.o
-	$(COMPILER) $(PARAMS) main.c graph.o
+$(OUTPUT): $(OBJ_DIR)/graph.o
+	$(COMPILER) $(PARAMS) main.c graph/graph.o
 
-graph.o: incidence_matrix.o
+$(OBJ_DIR)/graph.o:
+	@mkdir -p $(OBJ_DIR)
+	$(COMPILER) $(PARAMS) -c graph/graph.c -o $@
+
+$(OBJ_DIR)/incidence_matrix.o:
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(COMPILER) $(PARAMS) -c $< -o $@
 
 clean:
 	rm -r $(OBJ_DIR)

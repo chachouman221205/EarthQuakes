@@ -116,7 +116,7 @@ void print_unaccessible_nodes(Matrix* matrix, Node** tab){
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i] == 0){
-            printf("%s%s ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+            printf("%s%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }
     printf("\n");

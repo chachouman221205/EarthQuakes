@@ -6,8 +6,8 @@ PARAMS = -Wall -Wfatal-errors -Werror -g -o $(OUTPUT)
 
 OBJ_DIR = obj
 
-$(OUTPUT): $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o
-	$(COMPILER) $(PARAMS) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o
+$(OUTPUT): $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	$(COMPILER) $(PARAMS) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 	make clean
 
 $(OBJ_DIR)/graph.o: graph/graph.c
@@ -17,6 +17,10 @@ $(OBJ_DIR)/graph.o: graph/graph.c
 $(OBJ_DIR)/incidence_matrix.o:	graph/incidence_matrix.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c graph/incidence_matrix.c -o $@
+
+$(OBJ_DIR)/linked_list.o: graph/linked_list.c
+	@mkdir -p $(OBJ_DIR)
+	$(COMPILER) $(PARAMS) -c graph/linked_list.c -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)

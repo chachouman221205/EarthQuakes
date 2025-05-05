@@ -91,3 +91,25 @@ void free_matrix(Matrix* matrix) {
     free(matrix->grid);
     free(matrix);
 }
+
+void calculate_origin_distances(Matrix* matrix) {
+    ListHead* node_queue = ListInit();
+    ListQueue(node_queue, 0);
+    int current_node;
+    // tant qu'il reste des noeuds à explorer
+    while (node_queue->length > 0) {
+        current_node = ListPop(node_queue, 0);
+        printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);
+        matrix->nodes[current_node]->explored = true;
+        // pour chaque voisin
+        for (int i = 0; i < matrix->size; i++) {
+            // qui existe et qui n'est pas exploré
+            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+                ListQueue(node_queue, i);
+            }
+        }
+    }
+    printf("\n");
+    ListFree(node_queue);
+    reset_exploration(matrix);
+}

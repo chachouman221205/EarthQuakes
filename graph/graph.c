@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "graph.h"
+#include "linked_list.h"
 
 Variables* init_variables(){
     Variables* variables = malloc(1*sizeof(Variables));
@@ -148,7 +149,35 @@ void print_damage(Matrix* matrix){
 
 (option) tu peux remplir la distance from origin ici
 */
-void print_all_path_from_origin(Matrix* matrix);
+void print_all_path_from_origin(Matrix* matrix) {
+    ListHead* node_queue = ListInit();
+    ListQueue(node_queue, 0);
+    int current_node;
+    // tant qu'il reste des noeuds à explorer
+    while (node_queue->length > 0) {
+        current_node = ListPop(node_queue, 0);
+        printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);
+        matrix->nodes[current_node]->explored = true;
+        // pour chaque voisin
+        for (int i = 0; i < matrix->size; i++) {
+            // qui existe et qui n'est pas exploré
+            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+                ListQueue(node_queue, i);
+            }
+        }
+    }
+    printf("\n");
+    ListFree(node_queue);
+    reset_exploration(matrix);
+}
+
+
+
+void reset_exploration(Matrix* matrix) {
+    for (int i = 0; i < matrix->size; i++) {
+        matrix->nodes[i]->explored = false;
+    }
+}
 
 void print_unaccessible_nodes(Matrix* matrix){
     printf("The unaccessible nodes are :\n  -> ");

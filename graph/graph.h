@@ -56,4 +56,5 @@ void print_damage(Matrix* matrix);
 
 void print_all_path_from_origin(Matrix* matrix);
 void print_unaccessible_nodes(Matrix* matrix);
+void reset_exploration(Matrix* matrix);
 #endif

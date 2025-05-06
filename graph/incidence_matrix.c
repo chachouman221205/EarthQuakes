@@ -3,6 +3,7 @@
 #include <stdbool.h>
 
 #include "graph.h"
+#include "linked_list.h"
 
 Matrix* init_empty_matrix(int size) {
     Matrix* mat = malloc(1*sizeof(Matrix));

@@ -18,6 +18,8 @@ typedef struct Node{
     
     unsigned int distance_to_origin;
     int max_capacity_to_origin;
+    int connections_in;
+    int connections_out;
     Road* towards_origin;
 }Node;
 
@@ -28,6 +30,8 @@ typedef struct Road{
 
     int distance;
     bool usable;
+    bool to_secure;
+    bool is_created;
 
     int current_capacity;
     int max_capacity;

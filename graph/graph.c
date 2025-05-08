@@ -41,11 +41,15 @@ Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacit
         exit(1);
     }
     r->from = from;
+    from->connections_out++;
     r->to = to;
+    to->connections_in++;
     r->distance = distance;
     r->usable = usable;
     r->current_capacity = max_capacity;
     r->max_capacity = max_capacity;
+    r->to_secure = false;
+    r->is_created = false;
 
     return r;
 }
@@ -122,6 +126,8 @@ Node* init_node(Variables* variables, char type) {
 
     n->distance_to_origin = -1;
     n->explored = 0;
+    n->connections_in = 0;
+    n->connections_out = 0;
 
     return n;
 }

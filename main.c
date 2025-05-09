@@ -54,10 +54,17 @@ void Mission3(int question, char* graph) {
     switch (question) {
         case 1:
             int node;
-            printf("Quel noeud voulez vous explorer ? (Entrez un nombre) ");
+            printf("Quel noeud voulez vous explorer ?\nEntrez un nombre (1-%d) ", mat->size);
             scanf("%d", &node);
-            ListHead* path = find_path_to(mat, node);
-            ListFree(path);
+            ListHead* path = find_path_to(mat, node-1);
+            if (path == NULL) {
+                printf("Il n'y actuellement aucun chemin disponible vers %c%d\n", mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
+            } else {
+                printf("Voici le chemin pour aller vers %c%d\n-> ", mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
+                print_path(mat, path);
+                printf("\n");
+                ListFree(path);
+            }
             break;
     }
 }
@@ -66,7 +73,7 @@ int main(){
     printf(" \b\n\n\n");
 
     char filename[50];
-    Mission1(0, find_file(filename));
+    Mission3(1, find_file(filename));
 
     return 0;
 }

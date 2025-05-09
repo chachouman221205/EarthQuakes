@@ -5,6 +5,7 @@
 
 #include "graph.h"
 #include "linked_list.h"
+#include "incidence_matrix.h"
 
 Matrix* init_empty_matrix(int size) {
     Matrix* mat = malloc(1*sizeof(Matrix));
@@ -71,6 +72,10 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
     }
 
     fclose(f);
+
+    // préparation de la matrice pour les calculs
+    calculate_origin_distances(mat);
+
     return mat;
 }
 
@@ -96,35 +101,48 @@ void free_matrix(Matrix* matrix) {
     free(matrix);
 }
 
-int calculate_origin_path(Matrix* matrix, int node) {
+
+int calculate_origin_path(Matrix* matrix, int node, int* distance) {
     unsigned int min_distance = -1;
     int min_node = -1;
     int temp;
     for (int i = 0; i < matrix->size; i++) {
-        temp = matrix->grid[node][i]->distance + matrix->nodes[i]->distance_to_origin;
+        if (matrix->grid[i][node] == NULL) {
+            continue;
+        }
+
+        temp = matrix->grid[i][node]->distance + matrix->nodes[i]->distance_to_origin;
         if (temp < min_distance) {
             min_distance = temp;
             min_node = i;
         }
     }
+    *distance = min_distance;
     return min_node;
 }
 void calculate_origin_distances(Matrix* matrix) {
     ListHead* node_queue = ListInit();
     ListQueue(node_queue, 0);
-    int current_node;
+    int current_node = 0;
+    matrix->nodes[0]->distance_to_origin = 0;
+    matrix->nodes[0]->towards_origin = NULL;
     // tant qu'il reste des noeuds à explorer
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
 
-        int calculated_distance = calculate_origin_path(matrix, current_node);
-        if (calculated_distance != matrix->nodes[current_node]->distance_to_origin) {
-            matrix->nodes[current_node]->distance_to_origin = calculated_distance;
+        if (current_node != 0) {
+            int calculated_distance;
+            int node_towards_origin = calculate_origin_path(matrix, current_node, &calculated_distance);
+            // Si aucun chemin n'a été calculé, ou si la distance n'est pas la même, ou si le prochain noeud n'est pas le même
+            if (matrix->nodes[current_node]->towards_origin == NULL || calculated_distance != matrix->nodes[current_node]->distance_to_origin || node_towards_origin != matrix->nodes[current_node]->towards_origin->to->ID) {
+                matrix->nodes[current_node]->distance_to_origin = calculated_distance;
+                matrix->nodes[current_node]->towards_origin = matrix->grid[node_towards_origin][current_node];
 
-            // Marquer les voisins pour qu'ils soient recalculés
-            for (int i = 0; i < matrix->size; i++) {
-                if (matrix->grid[current_node][i] != NULL) {
-                    ListQueue(node_queue, i);
+                // Marquer les voisins pour qu'ils soient recalculés
+                for (int i = 0; i < matrix->size; i++) {
+                    if (matrix->grid[current_node][i] != NULL) {
+                        ListStack(node_queue, i);
+                    }
                 }
             }
         }
@@ -132,8 +150,9 @@ void calculate_origin_distances(Matrix* matrix) {
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
-            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+            if (matrix->grid[current_node][i] != NULL && matrix->nodes[i]->explored == false) {
                 ListQueue(node_queue, i);
+                matrix->nodes[i]->explored = true;
             }
         }
     }
@@ -146,8 +165,22 @@ ListHead* find_path_to(Matrix* matrix, int node) {
     ListHead* path = ListInit();
     ListQueue(path, node);
     while (node != 0) {
-        node = matrix->nodes[node]->towards_origin->to->ID;
+        if (matrix->nodes[node]->towards_origin == NULL) {
+            ListFree(path);
+            return NULL;
+        }
+        node = matrix->nodes[node]->towards_origin->from->ID;
         ListQueue(path, node);
     }
+    ListReverse(path);
     return path;
+}
+
+void print_path(Matrix* matrix, ListHead* path) {
+    ListNode* ptr = path->next;
+    while (ptr != NULL) {
+        Node* node = matrix->nodes[ptr->data];
+        printf("%c%d ", node->type, node->ID);
+        ptr = ptr->next;
+    }
 }

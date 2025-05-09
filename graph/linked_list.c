@@ -143,3 +143,17 @@ bool ListContains(ListHead* head, int X) {
 
     return false;
 }
+
+void ListReverse(ListHead* head) {
+    ListNode* ptr = head->next;
+    ListNode* ptr2 = ptr->next;
+    ListNode* temp;
+    ptr->next = NULL;
+    while (ptr2 != NULL) {
+        temp = ptr2->next;
+        ptr2->next = ptr;
+        ptr = ptr2;
+        ptr2 = temp;
+    }
+    head->next = ptr;
+}

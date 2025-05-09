@@ -37,5 +37,6 @@ int ListGetElement(ListHead* head, int index);
 ListHead* ListFromArray(int* arr, int n);
 
 bool ListContains(ListHead* head, int X);
+void ListReverse(ListHead* head);
 
 #endif

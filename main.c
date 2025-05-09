@@ -9,7 +9,6 @@ void Mission1(int question, char* graph) {
     switch(question) {
         case 0:
             print_roads(mat);
-            printf("The accessible nodes are :\n  -> ");
             print_all_path_from_origin(mat);
             print_unaccessible_nodes(mat);
             break;
@@ -17,7 +16,6 @@ void Mission1(int question, char* graph) {
             print_roads(mat);
             break;
         case 2:
-            printf("The accessible nodes are :\n  -> ");
             print_all_path_from_origin(mat);
             break;
         case 3:

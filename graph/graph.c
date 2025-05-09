@@ -160,6 +160,7 @@ void print_all_path_from_origin(Matrix* matrix) {
     ListQueue(node_queue, 0);
     int current_node;
     // tant qu'il reste des noeuds à explorer
+    printf("The accessible nodes are :\n  -> ");
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
         printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);

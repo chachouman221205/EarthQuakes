@@ -11,9 +11,6 @@ $(OUTPUT): $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_li
 	$(COMPILER) $(PARAMS) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 	make clean
 
-$(OBJ_DIR)/file_gen.o: test/gen_files/file_gen.c
-	@mkdir -p $(OBJ_DIR)
-	$(COMPILER) $(PARAMS) -c test/gen_files/file_gen.c -o $@
 
 $(OBJ_DIR)/graph.o: graph/graph.c
 	@mkdir -p $(OBJ_DIR)
@@ -38,3 +35,5 @@ clean:
 	rm -r $(OBJ_DIR)
 
 re: clean all
+
+.PHONY: test clean

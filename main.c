@@ -18,7 +18,7 @@ char* find_file(char* filename){
     } while(f != NULL);
 
     sprintf(filename, "test/gen_files/gen_graph%d.txt", --name_id);
-    // printf("%s\n", filename);
+    printf("\033[1;35mUsing :\033[0m %s\n\n", filename);
     return filename;
 }
 

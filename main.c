@@ -9,7 +9,7 @@ char* find_file(char* filename){
 
     // Trouver un nom de fichier qui n'existe pas encore
     do {
-        sprintf(filename, "gen_graph%d.txt", name_id);
+        sprintf(filename, "test/gen_files/gen_graph%d.txt", name_id);
         f = fopen(filename, "r");
         if(f != NULL) {
             fclose(f);
@@ -17,7 +17,7 @@ char* find_file(char* filename){
         }
     } while(f != NULL);
 
-    sprintf(filename, "gen_graph%d.txt", --name_id);
+    sprintf(filename, "test/gen_files/gen_graph%d.txt", --name_id);
     printf("%s\n", filename);
     return filename;
 }

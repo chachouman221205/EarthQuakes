@@ -22,7 +22,7 @@ int main(){
     fclose(f);
 
     srand(time(NULL));
-    f = fopen("gen_graph.txt", "w");
+    f = fopen("gen_file.txt", "w");
     if(f == NULL){ printf("Error opening file!\n"); return 1;}
 
     int max_size = 10, min_size = 3, link_chance = (max_size-1) / 3;

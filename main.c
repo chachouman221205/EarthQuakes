@@ -24,6 +24,22 @@ void Mission1(int question, char* graph) {
     }
     free_matrix_content(mat);
     free_matrix(mat);
+    free_variables_struct(var);
+}
+
+void Mission3(int question, char* graph) {
+    Variables* var = init_variables();
+    Matrix* mat = init_matrix_from_file(var, graph);
+
+    switch (question) {
+        case 1:
+            int node;
+            printf("Quel noeud voulez vous explorer ? (Entrez un nombre) ");
+            scanf("%d", &node);
+            ListHead* path = find_path_to(mat, node);
+            ListFree(path);
+            break;
+    }
 }
 
 int main(){

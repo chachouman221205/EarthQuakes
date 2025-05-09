@@ -96,6 +96,19 @@ void free_matrix(Matrix* matrix) {
     free(matrix);
 }
 
+int calculate_origin_path(Matrix* matrix, int node) {
+    unsigned int min_distance = -1;
+    int min_node = -1;
+    int temp;
+    for (int i = 0; i < matrix->size; i++) {
+        temp = matrix->grid[node][i]->distance + matrix->nodes[i]->distance_to_origin;
+        if (temp < min_distance) {
+            min_distance = temp;
+            min_node = i;
+        }
+    }
+    return min_node;
+}
 void calculate_origin_distances(Matrix* matrix) {
     ListHead* node_queue = ListInit();
     ListQueue(node_queue, 0);
@@ -103,8 +116,19 @@ void calculate_origin_distances(Matrix* matrix) {
     // tant qu'il reste des noeuds à explorer
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
-        printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);
-        matrix->nodes[current_node]->explored = true;
+
+        int calculated_distance = calculate_origin_path(matrix, current_node);
+        if (calculated_distance != matrix->nodes[current_node]->distance_to_origin) {
+            matrix->nodes[current_node]->distance_to_origin = calculated_distance;
+
+            // Marquer les voisins pour qu'ils soient recalculés
+            for (int i = 0; i < matrix->size; i++) {
+                if (matrix->grid[current_node][i] != NULL) {
+                    ListQueue(node_queue, i);
+                }
+            }
+        }
+
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
@@ -116,4 +140,14 @@ void calculate_origin_distances(Matrix* matrix) {
     printf("\n");
     ListFree(node_queue);
     reset_exploration(matrix);
+}
+
+ListHead* find_path_to(Matrix* matrix, int node) {
+    ListHead* path = ListInit();
+    ListQueue(path, node);
+    while (node != 0) {
+        node = matrix->nodes[node]->towards_origin->to->ID;
+        ListQueue(path, node);
+    }
+    return path;
 }

@@ -1,16 +1,15 @@
+#ifndef GRAPH
+#define GRAPH
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "incidence_matrix.h"
-
-#ifndef GRAPH
-#define GRAPH
 
 typedef struct Road Road;
 typedef struct Matrix Matrix;
 
-typedef struct Node{
+typedef struct Node {
     int ID;
     char type;
 
@@ -21,9 +20,9 @@ typedef struct Node{
     int connections_in;
     int connections_out;
     Road* towards_origin;
-}Node;
+} Node;
 
-typedef struct Road{
+typedef struct Road {
     // int ID ?
     Node* from;
     Node* to;
@@ -35,14 +34,17 @@ typedef struct Road{
 
     int current_capacity;
     int max_capacity;
-}Road;
+} Road;
 
-typedef struct Variables{
+typedef struct Variables {
     int city_ids;
     int hospital_ids;
     int warehouse_ids;
+} Variables;
 
-}Variables;
+#include "incidence_matrix.h"
+
+
 
 Variables* init_variables();
 
@@ -63,4 +65,5 @@ void explore_all_nodes_width(Matrix* matrix);
 void print_all_path_from_origin(Matrix* matrix);
 void print_unaccessible_nodes(Matrix* matrix);
 void reset_exploration(Matrix* matrix);
+
 #endif

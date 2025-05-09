@@ -5,18 +5,22 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#include "graph.h"
-
 typedef struct Matrix {
     int size;
     Node** nodes;
     Road*** grid;
 } Matrix;
 
+#include "graph.h"
+#include "linked_list.h"
+
+
 Matrix* init_empty_matrix(int size);
 Matrix* init_matrix_from_file(Variables* variables, char* fp);
 
 void free_matrix_content(Matrix* matrix);
 void free_matrix(Matrix* matrix);
+
+ListHead* find_path_to(Matrix* matrix, int node);
 
 #endif

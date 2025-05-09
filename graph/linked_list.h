@@ -2,7 +2,8 @@
  * Code réalisé pendant le semestre 3, réutilisé pour le projet
  */
 
-
+#ifndef LINKED_LIST
+#define LINKED_LIST
 
 
 
@@ -36,3 +37,5 @@ int ListGetElement(ListHead* head, int index);
 ListHead* ListFromArray(int* arr, int n);
 
 bool ListContains(ListHead* head, int X);
+
+#endif

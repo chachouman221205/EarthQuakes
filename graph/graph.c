@@ -185,19 +185,27 @@ void reset_exploration(Matrix* matrix) {
     }
 }
 
-void explore_all_nodes(Matrix* matrix) {
+bool is_usable(Road* road) {
+    if (road != NULL) {
+        return road->usable && (road->current_capacity > 0);
+    }
+    return false;
+}
+
+void explore_all_nodes_width(Matrix* matrix) {
     ListHead* node_queue = ListInit();
     ListQueue(node_queue, 0);
+    matrix->nodes[0]->explored = true;
     int current_node;
     // tant qu'il reste des noeuds à explorer
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
-        matrix->nodes[current_node]->explored = true;
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
             if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
                 ListQueue(node_queue, i);
+                matrix->nodes[i]->explored = true;
             }
         }
     }
@@ -205,10 +213,10 @@ void explore_all_nodes(Matrix* matrix) {
 }
 
 void print_unaccessible_nodes(Matrix* matrix){
-    explore_all_nodes(matrix);
+    explore_all_nodes_width(matrix);
     printf("The \033[1;31munaccessible\033[0m nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
-        if(matrix->nodes[i]->explored == 0){
+        if(matrix->nodes[i]->explored == false){
             printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }

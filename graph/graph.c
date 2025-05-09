@@ -178,8 +178,6 @@ void print_all_path_from_origin(Matrix* matrix) {
     reset_exploration(matrix);
 }
 
-
-
 void reset_exploration(Matrix* matrix) {
     for (int i = 0; i < matrix->size; i++) {
         matrix->nodes[i]->explored = false;

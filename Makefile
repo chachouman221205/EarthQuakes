@@ -7,6 +7,7 @@ PARAMS = -Wall -Wfatal-errors -Werror -g -o $(OUTPUT)
 OBJ_DIR = obj
 
 $(OUTPUT): $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	test/file_gen.exe
 	$(COMPILER) $(PARAMS) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 	make clean
 

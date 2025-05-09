@@ -49,10 +49,12 @@ int main(){
     int max_dist = 10, max_capa = 10;
 
     int rand_i = rand() % max_size+1;
+    int min_lines = 1, lines = 0;
     for(int i = 0; i < rand_size; i++){
         for(int ii = 0; ii < rand_size -1; ii++){
-            if(i != ii && (rand()%link_chance) == 0){
+            if(i != ii && (rand()%link_chance) == 0 || lines < min_lines){
                 fprintf(f, "%d %d %d %d\n", nodes[i], nodes[ii], rand()%max_dist+1, rand()%max_capa+1);
+                lines++;
                 // printf("%c - %c | ", nodes[i], nodes[ii]);
             }
         }// printf("\n");

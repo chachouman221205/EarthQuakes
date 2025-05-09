@@ -18,15 +18,15 @@ int main(){
 
     FILE *f;
     char filename[50];
-    int i = 1;
+    int file_id = 1;
 
     // Trouver un nom de fichier qui n'existe pas encore
     do {
-        sprintf(filename, "gen_graph%d.txt", i);
+        sprintf(filename, "gen_graph%d.txt", file_id);
         f = fopen(filename, "r");
         if(f != NULL) {
             fclose(f);
-            i++;
+            file_id++;
         }
     } while(f != NULL);
 

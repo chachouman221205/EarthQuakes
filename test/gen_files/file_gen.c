@@ -36,7 +36,7 @@ int main(){
 
     srand(time(NULL));
 
-    int max_size = 10, min_size = 3, link_chance = (max_size-1) / 3;
+    int max_size = 15, min_size = 3, link_chance = (max_size-1) / 3;
     int rand_size = (rand() % max_size);
     if(rand_size < min_size) rand_size = min_size;
     fprintf(f, "%d\n", rand_size);

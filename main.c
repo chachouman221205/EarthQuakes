@@ -29,7 +29,7 @@ void Mission1(int question, char* graph) {
 int main(){
     printf(" \b");
 
-    Mission1(0, "test/gen_graph.txt");
+    Mission1(0, "test/graph2.txt");
 
     return 0;
 }

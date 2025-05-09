@@ -58,6 +58,8 @@ void free_node(Node* n);
 
 void print_damage(Matrix* matrix);
 
+void explore_all_nodes_width(Matrix* matrix);
+
 void print_all_path_from_origin(Matrix* matrix);
 void print_unaccessible_nodes(Matrix* matrix);
 void reset_exploration(Matrix* matrix);

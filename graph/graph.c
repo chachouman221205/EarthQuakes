@@ -88,7 +88,7 @@ void print_road(Road* road){
     }
     printf("Road from %s%d to %s%d :\n", type1, road->from->ID, type2, road->to->ID);
     printf("  -> State : %s\n", 
-        (road->usable)? "\033[1;31mDestroyed\033[0m" : "\033[1;32mAccessible\033[0m");
+        (road->usable)? "\033[1;32mAccessible\033[0m" : "\033[1;31mDestroyed\033[0m");
     printf("  -> Current capacity : %d\n", road->current_capacity);
     printf("  -> Maximum capacity : %d\n", road->max_capacity);
     printf("\n");

@@ -16,16 +16,27 @@ int main(){
     * ordre des connexions non important
     */
 
-    // le numéro du graphe à créé
-    FILE* f = fopen("test.conf", "r");
-    int file_number; fscanf(f, "%d", &file_number);
-    fclose(f);
+    FILE *f;
+    char filename[50];
+    int i = 1;
+
+    // Trouver un nom de fichier qui n'existe pas encore
+    do {
+        sprintf(filename, "gen_graph%d.txt", i);
+        f = fopen(filename, "r");
+        if(f != NULL) {
+            fclose(f);
+            i++;
+        }
+    } while(f != NULL);
+
+    // Ouvrir le fichier pour écriture
+    f = fopen(filename, "w");
+    if(f == NULL) {printf("Erreur lors de la création du fichier.\n"); return 1;}
 
     srand(time(NULL));
-    f = fopen("gen_file.txt", "w");
-    if(f == NULL){ printf("Error opening file!\n"); return 1;}
 
-    int max_size = 10, min_size = 3, link_chance = (max_size-1) / 3;
+    int max_size = 15, min_size = 3, link_chance = (max_size-1) / 3;
     int rand_size = (rand() % max_size);
     if(rand_size < min_size) rand_size = min_size;
     fprintf(f, "%d\n", rand_size);
@@ -38,10 +49,12 @@ int main(){
     int max_dist = 10, max_capa = 10;
 
     int rand_i = rand() % max_size+1;
+    int min_lines = 1, lines = 0;
     for(int i = 0; i < rand_size; i++){
         for(int ii = 0; ii < rand_size -1; ii++){
-            if(i != ii && (rand()%link_chance) == 0){
+            if(i != ii && ((rand()%link_chance) == 0 || lines < min_lines)){
                 fprintf(f, "%d %d %d %d\n", nodes[i], nodes[ii], rand()%max_dist+1, rand()%max_capa+1);
+                lines++;
                 // printf("%c - %c | ", nodes[i], nodes[ii]);
             }
         }// printf("\n");
@@ -51,4 +64,6 @@ int main(){
     return 0;
 }
 
-//cd test && gcc -o file_gen.exe file_gen.c && cd ..
+//cd test/gen_files && gcc -o file_gen.exe file_gen.c && cd .. && cd ..
+
+// ls && echo && cd test && ls && echo && cd gen_files && ls && cd .. && cd ..

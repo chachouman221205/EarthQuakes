@@ -86,11 +86,12 @@ void print_road(Road* road){
         default:
             strcpy(type2, "Unknown");
     }
-    printf("Road from %s%d to %s%d :\n", type1, road->from->ID, type2, road->to->ID);
+    printf("Road from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m :\n", 
+        type1, road->from->ID, type2, road->to->ID);
     printf("  -> State : %s\n", 
         (road->usable)? "\033[1;32mAccessible\033[0m" : "\033[1;31mDestroyed\033[0m");
-    printf("  -> Current capacity : %d\n", road->current_capacity);
-    printf("  -> Maximum capacity : %d\n", road->max_capacity);
+    printf("  -> Current capacity : %4d\n", road->current_capacity);
+    printf("  -> Maximum capacity : %4d\n", road->max_capacity);
     printf("\n");
 }
 
@@ -141,12 +142,14 @@ void print_damage(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
             if(matrix->grid[line][column] != NULL){
-                (matrix->grid[line][column]->usable)? destroyed++ : accessible++;
+                (matrix->grid[line][column]->usable)? accessible++ : destroyed++;
             }
         }
     }
-    printf("There were %d accessible roads before the earthquake\n", destroyed + accessible);
-    printf("There are now %d accessible roads and %d destroyed roads\n", accessible, destroyed);
+    printf("There were \033[1;32m%d accessible\033[0m roads before the earthquake\n", 
+        destroyed + accessible);
+    printf("There are now \033[1;32m%d accessible\033[0m roads and ", accessible);
+    printf("\033[1;31m%d destroyed\033[0m roads\n\n", destroyed);
 }
 
 /* nassim : 
@@ -156,14 +159,25 @@ void print_damage(Matrix* matrix){
 (option) tu peux remplir la distance from origin ici
 */
 void print_all_path_from_origin(Matrix* matrix) {
-    explore_all_nodes_width(matrix);
-    printf("The accessible nodes are :\n  -> ");
-    for(int i = 0; i < matrix->size; i++){
-        if(matrix->nodes[i]->explored == true){
-            printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+    ListHead* node_queue = ListInit();
+    ListQueue(node_queue, 0);
+    int current_node;
+    // tant qu'il reste des noeuds à explorer
+    printf("The \033[1;32maccessible\033[0m nodes are :\n  -> ");
+    while (node_queue->length > 0) {
+        current_node = ListPop(node_queue, 0);
+        printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);
+        matrix->nodes[current_node]->explored = true;
+        // pour chaque voisin
+        for (int i = 0; i < matrix->size; i++) {
+            // qui existe et qui n'est pas exploré
+            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+                ListQueue(node_queue, i);
+            }
         }
     }
     printf("\n");
+    ListFree(node_queue);
     reset_exploration(matrix);
 }
 
@@ -179,6 +193,7 @@ bool is_usable(Road* road) {
     }
     return false;
 }
+
 void explore_all_nodes_width(Matrix* matrix) {
     ListHead* node_queue = ListInit();
     ListQueue(node_queue, 0);
@@ -190,7 +205,7 @@ void explore_all_nodes_width(Matrix* matrix) {
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
-            if (is_usable(matrix->grid[current_node][i]) && matrix->grid[current_node][i]->to->explored == false) {
+            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
                 ListQueue(node_queue, i);
                 matrix->nodes[i]->explored = true;
             }
@@ -201,7 +216,7 @@ void explore_all_nodes_width(Matrix* matrix) {
 
 void print_unaccessible_nodes(Matrix* matrix){
     explore_all_nodes_width(matrix);
-    printf("The unaccessible nodes are :\n  -> ");
+    printf("The \033[1;31munaccessible\033[0m nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i]->explored == false){
             printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);

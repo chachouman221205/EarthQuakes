@@ -64,4 +64,6 @@ int main(){
     return 0;
 }
 
-//cd test && gcc -o file_gen.exe file_gen.c && cd ..
+//cd test/gen_files && gcc -o file_gen.exe file_gen.c && cd .. && cd ..
+
+// ls && echo && cd test && ls && echo && cd gen_files && ls && cd .. && cd ..

@@ -15,9 +15,14 @@ int main(){
     *
     * ordre des connexions non important
     */
-   
+
+    // le numéro du graphe à créé
+    FILE* f = fopen("test.conf", "r");
+    int file_number; fscanf(f, "%d", &file_number);
+    fclose(f);
+
     srand(time(NULL));
-    FILE *f = fopen("gen_graph.txt", "w");
+    f = fopen("gen_graph.txt", "w");
     if(f == NULL){ printf("Error opening file!\n"); return 1;}
 
     int max_size = 10, min_size = 3, link_chance = (max_size-1) / 3;

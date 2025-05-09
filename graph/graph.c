@@ -185,7 +185,27 @@ void reset_exploration(Matrix* matrix) {
     }
 }
 
+void explore_all_nodes(Matrix* matrix) {
+    ListHead* node_queue = ListInit();
+    ListQueue(node_queue, 0);
+    int current_node;
+    // tant qu'il reste des noeuds à explorer
+    while (node_queue->length > 0) {
+        current_node = ListPop(node_queue, 0);
+        matrix->nodes[current_node]->explored = true;
+        // pour chaque voisin
+        for (int i = 0; i < matrix->size; i++) {
+            // qui existe et qui n'est pas exploré
+            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+                ListQueue(node_queue, i);
+            }
+        }
+    }
+    ListFree(node_queue);
+}
+
 void print_unaccessible_nodes(Matrix* matrix){
+    explore_all_nodes(matrix);
     printf("The unaccessible nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i]->explored == 0){
@@ -193,4 +213,5 @@ void print_unaccessible_nodes(Matrix* matrix){
         }
     }
     printf("\n");
+    reset_exploration(matrix);
 }

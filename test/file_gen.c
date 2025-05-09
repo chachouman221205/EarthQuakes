@@ -41,7 +41,7 @@ int main(){
     for(int i = 0; i < rand_size; i++){
         for(int ii = 0; ii < rand_size -1; ii++){
             if(i != ii && (rand()%link_chance) == 0){
-                fprintf(f, "%d %d %d %d\n", nodes[i], nodes[ii], rand()%max_dist, rand()%max_capa);
+                fprintf(f, "%d %d %d %d\n", nodes[i], nodes[ii], rand()%max_dist+1, rand()%max_capa+1);
                 // printf("%c - %c | ", nodes[i], nodes[ii]);
             }
         }// printf("\n");
@@ -50,3 +50,5 @@ int main(){
     fclose(f);
     return 0;
 }
+
+//cd test && gcc -o file_gen.exe file_gen.c && cd ..

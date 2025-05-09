@@ -159,25 +159,14 @@ void print_damage(Matrix* matrix){
 (option) tu peux remplir la distance from origin ici
 */
 void print_all_path_from_origin(Matrix* matrix) {
-    ListHead* node_queue = ListInit();
-    ListQueue(node_queue, 0);
-    int current_node;
-    // tant qu'il reste des noeuds à explorer
+    explore_all_nodes_width(matrix);
     printf("The \033[1;32maccessible\033[0m nodes are :\n  -> ");
-    while (node_queue->length > 0) {
-        current_node = ListPop(node_queue, 0);
-        printf("%c%d ", matrix->nodes[current_node]->type, matrix->nodes[current_node]->ID);
-        matrix->nodes[current_node]->explored = true;
-        // pour chaque voisin
-        for (int i = 0; i < matrix->size; i++) {
-            // qui existe et qui n'est pas exploré
-            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
-                ListQueue(node_queue, i);
-            }
+    for(int i = 0; i < matrix->size; i++){
+        if(matrix->nodes[i]->explored == true){
+            printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
         }
     }
     printf("\n");
-    ListFree(node_queue);
     reset_exploration(matrix);
 }
 
@@ -205,7 +194,7 @@ void explore_all_nodes_width(Matrix* matrix) {
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
-            if (matrix->grid[current_node][i] != NULL && matrix->grid[current_node][i]->to->explored == false) {
+            if (is_usable(matrix->grid[current_node][i]) && matrix->grid[current_node][i]->to->explored == false) {
                 ListQueue(node_queue, i);
                 matrix->nodes[i]->explored = true;
             }

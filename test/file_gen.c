@@ -15,10 +15,26 @@ int main(){
     *
     * ordre des connexions non important
     */
-   
+
+    FILE *f;
+    char filename[50];
+    int i = 1;
+
+    // Trouver un nom de fichier qui n'existe pas encore
+    do {
+        sprintf(filename, "gen_graph%d.txt", i);
+        f = fopen(filename, "r");
+        if(f != NULL) {
+            fclose(f);
+            i++;
+        }
+    } while(f != NULL);
+
+    // Ouvrir le fichier pour écriture
+    f = fopen(filename, "w");
+    if(f == NULL) {printf("Erreur lors de la création du fichier.\n"); return 1;}
+
     srand(time(NULL));
-    FILE *f = fopen("gen_graph.txt", "w");
-    if(f == NULL){ printf("Error opening file!\n"); return 1;}
 
     int max_size = 10, min_size = 3, link_chance = (max_size-1) / 3;
     int rand_size = (rand() % max_size);

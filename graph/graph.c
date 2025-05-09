@@ -142,12 +142,14 @@ void print_damage(Matrix* matrix){
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
             if(matrix->grid[line][column] != NULL){
-                (matrix->grid[line][column]->usable)? destroyed++ : accessible++;
+                (matrix->grid[line][column]->usable)? accessible++ : destroyed++;
             }
         }
     }
-    printf("There were %d accessible roads before the earthquake\n", destroyed + accessible);
-    printf("There are now %d accessible roads and %d destroyed roads\n", accessible, destroyed);
+    printf("There were \033[1;32m%d accessible\033[0m roads before the earthquake\n", 
+        destroyed + accessible);
+    printf("There are now \033[1;32m%d accessible\033[0m roads and ", accessible);
+    printf("\033[1;31m%d destroyed\033[0m roads\n\n", destroyed);
 }
 
 /* nassim : 

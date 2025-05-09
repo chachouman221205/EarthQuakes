@@ -27,6 +27,7 @@ void Mission1(int question, char* graph) {
     Matrix* mat = init_matrix_from_file(var, graph);
     switch(question) {
         case 0:
+            print_damage(mat);
             print_roads(mat);
             print_all_path_from_origin(mat);
             print_unaccessible_nodes(mat);

@@ -67,6 +67,9 @@ void Mission3(int question, char* graph) {
             }
             break;
     }
+    free_matrix_content(mat);
+    free_matrix(mat);
+    free_variables_struct(var);
 }
 
 int main(){

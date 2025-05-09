@@ -98,6 +98,7 @@ void free_matrix(Matrix* matrix) {
         free(matrix->grid[i]);
     }
     free(matrix->grid);
+    free(matrix->nodes);
     free(matrix);
 }
 

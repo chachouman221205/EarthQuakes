@@ -27,7 +27,7 @@ void Mission1(int question, char* graph) {
 }
 
 int main(){
-    printf(" \b");
+    printf(" \b\n\n\n");
 
     Mission1(0, "gen_graph.txt");
 

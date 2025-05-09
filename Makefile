@@ -23,10 +23,6 @@ $(OBJ_DIR)/linked_list.o: graph/linked_list.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c graph/linked_list.c -o $@
 
-$(OBJ_DIR)/file_gen.o: test/file_gen.c
-	@mkdir -p $(OBJ_DIR)
-	$(COMPILER) $(PARAMS) -c test/file_gen.c -o $@
-
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c $< -o $@

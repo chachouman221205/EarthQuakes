@@ -55,7 +55,12 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
      * ordre des connexions non important
      */
 
+    printf("in");
     FILE* f = fopen(fp, "r");
+    if(f == NULL){
+        printf("ERROR oppening file in init_matrix_from_file : %s\n", fp);
+        exit(1);
+    }
     int size;
     fscanf(f, "%d", &size);
 

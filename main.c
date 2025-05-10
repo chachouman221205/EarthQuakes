@@ -24,7 +24,9 @@ char* find_file(char* filename){
 
 void Mission1(int question, char* graph) {
     Variables* var = init_variables();
+    printf("1\n");
     Matrix* mat = init_matrix_from_file(var, graph);
+    printf("2\n");
     switch(question) {
         case 0:
             print_damage(mat);
@@ -41,6 +43,9 @@ void Mission1(int question, char* graph) {
         case 3:
             print_unaccessible_nodes(mat);
             break;
+        default :
+            printf("ERROR\n");
+            break;
     }
     free_matrix_content(mat);
     free_matrix(mat);
@@ -54,7 +59,7 @@ void Mission3(int question, char* graph) {
     switch (question) {
         case 1:
             int node;
-            printf("Quel noeud voulez vous explorer ?\nEntrez un nombre (1-%d) ", mat->size);
+            printf("Quel noeud voulez vous explorer ?\nEntrez un nombre (1-%d) : ", mat->size);
             scanf("%d", &node);
             ListHead* path = find_path_to(mat, node-1);
             if (path == NULL) {
@@ -66,6 +71,9 @@ void Mission3(int question, char* graph) {
                 ListFree(path);
             }
             break;
+        default :
+            printf("ERROR\n");
+            break;
     }
     free_matrix_content(mat);
     free_matrix(mat);
@@ -76,7 +84,11 @@ int main(){
     printf(" \b\n\n\n");
 
     char filename[50];
-    Mission3(1, find_file(filename));
+    *filename = *find_file(filename);
+    // printf("%s\n", filename);
+    Mission1(0, filename);
+    // Mission2(1, find_file(filename));
+    Mission3(1, filename);
 
     return 0;
 }

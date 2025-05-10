@@ -91,7 +91,7 @@ int main(){
     *filename = *find_file(filename);
     Mission1(0, filename);
 
-    // Mission3(1, filename);
+    Mission3(1, filename);
 
     return 0;
 }

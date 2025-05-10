@@ -154,8 +154,7 @@ void calculate_origin_distances(Matrix* matrix) {
             continue;
         }
         // Si aucun chemin n'a été calculé, ou si la distance n'est pas la même, ou si le prochain noeud n'est pas le même
-        if (
-               matrix->nodes[current_node]->towards_origin == NULL
+        if (matrix->nodes[current_node]->towards_origin == NULL
             || calculated_distance != matrix->nodes[current_node]->distance_to_origin
             || node_towards_origin != matrix->nodes[current_node]->towards_origin->from->ID
         ) {

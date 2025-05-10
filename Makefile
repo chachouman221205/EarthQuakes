@@ -27,8 +27,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c $< -o $@
 
-test: $(OUTPUT)
-	cd test/gen_files && gcc -o file_gen.exe file_gen.c && ./file_gen.exe
+test: $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	gcc -o test/gen_files/file_gen.exe test/gen_files/file_gen.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	cd test/gen_files && ./file_gen.exe
 
 clean:
 	rm -r $(OBJ_DIR)

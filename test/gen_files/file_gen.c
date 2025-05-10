@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 #include "../../graph/graph.h"
-#include "../../graph/incidence_matrix.h"
 
 int main(){
     /* Format de fichier :

@@ -69,8 +69,9 @@ int main(){
     Variables* var = init_variables();
     Matrix* mat = init_matrix_from_file(var, filename);
 
-    f = fopen(filename, "w");
+    f = fopen(filename, "a");
     if(f == NULL) {printf("Erreur lors de la création du fichier.\n"); return 1;}
+    // fprintf(f, "1 1 1 1\n");
 
     explore_all_nodes_width(mat);
     for(int i = 0; i < mat->size; i++){

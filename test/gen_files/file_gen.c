@@ -39,7 +39,7 @@ int main(){
 
     srand(time(NULL));
 
-    int max_size = 15, min_size = 3, link_chance = (max_size-1) / 3;
+    int max_size = 15, min_size = 5, link_chance = (max_size-1) / 3;
     // rand_size = 127; MAX
     int rand_size = (rand() % max_size);
     // printf("-- rand_size = %d\n", rand_size);

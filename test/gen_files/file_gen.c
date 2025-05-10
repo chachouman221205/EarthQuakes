@@ -40,7 +40,9 @@ int main(){
     srand(time(NULL));
 
     int max_size = 15, min_size = 3, link_chance = (max_size-1) / 3;
+    // rand_size = 127; MAX
     int rand_size = (rand() % max_size);
+    // printf("-- rand_size = %d\n", rand_size);
     if(rand_size < min_size) rand_size = min_size;
     fprintf(f, "%d\n", rand_size);
     
@@ -77,7 +79,7 @@ int main(){
     for(int i = 0; i < mat->size; i++){
         if(mat->nodes[i]->explored == false){
             int a = rand()%rand_size;
-            while(a == i || mat->nodes[a] == false) a = rand()%rand_size;
+            while(a == i || mat->nodes[a]->explored == false) a = rand()%rand_size;
 
             fprintf(f, "%d %d %d %d\n", nodes[a], nodes[i], rand()%max_dist+1, rand()%max_capa+1);
         }

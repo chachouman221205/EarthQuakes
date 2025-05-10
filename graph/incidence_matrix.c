@@ -57,7 +57,7 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
 
     FILE* f = fopen(fp, "r");
     if(f == NULL){
-        printf("ERROR oppening file in init_matrix_from_file : %s\n", fp);
+        printf("\033[31m:ERROR\033[0m: oppening file in init_matrix_from_file : %s\n", fp);
         exit(1);
     }
     int size;
@@ -116,7 +116,7 @@ int calculate_origin_path(Matrix* matrix, int node, int* distance) {
     int min_node = -1;
     int temp;
     for (int i = 0; i < matrix->size; i++) {
-        if (matrix->grid[i][node] == NULL) {
+        if (matrix->grid[i][node] == NULL || matrix->nodes[i]->distance_to_origin == -1) {
             continue;
         }
 

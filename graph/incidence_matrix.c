@@ -55,7 +55,6 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
      * ordre des connexions non important
      */
 
-    printf("in");
     FILE* f = fopen(fp, "r");
     if(f == NULL){
         printf("ERROR oppening file in init_matrix_from_file : %s\n", fp);
@@ -140,6 +139,28 @@ void calculate_origin_distances(Matrix* matrix) {
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
 
+<<<<<<< HEAD
+=======
+        if (current_node != 0) {
+            int calculated_distance;
+            int node_towards_origin = calculate_origin_path(matrix, current_node, &calculated_distance);
+            // Si aucun chemin n'a été calculé, ou si la distance n'est pas la même, ou si le prochain noeud n'est pas le même
+            if (matrix->nodes[current_node]->towards_origin == NULL
+                || calculated_distance != matrix->nodes[current_node]->distance_to_origin 
+                || node_towards_origin != matrix->nodes[current_node]->towards_origin->to->ID) {
+                matrix->nodes[current_node]->distance_to_origin = calculated_distance;
+                matrix->nodes[current_node]->towards_origin = matrix->grid[node_towards_origin][current_node];
+
+                // Marquer les voisins pour qu'ils soient recalculés
+                for (int i = 0; i < matrix->size; i++) {
+                    if (matrix->grid[current_node][i] != NULL) {
+                        ListStack(node_queue, i);
+                    }
+                }
+            }
+        }
+
+>>>>>>> refs/remotes/origin/main
         // pour chaque voisin
         for (int i = 0; i < matrix->size; i++) {
             // qui existe et qui n'est pas exploré
@@ -193,11 +214,12 @@ ListHead* find_path_to(Matrix* matrix, int node) {
     return path;
 }
 
-void print_path(Matrix* matrix, ListHead* path) {
+void print_path(Matrix* matrix, ListHead* path, int* length) {
     ListNode* ptr = path->next;
     while (ptr != NULL) {
         Node* node = matrix->nodes[ptr->data];
         printf("%c%d ", node->type, node->ID);
+        *length = node->distance_to_origin;
         ptr = ptr->next;
     }
 }

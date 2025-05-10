@@ -24,9 +24,7 @@ char* find_file(char* filename){
 
 void Mission1(int question, char* graph) {
     Variables* var = init_variables();
-    printf("1\n");
     Matrix* mat = init_matrix_from_file(var, graph);
-    printf("2\n");
     switch(question) {
         case 0:
             print_damage(mat);

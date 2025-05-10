@@ -16,6 +16,7 @@ ListHead* ListInit() {
     new->next = NULL;
     return new;
 }
+
 void ListFree(ListHead* head) {
     while (head->length > 0) {
         ListPop(head, 0);

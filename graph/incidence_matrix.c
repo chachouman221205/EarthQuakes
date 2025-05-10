@@ -72,7 +72,7 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
     unsigned int dist;
     srand(time(NULL));
     while (fscanf(f, "%d %d %u %d", &A, &B, &dist, &cap) != EOF) {
-        mat->grid[A-1][B-1] = init_road(mat->nodes[A-1], mat->nodes[B-1], dist, rand()%5 != 0, cap);
+        mat->grid[A-1][B-1] = init_road(mat->nodes[A-1], mat->nodes[B-1], dist, true, cap); // rand()%5 != 0
     }
 
     fclose(f);

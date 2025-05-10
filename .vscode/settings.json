@@ -2,6 +2,8 @@
     "files.associations": {
         "stdlib.h": "c",
         "random": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "incidence_matrix.h": "c",
+        "stdbool.h": "c"
     }
 }

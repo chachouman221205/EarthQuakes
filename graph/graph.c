@@ -206,7 +206,7 @@ void explore_all_nodes_width(Matrix* matrix) {
 
 void print_unaccessible_nodes(Matrix* matrix){
     explore_all_nodes_width(matrix);
-    printf("The \033[1;31munaccessible\033[0m nodes are :\n  -> ");
+    printf("The \033[1;31munnaccessible\033[0m nodes are :\n  -> ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i]->explored == false){
             printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);

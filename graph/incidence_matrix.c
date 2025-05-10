@@ -83,6 +83,17 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
     return mat;
 }
 
+Matrix* copy_matrix_content(Matrix* source) {
+    Matrix* dest = init_empty_matrix(source->size);
+    for (int i = 0; i < source->size; i++) {
+        dest->nodes[i] = source->nodes[i];
+        for (int j = 0; j < source->size; j++) {
+            dest->grid[i][j] = source->grid[i][j];
+        }
+    }
+    return dest;
+}
+
 void free_matrix_content(Matrix* matrix) {
     for (int i = 0; i < matrix->size; i++) {
         for (int j = 0; j < matrix->size; j++) {
@@ -199,4 +210,8 @@ void print_path(Matrix* matrix, ListHead* path, int* length) {
         *length = node->distance_to_origin;
         ptr = ptr->next;
     }
+}
+
+ListHead* find_connected_groups(Matrix* matrix, int* group_count) {
+    return NULL;
 }

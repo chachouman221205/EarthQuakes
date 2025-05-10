@@ -72,6 +72,9 @@ void Mission3(int question, char* graph) {
                 ListFree(path);
             }
             break;
+        case 2:
+            printf("\n");
+            break;
         default :
             printf("ERROR\n");
             break;

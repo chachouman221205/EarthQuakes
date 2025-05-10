@@ -126,6 +126,7 @@ Node* init_node(Variables* variables, char type) {
     n->type = type;
 
     n->distance_to_origin = -1;
+    n->towards_origin = NULL;
     n->explored = 0;
     n->connections_in = 0;
     n->connections_out = 0;

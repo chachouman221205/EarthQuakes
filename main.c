@@ -61,11 +61,14 @@ void Mission3(int question, char* graph) {
             scanf("%d", &node);
             ListHead* path = find_path_to(mat, node-1);
             if (path == NULL) {
-                printf("Il n'y actuellement aucun chemin disponible vers %c%d\n", mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
+                printf("Il n'y actuellement aucun chemin disponible vers %c%d\n",
+                    mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
             } else {
-                printf("Voici le chemin pour aller vers %c%d\n-> ", mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
-                print_path(mat, path);
-                printf("\n");
+                printf("Voici le chemin pour aller vers %c%d\n-> ", 
+                    mat->nodes[node-1]->type, mat->nodes[node-1]->ID);
+                int length;
+                print_path(mat, path, &length);
+                printf("\nTotal length : %d\n", length);
                 ListFree(path);
             }
             break;
@@ -83,9 +86,8 @@ int main(){
 
     char filename[50];
     *filename = *find_file(filename);
-    // printf("%s\n", filename);
     Mission1(0, filename);
-    // Mission2(1, find_file(filename));
+
     Mission3(1, filename);
 
     return 0;

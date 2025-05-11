@@ -66,7 +66,7 @@ int main(){
     
     fclose(f);
 
-    //----------------------
+    //----------- CORRECTION LINES -----------//
 
     Variables* var = init_variables();
     Matrix* mat = init_matrix_from_file(var, filename);
@@ -80,7 +80,8 @@ int main(){
         if(mat->nodes[i]->explored == false){
             int a = rand()%rand_size;
             while(a == i || mat->nodes[a]->explored == false) a = rand()%rand_size;
-
+            printf("\033[1;35mFILE : \033[0madded line  %d %d %d %d\n", 
+                nodes[a], nodes[i], rand()%max_dist+1, rand()%max_capa+1);
             fprintf(f, "%d %d %d %d\n", nodes[a], nodes[i], rand()%max_dist+1, rand()%max_capa+1);
         }
     }

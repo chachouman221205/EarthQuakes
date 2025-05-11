@@ -37,7 +37,7 @@ void free_variables_struct(Variables* variables){
 Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacity) {
     Road* r = malloc(sizeof(Road));
     if(r == NULL){
-        printf("\033[1;31mAllocation ERROR in \"init_road\"\033[1;0m\n");
+        printf("\033[0;31mAllocation ERROR in \"init_road\"\033[0;0m\n");
         exit(1);
     }
     r->from = from;
@@ -88,10 +88,12 @@ void print_road(Road* road){
     }
     printf("Road from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m :\n", 
         type1, road->from->ID, type2, road->to->ID);
-    printf("  -> State : %s\n", 
+    printf("  ⤷ State : %s\n", 
         (road->usable)? "\033[1;32mAccessible\033[0m" : "\033[1;31mDestroyed\033[0m");
-    printf("  -> Current capacity : %4d\n", road->current_capacity);
-    printf("  -> Maximum capacity : %4d\n", road->max_capacity);
+    (road->current_capacity == 0)?
+        printf("  ⤷ Current capacity : %4d\n", road->current_capacity) :
+        printf("  ⤷ Current capacity :    \033[1;31m0\033[0m\n");
+    printf("  ⤷ Maximum capacity : %4d\n", road->max_capacity);
     printf("\n");
 }
 
@@ -108,7 +110,7 @@ void print_roads(Matrix* matrix){
 Node* init_node(Variables* variables, char type) {
     Node* n = malloc(sizeof(Node));
     if(n == NULL){
-        printf("\033[1;31mAllocation ERROR in \"init_node\"\033[1;0m\n");
+        printf("\033[0;31mAllocation ERROR in \"init_node\"\033[0;0m\n");
         exit(1);
     }
     switch (type) {
@@ -161,7 +163,7 @@ void print_damage(Matrix* matrix){
 */
 void print_all_path_from_origin(Matrix* matrix) {
     explore_all_nodes_width(matrix);
-    printf("The \033[1;32maccessible\033[0m nodes are :\n  -> ");
+    printf("The \033[1;32maccessible\033[0m nodes are :\n  ⤷ ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i]->explored == true){
             printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
@@ -206,7 +208,7 @@ void explore_all_nodes_width(Matrix* matrix) {
 
 void print_unaccessible_nodes(Matrix* matrix){
     explore_all_nodes_width(matrix);
-    printf("The \033[1;31munnaccessible\033[0m nodes are :\n  -> ");
+    printf("The \033[1;31munnaccessible\033[0m nodes are :\n  ⤷ ");
     for(int i = 0; i < matrix->size; i++){
         if(matrix->nodes[i]->explored == false){
             printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);

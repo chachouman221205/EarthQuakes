@@ -50,6 +50,22 @@ void Mission1(int question, char* graph) {
     free_variables_struct(var);
 }
 
+void Mission2(int question, char* graph) {
+    Variables* var = init_variables();
+    Matrix* mat = init_matrix_from_file(var, graph);
+
+    switch (question) {
+        case 1:
+            
+        default :
+            printf("ERROR\n");
+            break;
+    }
+    free_matrix_content(mat);
+    free_matrix(mat);
+    free_variables_struct(var);
+}
+
 void Mission3(int question, char* graph) {
     Variables* var = init_variables();
     Matrix* mat = init_matrix_from_file(var, graph);

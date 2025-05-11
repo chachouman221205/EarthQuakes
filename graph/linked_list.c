@@ -108,6 +108,34 @@ int ListGetElement(ListHead* head, int index) {
     }
     return ptr->data;
 }
+int ListFindElement(ListHead* head, int element) {
+    ListNode* ptr = head->next;
+    int index = 0;
+
+    while (ptr != NULL) {
+        if (ptr->data == element) {
+            return index;
+        }
+        ptr = ptr->next;
+        index++;
+    }
+
+    return -1;
+}
+void ListRemove(ListHead* head, int element) {
+    ListNode* ptr = head->next;
+    ListNode* temp = NULL;
+
+    while (ptr->next != NULL) {
+        if (ptr->next->data == element) {
+            temp = ptr->next;
+            ptr->next = ptr->next->next;
+            free(temp);
+            temp = NULL;
+        }
+        ptr = ptr->next;
+    }
+}
 
 
 
@@ -132,11 +160,11 @@ ListHead* ListFromArray(int* arr, int n) {
     return new;
 }
 
-bool ListContains(ListHead* head, int X) {
+bool ListContains(ListHead* head, int element) {
     ListNode* ptr = head->next;
 
     while (ptr != NULL) {
-        if (ptr->data == X) {
+        if (ptr->data == element) {
             return true;
         }
         ptr = ptr->next;

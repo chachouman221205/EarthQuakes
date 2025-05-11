@@ -31,6 +31,8 @@ void ListQueue(ListHead* head, int X);
 
 void ListPrint(ListHead* head);
 int ListGetElement(ListHead* head, int index);
+int ListFindElement(ListHead* head, int element);
+void ListRemove(ListHead* head, int element);
 
 
 // Special Functions

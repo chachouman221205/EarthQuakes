@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+#include <math.h>
 
 #include "graph.h"
 #include "linked_list.h"
@@ -212,7 +213,70 @@ void print_path(Matrix* matrix, ListHead* path, int* length) {
     }
 }
 
+void multiply_matrix(Matrix* matrix, bool* has_changed) {
+    /*
+    S'il existe un chemin de i vers k, et de k vers j,
+    alors on affecte à i->j le chemin i->k
+
+    Si aucun changement n'a été fait, alors has_changed sera mis à false.
+    Cela permet d'éviter d'appeler cette fonction de complexité O(n3) inutilement
+    */
+    *has_changed = false;
+    for (int i = 0; i < matrix->size; i++) {
+        for (int j = 0; j < matrix->size; j++) {
+            if (matrix->grid[i][j] == NULL) {
+                for (int k = 0; k < matrix->size; k++) {
+                    if (is_usable(matrix->grid[i][j]) && is_usable(matrix->grid[j][k])) {
+                        matrix->grid[i][j] = matrix->grid[i][j];
+                        *has_changed = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+}
+Matrix* calculate_path_matrix(Matrix* matrix) {
+    matrix = copy_matrix_content(matrix); // Copier pour pouvoir appliquer des opérations sans affecter la matrice de départ
+    bool has_changed = true;
+    for (int i = 0; i < matrix->size && has_changed; i++) {
+        multiply_matrix(matrix, &has_changed);
+    }
+    return matrix;
+}
 ListHead* find_connected_groups(Matrix* matrix, int* group_count) {
-    matrix = copy_matrix_content(matrix); // Copier pour pouvoir appliquer des opérations sans problèmes
-    return NULL;
+    matrix = calculate_path_matrix(matrix);
+
+    int* _nodes = malloc(matrix->size * sizeof(int));
+    for (int i = 0; i < matrix->size; i++) {
+        _nodes[i] = i;
+    }
+    ListHead* nodes = ListFromArray(_nodes, matrix->size); // Liste des noeuds toujours disponibles
+
+    ListHead* groups = NULL;
+    ListHead* current_group;
+    int current_group_base;
+    *group_count = 0;
+    while (nodes->length > 0) {
+        // Ajout d'un nouveau groupe de sommets
+        (*group_count)++;
+        groups = realloc(groups, (*group_count) * sizeof(ListHead));
+        
+        current_group = &groups[*group_count - 1];
+        current_group_base = ListPop(nodes, 0);
+        ListQueue(current_group, current_group_base);
+
+        ListNode* previous = NULL;
+        for (ListNode* i = nodes->next; i->next != NULL; i = i->next) {
+            // Si un chemin existe dans les deux sens
+            if (is_usable(matrix->grid[current_group_base][i->data]) && is_usable(matrix->grid[i->data][current_group_base])) {
+                // On ajoute le sommet au groupe actuel, et on le retire de la liste commune
+                ListQueue(current_group, i->data);
+                ListRemove(nodes, i->data);
+                i = previous; // On revient un sommet en arrière pour éviter de sauter des sommetss
+            }
+            previous = i;
+        }
+    }
+    return groups;
 }

@@ -213,5 +213,6 @@ void print_path(Matrix* matrix, ListHead* path, int* length) {
 }
 
 ListHead* find_connected_groups(Matrix* matrix, int* group_count) {
+    matrix = copy_matrix_content(matrix); // Copier pour pouvoir appliquer des opérations sans problèmes
     return NULL;
 }

@@ -2,12 +2,12 @@ MAIN_FILE = main.c
 OUTPUT = EarthQuake.exe
 
 COMPILER = gcc
-PARAMS = -Wall -Wfatal-errors -Werror -g -o $(OUTPUT)
+PARAMS = -Wall -Wfatal-errors -Werror -g 
 
 OBJ_DIR = obj
 
 $(OUTPUT): $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
-	$(COMPILER) $(PARAMS) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	$(COMPILER) $(PARAMS) -o $(OUTPUT) main.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 	make clean
 
 
@@ -28,7 +28,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	$(COMPILER) $(PARAMS) -c $< -o $@
 
 test: $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
-	gcc -o test/gen_files/file_gen.exe test/gen_files/file_gen.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
+	$(COMPILER) $(PARAMS) -o test/gen_files/file_gen.exe test/gen_files/file_gen.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 	cd test/gen_files && ./file_gen.exe
 
 clean:

@@ -90,7 +90,7 @@ void Mission3(int question, char* graph) {
 }
 
 int main(){
-    printf(" \b\n\n\n");
+    printf(" \b\n\n");
 
     char filename[50];
     *filename = *find_file(filename);

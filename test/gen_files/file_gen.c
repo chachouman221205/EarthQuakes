@@ -83,8 +83,9 @@ int main(){
         if(mat->nodes[i]->explored == false){
             int a = rand()%rand_size;
             while(a == i || mat->nodes[a]->explored == false) a = rand()%rand_size;
-            printf("\033[1;35mFILE : \033[0madded line  %d %d %d %d\n", 
-                a+1, i+1, rand()%max_dist+1, rand()%max_capa+1);
+            // printf("\033[1;35mFILE : \033[0madded line \"%d %d %d %d\"\n", 
+                // a+1, i+1, rand()%max_dist+1, rand()%max_capa+1);
+            printf("\033[1;35mFILE : \033[0madded road : C%d → C%d\n", a, i);
             fprintf(f, "%d %d %d %d\n", a+1, i+1, rand()%max_dist+1, rand()%max_capa+1);
             
             reset_exploration(mat);

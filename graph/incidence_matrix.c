@@ -57,7 +57,7 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
 
     FILE* f = fopen(fp, "r");
     if(f == NULL){
-        printf("\033[31m:ERROR\033[0m: oppening file in init_matrix_from_file : %s\n", fp);
+        printf("\033[31mERROR\033[0m: oppening file in init_matrix_from_file : %s\n", fp);
         exit(1);
     }
     int size;

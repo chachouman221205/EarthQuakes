@@ -57,7 +57,7 @@ void Mission3(int question, char* graph) {
     switch (question) {
         case 1:
             int node;
-            printf("Which node do you want to access ?\nEnter a number (1-%d) : ", mat->size);
+            printf("Which node do you want to access ?\nEnter a number (1-%d) (C0 = 1 etc) : ", mat->size);
             scanf("%d", &node);
             if((int)node < 1 || (int)node > mat->size){
                 printf("\033[0;31mERROR : Invalid node number\033[0m\n");

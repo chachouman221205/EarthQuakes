@@ -226,8 +226,8 @@ void multiply_matrix(Matrix* matrix, bool* has_changed) {
         for (int j = 0; j < matrix->size; j++) {
             if (matrix->grid[i][j] == NULL) {
                 for (int k = 0; k < matrix->size; k++) {
-                    if (is_usable(matrix->grid[i][j]) && is_usable(matrix->grid[j][k])) {
-                        matrix->grid[i][j] = matrix->grid[i][j];
+                    if (is_usable(matrix->grid[i][k]) && is_usable(matrix->grid[k][j])) {
+                        matrix->grid[i][j] = matrix->grid[i][k];
                         *has_changed = true;
                         break;
                     }
@@ -263,19 +263,23 @@ ListHead* find_connected_groups(Matrix* matrix, int* group_count) {
         groups = realloc(groups, (*group_count) * sizeof(ListHead));
         
         current_group = &groups[*group_count - 1];
+        current_group->length = 0;
+        current_group->next = NULL;
         current_group_base = ListPop(nodes, 0);
         ListQueue(current_group, current_group_base);
 
-        ListNode* previous = NULL;
-        for (ListNode* i = nodes->next; i->next != NULL; i = i->next) {
+        ListNode* _;
+        for (ListNode* i = nodes->next; i != NULL;) {
             // Si un chemin existe dans les deux sens
             if (is_usable(matrix->grid[current_group_base][i->data]) && is_usable(matrix->grid[i->data][current_group_base])) {
                 // On ajoute le sommet au groupe actuel, et on le retire de la liste commune
                 ListQueue(current_group, i->data);
+                _ = i->next;
                 ListRemove(nodes, i->data);
-                i = previous; // On revient un sommet en arrière pour éviter de sauter des sommetss
+                i = _;
+            } else {
+                i = i->next;
             }
-            previous = i;
         }
     }
     return groups;

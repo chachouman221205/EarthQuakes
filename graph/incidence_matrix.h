@@ -26,4 +26,8 @@ void calculate_origin_distances(Matrix* matrix);
 ListHead* find_path_to(Matrix* matrix, int node);
 void print_path(Matrix* matrix, ListHead* path, int* length);
 
+void multiply_matrix(Matrix* matrix, bool* has_changed);
+Matrix* calculate_path_matrix(Matrix* matrix);
+ListHead* find_connected_groups(Matrix* matrix, int* group_count);
+
 #endif

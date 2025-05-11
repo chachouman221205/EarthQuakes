@@ -56,7 +56,12 @@ void Mission2(int question, char* graph) {
 
     switch (question) {
         case 1:
-            
+            int n;
+            ListHead* groups = find_connected_groups(mat, &n);
+            for (int i = 0; i < n; i++) {
+                ListPrint(&groups[i]);
+            }
+            break;
         default :
             printf("ERROR\n");
             break;
@@ -111,7 +116,7 @@ int main(){
     char filename[50];
     *filename = *find_file(filename);
     Mission1(0, filename);
-
+    Mission2(1, filename);
     Mission3(1, filename);
 
     return 0;

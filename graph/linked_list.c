@@ -123,15 +123,25 @@ int ListFindElement(ListHead* head, int element) {
     return -1;
 }
 void ListRemove(ListHead* head, int element) {
-    ListNode* ptr = head->next;
     ListNode* temp = NULL;
-
+    
+    while (head->next != NULL && head->next->data == element) {
+        temp = head->next;
+        head->next = head->next->next;
+        free(temp);
+        temp = NULL;
+        head->length--;
+    }
+    
+    ListNode* ptr = head->next;
+    if (ptr == NULL) return;
     while (ptr->next != NULL) {
         if (ptr->next->data == element) {
             temp = ptr->next;
             ptr->next = ptr->next->next;
             free(temp);
             temp = NULL;
+            head->length--;
         }
         ptr = ptr->next;
     }

@@ -59,6 +59,11 @@ void Mission3(int question, char* graph) {
             int node;
             printf("Which node do you want to access ?\nEnter a number (1-%d) : ", mat->size);
             scanf("%d", &node);
+            if((int)node < 1 || (int)node > mat->size){
+                printf("\033[1;31mERROR : Invalid node number\033[0m\n");
+                while(getchar() != '\n');
+                return Mission3(question, graph);
+            }
             ListHead* path = find_path_to(mat, node-1);
             if (path == NULL) {
                 printf("\033[1;31mThere are no existing path to %c%d\033[0m\n",

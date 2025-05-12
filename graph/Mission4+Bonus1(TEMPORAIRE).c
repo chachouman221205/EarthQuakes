@@ -7,7 +7,7 @@
 #include "linked_list.h"
 #include "incidence_matrix.h"
 
-bool XAlready_use(Node X , Node liste , int size){
+bool XAlready_use(Node* X, Node** liste, int size){
     for(int i=0 ; i<size;i++){
         if(liste[i] == X){
             return(true);
@@ -15,7 +15,6 @@ bool XAlready_use(Node X , Node liste , int size){
     }
     return(false);
 }
-
 
 void Mission4(Matrix* matrix) {
     int Xsize = 0; // ici X symbolise l'arbre connex le plus court du graphe ( que l'on cherche )
@@ -34,19 +33,18 @@ void Mission4(Matrix* matrix) {
             printf("Erreur d'alloc\n");
         }
 
-        int line=NULL;
-        int column=NULL;
+        int line=0;
+        int column=0;
         for (int i = 0 ; i < Xsize ; i++){  //chercher la route connecté à X la plus courte et la sécuriser 
             for (int y=0 ; y < Xconnected[i]->connections_out ; y++ ){
                 if(matrix->grid[i][y] != NULL){
-                    if (matrix->grid[i][y]->distance < matrix->grid[line][colum] && XAlready_use(matrix->grid[line][column]->to,*Xconnected, Xsize) == false){
+                    if (matrix->grid[i][y]->distance < matrix->grid[line][column]->distance && XAlready_use(matrix->grid[line][column]->to,*Xconnected, Xsize) == false){
                         line = i;
                         column = y;
                     }
                 }
             }
-
-        }  
+        }
 
 
         Xconnected = temp;
@@ -57,7 +55,7 @@ void Mission4(Matrix* matrix) {
 
 }
 
-Void Bonus1(Matrix* matrix){ // on part du principe qu'une route ajouté est de long=10 
+void Bonus1(Matrix* matrix){ // on part du principe qu'une route ajouté est de long=10 
     int road_to_create_number = matrix->size/10; // on s'autorise à créer 1/10 de route existante en plus ( à équilibrer )
 
     for int (i = road_to_create_number ; i > 0  ; i--){ // relier les noeud avec le plus de connection entrante aux noeuds avec le plus de connections sortante
@@ -100,7 +98,7 @@ void print_road_to_secure(Road* road){
         default:
             strcpy(type2, "Unknown");
     }
-    if road->to_secure == true {
+    if(road->to_secure == true){
         printf("Road to secure from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m :\n", 
             type1, road->from->ID, type2, road->to->ID);
     

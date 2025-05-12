@@ -353,7 +353,7 @@ void create_road (Matrix mat , int A ; int B){
     mat->grid[A-1][B-1]->is_created = true;
 }
 
-find_road_to_create(Matrix* matrix){
+void find_road_to_create(Matrix* matrix){ //Bonus 1
     int created_road = 0 ;
     int number_road_to_create = matrix->size/10; // on set le nombre de route à créer à 1 dixième de la taille du graphe
     while( created_road< number_road_to_create;){ // on répete l'action de créer une route jusqu'a que les 10 routes soit crées 
@@ -380,4 +380,8 @@ find_road_to_create(Matrix* matrix){
         }
     }
     reset_exploration(matrix);
+}
+
+void truck_travel(){
+    
 }

@@ -40,9 +40,9 @@ int main(){
     srand(time(NULL));
 
     int max_size = 15, min_size = 5, link_chance = (max_size-1) / 3;
-    // rand_size = 32; MAX
     int rand_size = (rand() % max_size);
     if(rand_size < min_size) rand_size = min_size;
+    // rand_size = 32; MAX
     printf("\n\033[1;35mMATRIX SIZE :\033[0m %d", rand_size);
 
     fprintf(f, "%d\n", rand_size);

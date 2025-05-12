@@ -308,7 +308,11 @@ void mark_secure_roads(Matrix* matrix) {
     while(tree_size < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
         int i_min=0;
         int j_min=0;
-        for (int i = 0; i < tree_size; i++){  //chercher la route connecté à tree_ la plus courte et la sécuriser 
+        for (int i = 0; i < matrix->size; i++){  //chercher la route connecté à tree_ la plus courte et la sécuriser
+            if (!is_node_in_array(matrix->nodes[i], tree, tree_size)) {
+                continue;
+            }
+
             for (int j = 0; j < matrix->size; j++ ){
                 if(matrix->grid[i][j] != NULL){
                     if (matrix->grid[i][j]->to_secure) {
@@ -319,7 +323,7 @@ void mark_secure_roads(Matrix* matrix) {
                         j_min = j;
                         continue;
                     }
-                    if (matrix->grid[i][j]->distance < matrix->grid[i_min][j_min]->distance && is_node_in_array(matrix->nodes[j_min], tree, tree_size) == false){
+                    if (matrix->grid[i][j]->distance < matrix->grid[i_min][j_min]->distance && !is_node_in_array(matrix->nodes[j], tree, tree_size)){
                         i_min = i;
                         j_min = j;
                     }
@@ -336,4 +340,6 @@ void mark_secure_roads(Matrix* matrix) {
         tree[tree_size-1] = matrix->nodes[j_min];
         matrix->grid[i_min][j_min]->to_secure = true;
     }
+
+    free(tree);
 }

@@ -383,7 +383,44 @@ void find_road_to_create(Matrix* matrix){ //Bonus 1
     reset_exploration(matrix);
 }
 
-void truck_travel(){
+void truck_travel() {
 
 }
 
+void citys_is_repared(Matrix* matrix){
+    for(int i=0 ; i < matrix->size ; i++){
+        if (matrix->node[i]->Is_repared == false ){
+            return false;
+        }
+    }
+    return true;
+
+}
+
+void verif_city_reparation(Matrix* matrix){
+    for (int i = 0 ; i < matrix->size ; i++){
+        if( matrix->node[i]->current_capacity[4] == 100 ){
+            matrix->node[i]->Is_repared = true;
+        }
+    }
+}
+
+void repare_city(Matrix* matrix){
+    int time = 0;
+    while ( citys_is_repared(matrix) != true){ // tant que toute les villes ne sont pas réparés
+
+        // il faut maintenant envoyer des camions pour aprovisioner les villes en matériaux 
+        // on verifie si on a des camion libre 
+        // si oui on l'envoie ravitailler X ville dans le besoin 
+        // On trace son trajet 
+        // une fois le camion vide --> retour à la case départ ( ou à l'entrepot le plus proche dans l'idéal )
+        // retour à l'étape 1
+
+        // augementer le temps de 1 à chauqe "tick"
+
+        verif_city_reparation(matrix); // actualise l'état des villes 
+        time++;
+    }
+    printf("\n Cela a prit %d tour pour réparer les villes \n " , time);
+
+}

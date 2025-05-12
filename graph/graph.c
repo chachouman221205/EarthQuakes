@@ -132,6 +132,10 @@ Node* init_node(Variables* variables, char type) {
     n->explored = 0;
     n->connections_in = 0;
     n->connections_out = 0;
+    n->Is_repared = 0;
+    for (int i=0 ; i < 5 ; i++){
+        n->current_capacity[i] = 0;
+    }
 
     return n;
 }
@@ -300,3 +304,5 @@ void print_roads_created(Matrix* matrix){
         }
     }
 }
+
+

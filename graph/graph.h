@@ -21,6 +21,10 @@ typedef struct Node {
     int connections_out;
     Road* towards_origin;
 
+    int current_capacity[5];
+    // {Provisions;médicaments;médecins;ouvriers;matériaux}
+    bool Is_repared;
+
 } Node;
 
 typedef struct Road {
@@ -35,6 +39,7 @@ typedef struct Road {
 
     int current_capacity;
     int max_capacity;
+    //int future_occupation;
 } Road;
 
 typedef struct Variables {

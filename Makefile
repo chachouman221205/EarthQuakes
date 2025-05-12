@@ -37,6 +37,10 @@ test: $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o
 clean:
 	rm -r $(OBJ_DIR)
 
+web:
+	make
+	emcc web_interface/web.c -o /home/chachou/WebHub/EarthQuake/index.js -I/home/chachou/raylib/src -L/home/chachou/raylib/build_web/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -s FULL_ES2=1
+
 re: clean all
 
-.PHONY: test clean
+.PHONY: test clean obj

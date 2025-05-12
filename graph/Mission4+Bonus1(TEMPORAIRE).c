@@ -17,28 +17,28 @@ bool XAlready_use(Node* X, Node** liste, int size){
 }
 
 void Mission4(Matrix* matrix) {
-    int Xsize = 0; // ici X symbolise l'arbre connex le plus court du graphe ( que l'on cherche )
-    Node *Xconnected = NULL;
-    realloc(Xconnected, (Xsize + 1) * sizeof(Node));
+    int tree_size = 0;
+    Node *tree_connected = NULL;
+    realloc(tree_connected, (tree_size + 1) * sizeof(Node));
     if (temp == NULL) {
         printf("Erreur d'alloc\n");
     }
-    Xconnected = temp;
-    Xconnected[Xsize] = matrix->nodes[0];
-    Xsize++;
+    tree_connected = temp;
+    tree_connected[tree_size] = matrix->nodes[0];
+    tree_size++;
 
-    while(Xsize < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
-        realloc(Xconnected, (Xsize + 1) * sizeof(Node));
-        if (Xconnected == NULL) {
+    while(tree_size < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
+        realloc(tree_connected, (tree_size + 1) * sizeof(Node));
+        if (tree_connected == NULL) {
             printf("Erreur d'alloc\n");
         }
 
         int line=0;
         int column=0;
-        for (int i = 0 ; i < Xsize ; i++){  //chercher la route connecté à X la plus courte et la sécuriser 
-            for (int y=0 ; y < Xconnected[i]->connections_out ; y++ ){
+        for (int i = 0 ; i < tree_size ; i++){  //chercher la route connecté à tree_ la plus courte et la sécuriser 
+            for (int y=0 ; y < tree_connected[i]->connections_out ; y++ ){
                 if(matrix->grid[i][y] != NULL){
-                    if (matrix->grid[i][y]->distance < matrix->grid[line][column]->distance && XAlready_use(matrix->grid[line][column]->to,*Xconnected, Xsize) == false){
+                    if (matrix->grid[i][y]->distance < matrix->grid[line][column]->distance && tree_Already_use(matrix->grid[line][column]->to,*tree_connected, tree_size) == false){
                         line = i;
                         column = y;
                     }
@@ -48,9 +48,9 @@ void Mission4(Matrix* matrix) {
         }
 
 
-        Xconnected = temp;
-        Xconnected[Xsize] = matrix->grid[line][column]->to;
-        Xsize++;
+        tree_connected = temp;
+        tree_connected[tree_size] = matrix->grid[line][column]->to;
+        tree_size++;
         matrix->grid[line][column]->to_secure = true;       
     }
 

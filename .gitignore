@@ -8,5 +8,8 @@ test.c
 # Joseph
 test/gen_files/*
 gen_graph.txt
+ui
+ui/*
+
 
 # Enzo

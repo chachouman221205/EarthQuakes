@@ -50,26 +50,20 @@ void Mission1(int question, char* graph) {
     free_variables_struct(var);
 }
 
-void Mission2(int question, char* graph) {
+void Mission2(char* graph) {
     Variables* var = init_variables();
     Matrix* mat = init_matrix_from_file(var, graph);
 
-    switch (question) {
-        case 1:
-            int n;
-            int _;
-            ListHead* groups = find_connected_groups(mat, &n);
-            printf("The groups of nodes where you can freely move are :\n");
-            for (int i = 0; i < n; i++) {
-                printf("  ⤷ Group %2d : ", i);
-                print_path(mat, &groups[i], &_);
-                printf("\n");
-            }
-            break;
-        default :
-            printf("ERROR\n");
-            break;
+    int n;
+    int _;
+    ListHead* groups = find_connected_groups(mat, &n);
+    printf("The groups of nodes where you can freely move are :\n");
+    for (int i = 0; i < n; i++) {
+        printf("  ⤷ Group %2d : ", i);
+        print_path(mat, &groups[i], &_);
+        printf("\n");
     }
+
     free_matrix_content(mat);
     free_matrix(mat);
     free_variables_struct(var);
@@ -114,22 +108,13 @@ void Mission3(int question, char* graph) {
     free_variables_struct(var);
 }
 
-void Mission4(int question, char* graph) {
+void Mission4(char* graph) {
     Variables* var = init_variables();
     Matrix* mat = init_matrix_from_file(var, graph);
 
-    switch (question) {
-        case 1:
-            mark_secure_roads(mat);
-            print_roads_to_secure(mat);
-            break;
-        case 2:
-            printf("\n");
-            break;
-        default :
-            printf("ERROR\n");
-            break;
-    }
+    mark_secure_roads(mat);
+    print_roads_to_secure(mat);
+
     free_matrix_content(mat);
     free_matrix(mat);
     free_variables_struct(var);
@@ -141,9 +126,9 @@ int main(){
     char filename[50];
     *filename = *find_file(filename);
     Mission1(0, filename);
-    Mission2(1, filename);
+    Mission2(filename);
     Mission3(1, filename);
-    Mission4(1, filename);
+    Mission4(filename);
 
 
     return 0;

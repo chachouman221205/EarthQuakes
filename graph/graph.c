@@ -155,12 +155,7 @@ void print_damage(Matrix* matrix){
     printf("\033[1;31m%d destroyed\033[0m roads\n\n", destroyed);
 }
 
-/* nassim : 
-- fonction d'exloration qui print les chemins
-- node->explored = 1 si tu as exploré le sommet, touche pas sinon (0)
 
-(option) tu peux remplir la distance from origin ici
-*/
 void print_all_path_from_origin(Matrix* matrix) {
     explore_all_nodes_width(matrix);
     printf("The \033[1;32maccessible\033[0m nodes are :\n  ⤷ ");
@@ -247,10 +242,8 @@ void print_road_to_secure(Road* road){
             strcpy(type2, "Unknown");
     }
     if(road->to_secure == true){
-        printf("Road to secure from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m :\n", 
+        printf("Road to secure from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
             type1, road->from->ID, type2, road->to->ID);
-    
-         printf("\n");
     }
 }
 

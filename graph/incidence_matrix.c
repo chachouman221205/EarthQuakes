@@ -284,3 +284,56 @@ ListHead* find_connected_groups(Matrix* matrix, int* group_count) {
     }
     return groups;
 }
+
+bool is_node_in_array(Node* node, Node** array, int size){
+    for(int i=0 ; i<size;i++){
+        if(array[i] == node){
+            return(true);
+        }
+    }
+    return(false);
+}
+
+void mark_secure_roads(Matrix* matrix) {
+    int tree_size = 0;
+    Node** tree = NULL;
+    tree = realloc(tree, (tree_size + 1) * sizeof(Node*));
+    if (tree == NULL) {
+        printf("Erreur d'alloc\n");
+        exit(EXIT_FAILURE);
+    }
+    tree[tree_size] = matrix->nodes[0];
+    tree_size++;
+
+    while(tree_size < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
+        int i_min=0;
+        int j_min=0;
+        for (int i = 0; i < tree_size; i++){  //chercher la route connecté à tree_ la plus courte et la sécuriser 
+            for (int j = 0; j < matrix->size; j++ ){
+                if(matrix->grid[i][j] != NULL){
+                    if (matrix->grid[i][j]->to_secure) {
+                        continue;
+                    }
+                    if (matrix->grid[i_min][j_min] == NULL) {
+                        i_min = i;
+                        j_min = j;
+                        continue;
+                    }
+                    if (matrix->grid[i][j]->distance < matrix->grid[i_min][j_min]->distance && is_node_in_array(matrix->nodes[j_min], tree, tree_size) == false){
+                        i_min = i;
+                        j_min = j;
+                    }
+                }
+            }
+
+        }
+
+        tree_size++;
+        tree = realloc(tree, (tree_size) * sizeof(Node));
+        if (tree == NULL) {
+            printf("Erreur d'alloc\n");
+        }
+        tree[tree_size-1] = matrix->nodes[j_min];
+        matrix->grid[i_min][j_min]->to_secure = true;
+    }
+}

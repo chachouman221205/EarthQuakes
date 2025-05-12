@@ -21,9 +21,6 @@ typedef struct Node {
     int connections_out;
     Road* towards_origin;
 
-    /*Request medical_supplies;
-    Request food_supplies;
-    Request non_essential;*/
 } Node;
 
 typedef struct Road {
@@ -31,7 +28,7 @@ typedef struct Road {
     Node* from;
     Node* to;
 
-    int distance;
+    unsigned int distance;
     bool usable;
     bool to_secure;
     bool is_created;
@@ -70,5 +67,8 @@ void explore_all_nodes_width(Matrix* matrix);
 void print_all_path_from_origin(Matrix* matrix);
 void print_unaccessible_nodes(Matrix* matrix);
 void reset_exploration(Matrix* matrix);
+
+void print_road_to_secure(Road* road);
+void print_roads_to_secure(Matrix* matrix);
 
 #endif

@@ -30,4 +30,7 @@ void multiply_matrix(Matrix* matrix, bool* has_changed);
 Matrix* calculate_path_matrix(Matrix* matrix);
 ListHead* find_connected_groups(Matrix* matrix, int* group_count);
 
+bool is_node_in_array(Node* node, Node** array, int size);
+void mark_secure_roads(Matrix* matrix);
+
 #endif

@@ -142,8 +142,9 @@ void ListRemove(ListHead* head, int element) {
             free(temp);
             temp = NULL;
             head->length--;
+        } else {
+            ptr = ptr->next;
         }
-        ptr = ptr->next;
     }
 }
 

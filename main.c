@@ -114,6 +114,27 @@ void Mission3(int question, char* graph) {
     free_variables_struct(var);
 }
 
+void Mission4(int question, char* graph) {
+    Variables* var = init_variables();
+    Matrix* mat = init_matrix_from_file(var, graph);
+
+    switch (question) {
+        case 1:
+            mark_secure_roads(mat);
+            print_roads_to_secure(mat);
+            break;
+        case 2:
+            printf("\n");
+            break;
+        default :
+            printf("ERROR\n");
+            break;
+    }
+    free_matrix_content(mat);
+    free_matrix(mat);
+    free_variables_struct(var);
+}
+
 int main(){
     printf(" \b\n\n");
 
@@ -122,6 +143,8 @@ int main(){
     Mission1(0, filename);
     Mission2(1, filename);
     Mission3(1, filename);
+    Mission4(1, filename);
+
 
     return 0;
 }

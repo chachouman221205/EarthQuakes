@@ -7,6 +7,9 @@ typedef struct Truck{
     
     int current_capacity;
     int max_capacity;
+
+    int destination;
+    int position;
 }Truck;
 
 bool can_load_truck(Truck* truck){

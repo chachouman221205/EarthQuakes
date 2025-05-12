@@ -20,7 +20,7 @@ bool XAlready_use(Node X , Node liste , int size){
 void Mission4(Matrix* matrix) {
     int Xsize = 0; // ici X symbolise l'arbre connex le plus court du graphe ( que l'on cherche )
     Node *Xconnected = NULL;
-    int *temp = realloc(Xconnected, (Xsize + 1) * sizeof(Node));
+    realloc(Xconnected, (Xsize + 1) * sizeof(Node));
     if (temp == NULL) {
         printf("Erreur d'alloc\n");
     }
@@ -29,8 +29,8 @@ void Mission4(Matrix* matrix) {
     Xsize++;
 
     while(Xsize < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
-        *temp = realloc(Xconnected, (Xsize + 1) * sizeof(Node));
-        if (temp == NULL) {
+        realloc(Xconnected, (Xsize + 1) * sizeof(Node));
+        if (Xconnected == NULL) {
             printf("Erreur d'alloc\n");
         }
 
@@ -46,10 +46,7 @@ void Mission4(Matrix* matrix) {
                 }
             }
 
-        }  
-
-
-        Xconnected = temp;
+        }   
         Xconnected[Xsize] = matrix->grid[line][column]->to;
         Xsize++;
         matrix->grid[line][column]->to_secure = true;       

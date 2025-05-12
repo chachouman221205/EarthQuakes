@@ -7,9 +7,9 @@
 #include "linked_list.h"
 #include "incidence_matrix.h"
 
-bool XAlready_use(Node* X, Node** liste, int size){
+bool is_node_in_array(Node* node, Node** array, int size){
     for(int i=0 ; i<size;i++){
-        if(liste[i] == X){
+        if(array[i] == node){
             return(true);
         }
     }
@@ -18,27 +18,27 @@ bool XAlready_use(Node* X, Node** liste, int size){
 
 void Mission4(Matrix* matrix) {
     int tree_size = 0;
-    Node *tree_connected = NULL;
-    realloc(tree_connected, (tree_size + 1) * sizeof(Node));
-    if (temp == NULL) {
+    Node** tree = NULL;
+    tree = realloc(tree, (tree_size + 1) * sizeof(Node*));
+    if (tree == NULL) {
         printf("Erreur d'alloc\n");
+        exit(EXIT_FAILURE);
     }
-    tree_connected = temp;
-    tree_connected[tree_size] = matrix->nodes[0];
+    tree[tree_size] = matrix->nodes[0];
     tree_size++;
 
     while(tree_size < matrix->size){ // tant que tout les noeud ne sont pas connectés entres eux 
-        realloc(tree_connected, (tree_size + 1) * sizeof(Node));
-        if (tree_connected == NULL) {
+        tree = realloc(tree, (tree_size + 1) * sizeof(Node));
+        if (tree == NULL) {
             printf("Erreur d'alloc\n");
         }
 
         int line=0;
         int column=0;
         for (int i = 0 ; i < tree_size ; i++){  //chercher la route connecté à tree_ la plus courte et la sécuriser 
-            for (int y=0 ; y < tree_connected[i]->connections_out ; y++ ){
+            for (int y=0 ; y < tree[i]->connections_out ; y++ ){
                 if(matrix->grid[i][y] != NULL){
-                    if (matrix->grid[i][y]->distance < matrix->grid[line][column]->distance && tree_Already_use(matrix->grid[line][column]->to,*tree_connected, tree_size) == false){
+                    if (matrix->grid[i][y]->distance < matrix->grid[line][column]->distance && is_node_in_array(matrix->nodes[column], tree, tree_size) == false){
                         line = i;
                         column = y;
                     }
@@ -48,8 +48,7 @@ void Mission4(Matrix* matrix) {
         }
 
 
-        tree_connected = temp;
-        tree_connected[tree_size] = matrix->grid[line][column]->to;
+        tree[tree_size] = matrix->grid[line][column]->to;
         tree_size++;
         matrix->grid[line][column]->to_secure = true;       
     }
@@ -59,7 +58,7 @@ void Mission4(Matrix* matrix) {
 void Bonus1(Matrix* matrix){ // on part du principe qu'une route ajouté est de long=10 
     int road_to_create_number = matrix->size/10; // on s'autorise à créer 1/10 de route existante en plus ( à équilibrer )
 
-    for int (i = road_to_create_number ; i > 0  ; i--){ // relier les noeud avec le plus de connection entrante aux noeuds avec le plus de connections sortante
+    for (int i = road_to_create_number ; i > 0  ; i--){ // relier les noeud avec le plus de connection entrante aux noeuds avec le plus de connections sortante
 
     
     }
@@ -115,4 +114,9 @@ void print_roads_to_secure(Matrix* matrix){
             }
         }
     }
+}
+int main() {
+    Variables* var = init_variables();
+    Matrix* mat = init_matrix_from_file(var, "test/gen_files/gen_graph10.txt");
+    print_roads_to_secure(mat);
 }

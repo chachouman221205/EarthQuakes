@@ -57,9 +57,13 @@ void Mission2(int question, char* graph) {
     switch (question) {
         case 1:
             int n;
+            int _;
             ListHead* groups = find_connected_groups(mat, &n);
+            printf("The groups of nodes where you can freely move are :\n");
             for (int i = 0; i < n; i++) {
-                ListPrint(&groups[i]);
+                printf("Group %d: ", i);
+                print_path(mat, &groups[i], &_);
+                printf("\n");
             }
             break;
         default :

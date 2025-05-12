@@ -39,7 +39,7 @@ clean:
 
 web:
 	make
-	emcc web_interface/test.c -o /home/chachou/WebHub/EarthQuake/index.js -I/home/chachou/raylib/src -L/home/chachou/raylib/build_web/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -s FULL_ES2=1
+	emcc web_interface/web.c -o /home/chachou/WebHub/EarthQuake/index.js -I/home/chachou/raylib/src -L/home/chachou/raylib/build_web/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -s FULL_ES2=1
 
 re: clean all
 

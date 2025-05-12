@@ -71,4 +71,7 @@ void reset_exploration(Matrix* matrix);
 void print_road_to_secure(Road* road);
 void print_roads_to_secure(Matrix* matrix);
 
+void print_road_created(Road* road);
+void print_roads_created(Matrix* matrix);
+
 #endif

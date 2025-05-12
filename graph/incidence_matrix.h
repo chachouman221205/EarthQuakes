@@ -33,4 +33,7 @@ ListHead* find_connected_groups(Matrix* matrix, int* group_count);
 bool is_node_in_array(Node* node, Node** array, int size);
 void mark_secure_roads(Matrix* matrix);
 
+void create_road (Matrix* mat, int A, int B);
+void find_road_to_create(Matrix* matrix);
+
 #endif

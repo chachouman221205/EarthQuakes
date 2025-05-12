@@ -372,6 +372,7 @@ void find_road_to_create(Matrix* matrix){ //Bonus 1
         if(matrix->grid[j_min][i_min] == NULL && i_min != j_min){ // si la route entre les 2 sommets n'existe pas encore et que i_min est différent de j_min alors on crée la route
             create_road(matrix, j_min, i_min);
             created_road++;
+            printf(" Route %d cree \n" ,created_road);
             reset_exploration(matrix);
 
         }

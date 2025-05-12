@@ -7,7 +7,6 @@ typedef struct Truck{
     
     int current_capacity;
     int max_capacity;
-
     int destination;
     int position;
 }Truck;

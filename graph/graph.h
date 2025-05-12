@@ -20,6 +20,10 @@ typedef struct Node {
     int connections_in;
     int connections_out;
     Road* towards_origin;
+
+    /*Request medical_supplies;
+    Request food_supplies;
+    Request non_essential;*/
 } Node;
 
 typedef struct Road {

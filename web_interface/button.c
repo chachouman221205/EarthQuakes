@@ -2,7 +2,7 @@
 
 #include "raylib.h"
 
-#define ROUNDNESS 0.5f
+#define ROUNDNESS 0.4f
 
 typedef struct Button {
     char text[50];
@@ -16,7 +16,7 @@ typedef struct Button {
 
 void DrawButton(Button button) {
     Rectangle rec = {button.x-button.size_x/2, button.y-button.size_y/2, button.size_x, button.size_y};
-    DrawRectangleRounded(rec, ROUNDNESS, 8, GRAY);
+    DrawRectangleRounded(rec, ROUNDNESS, 8, button.color);
     DrawRectangleRoundedLines(rec, ROUNDNESS, 8, BLACK);
     int size = 20;
     DrawText(button.text, button.x - strlen(button.text)*0.3*size, button.y-0.6*size, size, BLACK);

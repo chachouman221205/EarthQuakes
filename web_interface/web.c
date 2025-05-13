@@ -5,6 +5,8 @@
 #include "raylib.h"
 #include "button.h"
 
+#define BUTTON_COLOR GRAY
+
 //------------------------------------------------------------------------------------
 int main(void){
     // Initialization
@@ -14,9 +16,9 @@ int main(void){
     InitWindow(w, h, "EarthQuake");
     
     Rectangle side_bar = { 0, 0, w/4, h};
-    bool button_click = false;
-
+    
     // Buttons
+    bool button_click = false;
     int button_x = side_bar.x + side_bar.width/2;
     int button_width = side_bar.width/2;
     int button_height = h/20;
@@ -31,21 +33,24 @@ int main(void){
         //    button_click = true;
         //}
 
-        Button button1 = NewButton("test", button_x, 3*button_height, button_width, button_height, GRAY, NULL);
+        Button Mission1_button = NewButton("Mission1", button_x, 3*button_height, button_width, button_height, BUTTON_COLOR, NULL);
     
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
             
-            // Side Bar
+            //--- Side Bar ---//
             DrawRectangleRec(side_bar, LIGHTGRAY);
+            
+                // Title
             int title_x = w/8; int title_y = h/20; int title_size = 50; char *title = "EarthQuake";
             DrawText(title,  title_x - strlen(title)*0.3*title_size, title_y - 0.6*title_size, title_size, BLACK);
-            DrawButton(button1);
             
-            if(button_click) {
-                DrawText("Bouton cliqué !", 330, 300, 20, RED);
-            }
+                // Buttons
+            DrawButton(Mission1_button);
+
+            //--- Main content ---//
+            
 
         EndDrawing();
     }

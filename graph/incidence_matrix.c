@@ -389,7 +389,7 @@ void truck_travel() {
 
 bool citys_is_repared(Matrix* matrix){
     for(int i=0 ; i < matrix->size ; i++){
-        if (matrix->node[i]->Is_repared == false ){
+        if (matrix->nodes[i]->Is_repared == false ){
             return false;
         }
     }
@@ -399,8 +399,8 @@ bool citys_is_repared(Matrix* matrix){
 
 void verif_city_reparation(Matrix* matrix){
     for (int i = 0 ; i < matrix->size ; i++){
-        if( matrix->node[i]->current_capacity[4] == 100 ){
-            matrix->node[i]->Is_repared = true;
+        if( matrix->nodes[i]->current_capacity[4] == 100 ){
+            matrix->nodes[i]->Is_repared = true;
         }
     }
 }

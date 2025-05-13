@@ -353,7 +353,7 @@ void create_road (Matrix* mat, int A, int B){
     mat->grid[A-1][B-1]->is_created = true;
 }
 
-void find_road_to_create(Matrix* matrix){
+void find_road_to_create(Matrix* matrix){ //Bonus 1
     int created_road = 0 ;
     int number_road_to_create = matrix->size/10; // on set le nombre de route à créer à 1 dixième de la taille du graphe
     while( created_road< number_road_to_create){ // on répete l'action de créer une route jusqu'a que les 10 routes soit crées 
@@ -372,6 +372,7 @@ void find_road_to_create(Matrix* matrix){
         if(matrix->grid[j_min][i_min] == NULL && i_min != j_min){ // si la route entre les 2 sommets n'existe pas encore et que i_min est différent de j_min alors on crée la route
             create_road(matrix, j_min, i_min);
             created_road++;
+            printf(" Route %d cree \n" ,created_road);
             reset_exploration(matrix);
 
         }
@@ -382,6 +383,44 @@ void find_road_to_create(Matrix* matrix){
     reset_exploration(matrix);
 }
 
-void truck_travel(){
-    
+void truck_travel() {
+
+}
+
+bool citys_is_repared(Matrix* matrix){
+    for(int i=0 ; i < matrix->size ; i++){
+        if (matrix->node[i]->Is_repared == false ){
+            return false;
+        }
+    }
+    return true;
+
+}
+
+void verif_city_reparation(Matrix* matrix){
+    for (int i = 0 ; i < matrix->size ; i++){
+        if( matrix->node[i]->current_capacity[4] == 100 ){
+            matrix->node[i]->Is_repared = true;
+        }
+    }
+}
+
+void repare_city(Matrix* matrix){
+    int time = 0;
+    while ( citys_is_repared(matrix) != true){ // tant que toute les villes ne sont pas réparés
+
+        // il faut maintenant envoyer des camions pour aprovisioner les villes en matériaux 
+        // on verifie si on a des camion libre 
+        // si oui on l'envoie ravitailler X ville dans le besoin 
+        // On trace son trajet 
+        // une fois le camion vide --> retour à la case départ ( ou à l'entrepot le plus proche dans l'idéal )
+        // retour à l'étape 1
+
+        // augementer le temps de 1 à chauqe "tick"
+
+        verif_city_reparation(matrix); // actualise l'état des villes 
+        time++;
+    }
+    printf("\n Cela a prit %d tour pour réparer les villes \n " , time);
+
 }

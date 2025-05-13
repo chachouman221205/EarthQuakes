@@ -132,6 +132,10 @@ Node* init_node(Variables* variables, char type) {
     n->explored = 0;
     n->connections_in = 0;
     n->connections_out = 0;
+    n->Is_repared = 0;
+    for (int i=0 ; i < 5 ; i++){
+        n->current_capacity[i] = 0;
+    }
 
     return n;
 }
@@ -256,3 +260,49 @@ void print_roads_to_secure(Matrix* matrix){
         }
     }
 }
+
+void print_road_created(Road* road){
+    char type1[20], type2[20];
+    switch (road->from->type) {
+        case 'C':
+            strcpy(type1, "City");
+            break;
+        case 'H':
+            strcpy(type1, "Hospital");
+            break;
+        case 'W':
+            strcpy(type1, "Warehouse");
+            break;
+        default:
+            strcpy(type1, "Unknown");
+    }
+    switch (road->to->type) {
+        case 'C':
+            strcpy(type2, "City");
+            break;
+        case 'H':
+            strcpy(type2, "Hospital");
+            break;
+        case 'W':
+            strcpy(type2, "Warehouse");
+            break;
+        default:
+            strcpy(type2, "Unknown");
+    }
+    if(road->is_created == true){
+        printf("Road Created from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
+            type1, road->from->ID, type2, road->to->ID);
+    }
+}
+
+void print_roads_created(Matrix* matrix){
+    for(int line = 0; line < matrix->size; line++){
+        for(int column = 0; column < matrix->size; column++){
+            if(matrix->grid[line][column] != NULL){
+                print_road_created(matrix->grid[line][column]);
+            }
+        }
+    }
+}
+
+

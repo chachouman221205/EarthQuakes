@@ -120,6 +120,18 @@ void Mission4(char* graph) {
     free_variables_struct(var);
 }
 
+void Bonus1(char* graph) {
+    Variables* var = init_variables();
+    Matrix* mat = init_matrix_from_file(var, graph);
+
+    find_road_to_create(mat);
+    print_roads_created(mat);
+
+    free_matrix_content(mat);
+    free_matrix(mat);
+    free_variables_struct(var);
+}
+
 int main(){
     printf(" \b\n\n");
 
@@ -129,6 +141,7 @@ int main(){
     Mission2(filename);
     Mission3(1, filename);
     Mission4(filename);
+    //Bonus1(filename);
 
 
     return 0;

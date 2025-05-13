@@ -421,6 +421,6 @@ void repare_city(Matrix* matrix){
         verif_city_reparation(matrix); // actualise l'état des villes 
         time++;
     }
-    printf("\n Cela a prit %d tour pour réparer les villes \n " , time);
+    printf("\n Cela a prit %d ticks pour réparer les villes \n " , time);
 
 }

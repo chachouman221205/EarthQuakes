@@ -74,7 +74,7 @@ Matrix* init_matrix_from_file(Variables* variables, char* fp) {
     srand(time(NULL));
     while (fscanf(f, "%d %d %u %d", &A, &B, &dist, &cap) != EOF) {
         if (mat->grid[A-1][B-1] != NULL) {
-            printf("\033[31mError while reading file:\033[0m Double road declaration (%d -> %d)\n", A, B);
+            printf("\033[0;31mError while reading file:\033[0m Double road declaration (%d -> %d)\n", A, B);
             exit(EXIT_FAILURE);
         }
         mat->grid[A-1][B-1] = init_road(mat->nodes[A-1], mat->nodes[B-1], dist, true, cap); // rand()%5 != 0
@@ -421,6 +421,6 @@ void repare_city(Matrix* matrix){
         verif_city_reparation(matrix); // actualise l'état des villes 
         time++;
     }
-    printf("\n Cela a prit %d ticks pour réparer les villes \n " , time);
+    printf("\nIt took %d ticks to repair all roads\n" , time);
 
 }

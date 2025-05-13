@@ -246,7 +246,7 @@ void print_road_to_secure(Road* road){
             strcpy(type2, "Unknown");
     }
     if(road->to_secure == true){
-        printf("Road to secure from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
+        printf("Road \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
             type1, road->from->ID, type2, road->to->ID);
     }
 }
@@ -290,7 +290,7 @@ void print_road_created(Road* road){
             strcpy(type2, "Unknown");
     }
     if(road->is_created == true){
-        printf("Road Created from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
+        printf("Road created from \033[0;36m%s%d\033[0m to \033[0;36m%s%d\033[0m\n", 
             type1, road->from->ID, type2, road->to->ID);
     }
 }

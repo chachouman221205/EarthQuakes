@@ -6,7 +6,9 @@ typedef struct Button {
     int y;
     int size_x;
     int size_y;
+    Rectangle rec;
     Color color;
+    Color hover_color;
     bool* clicked;
 } Button;
 

@@ -358,26 +358,31 @@ void find_road_to_create(Matrix* matrix){ //Bonus 1
     int number_road_to_create = matrix->size/10; // on set le nombre de route à créer à 1 dixième de la taille du graphe
     while( created_road< number_road_to_create){ // on répete l'action de créer une route jusqu'a que les 10 routes soit crées 
         int i_min=0;
-        int j_min=0;
+        int i_max=0;
+        int delta_min, delta_max;
+        int delta;
         for (int i = 0; i < matrix->size; i++){
-            if (matrix->nodes[i]->connections_out - matrix->nodes[i]->connections_in > matrix->nodes[i_min]->connections_out - matrix->nodes[i_min]->connections_in && matrix->nodes[i]->explored == false){
-                i_min = i;
+            if (matrix->nodes[i]->explored) continue;
+
+            delta = matrix->nodes[i]->connections_in - matrix->nodes[i]->connections_out;
+            if (delta > delta_max){
+                i_max = i;
+                delta_max = delta;
             } // cherche le sommet avec le deltaSortie le plus élevé
-        }
-        for (int j = 0; j < matrix->size; j++ ){
-            if (matrix->nodes[j]->connections_in - matrix->nodes[j]->connections_out > matrix->nodes[j_min]->connections_in - matrix->nodes[j_min]->connections_out && matrix->nodes[j]->explored == false){
-                j_min = j;
+            if (delta < delta_min){
+                i_min = i;
+                delta_min = delta;
             }  // cherche le sommet avec le deltaEntrée le plus élevé
         }
-        if(matrix->grid[j_min][i_min] == NULL && i_min != j_min){ // si la route entre les 2 sommets n'existe pas encore et que i_min est différent de j_min alors on crée la route
-            create_road(matrix, j_min, i_min);
-            created_road++;
-            printf(" Route %d cree \n" ,created_road);
-            reset_exploration(matrix);
 
+        if(matrix->grid[i_max][i_min] == NULL && i_min != i_max){ // si la route entre les 2 sommets n'existe pas encore et que i_min est différent de j_min alors on crée la route
+            create_road(matrix, i_max, i_min);
+            created_road++;
+            printf(" Route %d created \n" ,created_road);
+            reset_exploration(matrix);
         }
         else { // sinon on marque le sommet entré pour dire qu'il n'est pas utilisable pour l'instant
-            matrix->nodes[j_min]->explored = true;
+            matrix->nodes[i_max]->explored = true;
         }
     }
     reset_exploration(matrix);

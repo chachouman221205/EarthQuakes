@@ -125,7 +125,9 @@ void Bonus1(char* graph) {
     Matrix* mat = init_matrix_from_file(var, graph);
 
     find_road_to_create(mat);
+    printf("1\n");
     print_roads_created(mat);
+    printf("2\n");
 
     free_matrix_content(mat);
     free_matrix(mat);

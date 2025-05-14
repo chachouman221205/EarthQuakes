@@ -351,7 +351,6 @@ void mark_secure_roads(Matrix* matrix) {
 }
 
 void create_road (Matrix* mat, int A, int B){
-    printf("c %d %d\n", A, B);
     mat->grid[A][B] = init_road(mat->nodes[A], mat->nodes[B], 10 , true, 6); // ici distance mise à 10 et capacity à 6 ( à modifier )
     mat->grid[A][B]->is_created = true;
 }
@@ -363,8 +362,9 @@ void find_road_to_create(Matrix* matrix){ //Bonus 1
     while(created_road < number_road_to_create){ // on répete l'action de créer une route jusqu'a que les 10 routes soit crées 
         int i_min=0;
         int i_max=0;
-        int delta_min, delta_max;
-        int delta;
+        int delta = matrix->nodes[0]->connections_in - matrix->nodes[0]->connections_out;
+        int delta_min = delta;
+        int delta_max = delta;
 
         for (int i = 0; i < matrix->size; i++){
             if (matrix->nodes[i]->explored) continue;
@@ -388,6 +388,7 @@ void find_road_to_create(Matrix* matrix){ //Bonus 1
         }
         else { // sinon on marque le sommet entré pour dire qu'il n'est pas utilisable pour l'instant
             matrix->nodes[i_max]->explored = true;
+            matrix->nodes[i_min]->explored = true;
         }
     }
     reset_exploration(matrix);

@@ -10,12 +10,12 @@
 #define BUTTON_COLOR GRAY
 
 //------------------------------------------------------------------------------------
-void app_start(Incidence_Matrix* mat){
+void app_start(char* filename){
     // Initialization
     //--------------------------------------------------------------------------------------
     int w = 2400 * 0.8;
     int h = 1200 * 0.8;
-    InitWindow(w, h, "EarthQuake");
+    InitWindow(w, h, filename);
     
     Rectangle title_bar = {0, 0, w, h/10};
     Rectangle side_bar = {0, title_bar.height, w/4, h};
@@ -31,6 +31,9 @@ void app_start(Incidence_Matrix* mat){
     Switch start_stop = NewSwitch("start", "stop", button_x, 3*button_height, button_width, button_height, GREEN, RED, &running);
     start_stop.hover_color_off = DARKGREEN;
     start_stop.hover_color_on = MAROON;
+
+    Variables* var = init_variables();
+    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
 
     // Main game loop
     while (!WindowShouldClose()){   // close or esc key
@@ -59,7 +62,7 @@ void app_start(Incidence_Matrix* mat){
 
             //--- Title ---//
             DrawRectangleRec(title_bar, GRAY);
-            int title_size = 50; char *title = "EarthQuake"; int title_x = title_bar.x + title_bar.width/2; int title_y = title_bar.y + title_bar.height/2;
+            int title_size = 50; char *title = "EarthQuakeSim"; int title_x = title_bar.x + title_bar.width/2; int title_y = title_bar.y + title_bar.height/2;
             DrawText(title,  title_x - strlen(title)*0.3*title_size, title_y - 0.6*title_size, title_size, BLACK);
 
                 // Shadow
@@ -69,4 +72,8 @@ void app_start(Incidence_Matrix* mat){
     }
 
     CloseWindow();
+
+    free_incidence_matrix_content(mat);
+    free_incidence_matrix(mat);
+    free_variables_struct(var);
 }

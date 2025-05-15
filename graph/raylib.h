@@ -24,6 +24,9 @@ typedef struct Way{
 
 }Way;
 
+void show_road(Road* road , int*** sommets);
+int Coordonate_node(Matrix* matrix , int weight , int high , int weightT , int highT);
+void show(Matrix* matrix , int*** sommets);
 
 
 #endif

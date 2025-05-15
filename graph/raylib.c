@@ -133,7 +133,7 @@ void show(Matrix* matrix , int*** sommets){
         }
     }
     for (int k = 0 ; k < matrix->size ; k++){
-            DrawCircle(sommets[k][0], sommets[k][1], 3, sommets);
+            DrawCircle(sommets[k][0], sommets[k][1], 3, VIOLET);
             DrawText("node", sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
     }
 }

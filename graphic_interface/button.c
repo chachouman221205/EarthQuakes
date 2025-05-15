@@ -27,7 +27,7 @@ void DrawButton(Button button) {
     if (button.clicked != NULL) *(button.clicked) = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
-Button NewButton(char text[50], int x, int y, int size_x, int size_y, Color color, bool* clicked) {
+Button NewButton(char* text, int x, int y, int size_x, int size_y, Color color, bool* clicked) {
     Button button;
     strcpy(button.text, text);
     button.x = x;
@@ -40,7 +40,7 @@ Button NewButton(char text[50], int x, int y, int size_x, int size_y, Color colo
     return button;
 }
 
-Button NewButtonRec(char text[50], Rectangle rec, Color color, bool* clicked) {
+Button NewButtonRec(char* text, Rectangle rec, Color color, bool* clicked) {
     Button button;
     strcpy(button.text, text);
     button.x = rec.x + rec.width/2;
@@ -94,7 +94,7 @@ void DrawSwitch(Switch s) {
 }
 
 
-Switch NewSwitch(char text_off[50], char text_on[50], int x, int y, int size_x, int size_y, Color color_off, Color color_on, bool* state) {
+Switch NewSwitch(char* text_off, char* text_on, int x, int y, int size_x, int size_y, Color color_off, Color color_on, bool* state) {
     Switch s;
     strcpy(s.text_on, text_on);
     strcpy(s.text_off, text_off);

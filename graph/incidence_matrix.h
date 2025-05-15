@@ -23,6 +23,7 @@ Incidence_Matrix* init_incidence_matrix_from_file(Variables* variables, char* fp
 void free_incidence_matrix_content(Incidence_Matrix* incidence_matrix);
 void free_incidence_matrix(Incidence_Matrix* incidence_matrix);
 
+
 int calculate_origin_path(Incidence_Matrix* incidence_matrix, int node, int* distance);
 void calculate_origin_distances(Incidence_Matrix* incidence_matrix);
 ListHead* find_path_to(Incidence_Matrix* incidence_matrix, int node);

@@ -10,14 +10,12 @@
 #define BUTTON_COLOR GRAY
 
 //------------------------------------------------------------------------------------
-int tkt(void){
+void app_start(void){
     // Initialization
     //--------------------------------------------------------------------------------------
     int w = 2400 * 0.8;
     int h = 1200 * 0.8;
-    printf("Début");
     InitWindow(w, h, "EarthQuake");
-    printf("Début2");
     
     Rectangle title_bar = {0, 0, w, h/10};
     Rectangle side_bar = {0, title_bar.height, w/4, h};
@@ -75,6 +73,4 @@ int tkt(void){
     }
 
     CloseWindow();
-    
-    return 0;
 }

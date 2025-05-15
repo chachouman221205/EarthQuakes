@@ -113,7 +113,7 @@ void free_incidence_matrix_content(Incidence_Matrix* incidence_matrix) {
     }
 }
 
-void free_Incidence_Matrix(Incidence_Matrix* incidence_matrix) {
+void free_incidence_matrix(Incidence_Matrix* incidence_matrix) {
     for (int i = 0; i < incidence_matrix->size; i++) {
         free(incidence_matrix->grid[i]);
     }
@@ -217,7 +217,7 @@ void print_path(Incidence_Matrix* incidence_matrix, ListHead* path, int* length)
     }
 }
 
-void multiply_Incidence_Matrix(Incidence_Matrix* incidence_matrix, bool* has_changed) {
+void multiply_incidence_matrix(Incidence_Matrix* incidence_matrix, bool* has_changed) {
     /*
     S'il existe un chemin de i vers k, et de k vers j,
     alors on affecte à i->j le chemin i->k

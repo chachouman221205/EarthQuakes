@@ -68,14 +68,14 @@ int main(){
     //----------- CORRECTION LINES -----------//
 
     Variables* var = init_variables();
-    Matrix* mat = init_matrix_from_file(var, filename);
+    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
 
     f = fopen(filename, "a");
     if(f == NULL) {
         printf("\033[0;31mERROR oppening file\033[0m\n"); 
         
-        free_matrix_content(mat);
-        free_matrix(mat);
+        free_incidence_matrix_content(mat);
+        free_incidence_matrix(mat);
         free_variables_struct(var);
         return 1;
     }
@@ -98,8 +98,8 @@ int main(){
 
     fclose(f);
 
-    free_matrix_content(mat);
-    free_matrix(mat);
+    free_incidence_matrix_content(mat);
+    free_incidence_matrix(mat);
     free_variables_struct(var);
     return 0;
 }

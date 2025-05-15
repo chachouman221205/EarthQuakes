@@ -13,7 +13,7 @@ typedef struct Button {
 } Button;
 
 void DrawButton(Button button);
-Button NewButton(char text[50], int x, int y, int size_x, int size_y, Color color, bool* clicked);
+Button NewButton(char* text, int x, int y, int size_x, int size_y, Color color, bool* clicked);
 
 typedef struct Switch {
     char text_off[50];
@@ -31,4 +31,4 @@ typedef struct Switch {
 } Switch;
 
 void DrawSwitch(Switch s);
-Switch NewSwitch(char text_on[50], char text_off[50], int x, int y, int size_x, int size_y, Color color_on, Color color_off, bool* state);
+Switch NewSwitch(char* text_on, char* text_off, int x, int y, int size_x, int size_y, Color color_on, Color color_off, bool* state);

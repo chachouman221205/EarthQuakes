@@ -5,12 +5,12 @@
 #include "raylib.h"
 #include "button.h"
 //#include "geometry.h"
-//#include "../graph/graph.h"
+#include "../graph/graph.h"
 
 #define BUTTON_COLOR GRAY
 
 //------------------------------------------------------------------------------------
-void app_start(void){
+void app_start(Incidence_Matrix* mat){
     // Initialization
     //--------------------------------------------------------------------------------------
     int w = 2400 * 0.8;
@@ -21,11 +21,6 @@ void app_start(void){
     Rectangle side_bar = {0, title_bar.height, w/4, h};
     int shadow_size = 10;
     Color shadow_color = {0, 0, 0, 150};
-
-    //char* filename;
-    //find_file(filename);
-    //Variables* var = init_variables();
-    //Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
     
     // Buttons
     bool running = false;

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "graph/graph.h"
+#include "graphic_interface/interface.h"
 
 
 void Mission1(int question, char* graph) {
@@ -121,11 +122,15 @@ int main(){
 
     char filename[50];
     *filename = *find_file(filename);
+    Variables* var = init_variables();
+    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
     // Mission1(0, filename);
     // Mission2(filename);
     // Mission3(1, filename);
     // Mission4(filename);
-    Bonus1(filename);
+    // Bonus1(filename);
+
+    app_start(mat);
 
 
     return 0;

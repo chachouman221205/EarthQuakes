@@ -4,7 +4,7 @@
 
 #include "raylib.h"
 #include "button.h"
-//#include "geometry.h"
+#include "geometry.h"
 #include "../graph/graph.h"
 
 #define BUTTON_COLOR GRAY
@@ -44,7 +44,8 @@ void app_start(Incidence_Matrix* mat){
             
             if (running) {
                 // ENZO MET TON CODE ICI
-                //int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+                int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+                show(mat, coords_sommets);
             }
 
             //--- Side Bar ---//

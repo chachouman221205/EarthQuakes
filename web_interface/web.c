@@ -35,8 +35,9 @@ int main(void){
         //    button_click = true;
         //}
 
-        Button Mission1_button = NewButton("Mission1", button_x, 3*button_height, button_width, button_height, BUTTON_COLOR, NULL);
-    
+        Button start_button = NewButton("Mission1", button_x, 3*button_height, button_width, button_height, BUTTON_COLOR, NULL);
+        start_button.hover_color = DARKGRAY;
+
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
@@ -49,7 +50,7 @@ int main(void){
             DrawText(title,  title_x - strlen(title)*0.3*title_size, title_y - 0.6*title_size, title_size, BLACK);
             
                 // Buttons
-            DrawButton(Mission1_button);
+            DrawButton(start_button);
 
             //--- Main content ---//
             

@@ -255,7 +255,7 @@ void print_roads_to_secure(Matrix* matrix){
     int count = 0;
     for(int line = 0; line < matrix->size; line++){
         for(int column = 0; column < matrix->size; column++){
-            if(matrix->grid[line][column] != NULL){
+            if(matrix->grid[line][column] != NULL && matrix->grid[line][column]->to_secure){
                 print_road_to_secure(matrix->grid[line][column]);
                 count++;
             }

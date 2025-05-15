@@ -24,6 +24,7 @@ void DrawButton(Button button) {
     DrawRectangleRoundedLines(button.rec, ROUNDNESS, 8, BLACK);
     int size = 20;
     DrawText(button.text, button.x - strlen(button.text)*0.3*size, button.y-0.6*size, size, BLACK);
+    if (button.clicked != NULL) (button.clicked*) = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
 Button NewButton(char text[50], int x, int y, int size_x, int size_y, Color color, bool* clicked) {

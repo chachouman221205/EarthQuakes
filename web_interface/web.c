@@ -29,10 +29,7 @@ int main(void){
         //bool hover = CheckCollisionPointRec(mousePos, button);
         //bool click = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 
-        //if(click) {
-        //    button_click = true;
-        //}
-
+        
         Button start_button = NewButton("Mission1", button_x, 3*button_height, button_width, button_height, BUTTON_COLOR, NULL);
         start_button.hover_color = DARKGRAY;
 

@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "incidence_matrix.h"
 
 typedef struct Road Road;
-typedef struct Matrix Matrix;
 
 typedef struct Node {
     int ID;
@@ -48,9 +48,9 @@ typedef struct Variables {
     int warehouse_ids;
 } Variables;
 
-#include "incidence_matrix.h"
 
 
+char* find_file(char* filename);
 
 Variables* init_variables();
 
@@ -59,24 +59,24 @@ void free_variables_struct(Variables* variables);
 Road* init_road(Node* from, Node* to, int distance, bool usable, int max_capacity);
 void free_road(Road* r);
 void print_road(Road* road);
-void print_roads(Matrix* matrix);
+void print_roads(Incidence_Matrix* incidence_matrix);
 
 Node* init_node(Variables* variables, char type);
 void free_node(Node* n);
 
-void print_damage(Matrix* matrix);
+void print_damage(Incidence_Matrix* incidence_matrix);
 
 bool is_usable(Road* road);
-void explore_all_nodes_width(Matrix* matrix);
+void explore_all_nodes_width(Incidence_Matrix* incidence_matrix);
 
-void print_all_path_from_origin(Matrix* matrix);
-void print_unaccessible_nodes(Matrix* matrix);
-void reset_exploration(Matrix* matrix);
+void print_all_path_from_origin(Incidence_Matrix* incidence_matrix);
+void print_unaccessible_nodes(Incidence_Matrix* incidence_matrix);
+void reset_exploration(Incidence_Matrix* incidence_matrix);
 
 void print_road_to_secure(Road* road);
-void print_roads_to_secure(Matrix* matrix);
+void print_roads_to_secure(Incidence_Matrix* incidence_matrix);
 
 void print_road_created(Road* road);
-void print_roads_created(Matrix* matrix);
+void print_roads_created(Incidence_Matrix* incidence_matrix);
 
 #endif

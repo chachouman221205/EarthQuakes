@@ -6,6 +6,27 @@
 #include "graph.h"
 #include "linked_list.h"
 
+
+char* find_file(char* filename){
+    FILE *f;
+    int name_id = 1;
+
+    // Trouver un nom de fichier qui n'existe pas encore
+    do {
+        sprintf(filename, "test/gen_files/gen_graph%d.txt", name_id);
+        f = fopen(filename, "r");
+        if(f != NULL) {
+            fclose(f);
+            name_id++;
+        }
+    } while(f != NULL);
+
+    sprintf(filename, "test/gen_files/gen_graph%d.txt", --name_id);
+    printf("\033[1;35mUsing :\033[0m %s\n\n", filename);
+    return filename;
+}
+
+
 Variables* init_variables(){
     Variables* variables = malloc(1*sizeof(Variables));
     if(variables == NULL){
@@ -25,9 +46,9 @@ void free_variables_struct(Variables* variables){
 }
 
 /*
-    void graph_exploration(Matrix* matrix){
-        for(int line = 0; line < matrix->size; line++){
-            for(int column = 0; column < matrix->size; column++){
+    void graph_exploration(Incidence_Matrix* incidence_matrix){
+        for(int line = 0; line < incidence_matrix->size; line++){
+            for(int column = 0; column < incidence_matrix->size; column++){
                 pass();
             }
         }
@@ -97,11 +118,11 @@ void print_road(Road* road){
     printf("\n");
 }
 
-void print_roads(Matrix* matrix){
-    for(int line = 0; line < matrix->size; line++){
-        for(int column = 0; column < matrix->size; column++){
-            if(matrix->grid[line][column] != NULL){
-                print_road(matrix->grid[line][column]);
+void print_roads(Incidence_Matrix* incidence_matrix){
+    for(int line = 0; line < incidence_matrix->size; line++){
+        for(int column = 0; column < incidence_matrix->size; column++){
+            if(incidence_matrix->grid[line][column] != NULL){
+                print_road(incidence_matrix->grid[line][column]);
             }
         }
     }
@@ -144,12 +165,12 @@ void free_node(Node* n) {
     free(n);
 }
 
-void print_damage(Matrix* matrix){
+void print_damage(Incidence_Matrix* incidence_matrix){
     int accessible = 0, destroyed = 0;
-    for(int line = 0; line < matrix->size; line++){
-        for(int column = 0; column < matrix->size; column++){
-            if(matrix->grid[line][column] != NULL){
-                (matrix->grid[line][column]->usable)? accessible++ : destroyed++;
+    for(int line = 0; line < incidence_matrix->size; line++){
+        for(int column = 0; column < incidence_matrix->size; column++){
+            if(incidence_matrix->grid[line][column] != NULL){
+                (incidence_matrix->grid[line][column]->usable)? accessible++ : destroyed++;
             }
         }
     }
@@ -160,21 +181,21 @@ void print_damage(Matrix* matrix){
 }
 
 
-void print_all_path_from_origin(Matrix* matrix) {
-    explore_all_nodes_width(matrix);
+void print_all_path_from_origin(Incidence_Matrix* incidence_matrix) {
+    explore_all_nodes_width(incidence_matrix);
     printf("The \033[1;32maccessible\033[0m nodes are :\n  ⤷ ");
-    for(int i = 0; i < matrix->size; i++){
-        if(matrix->nodes[i]->explored == true){
-            printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+    for(int i = 0; i < incidence_matrix->size; i++){
+        if(incidence_matrix->nodes[i]->explored == true){
+            printf("%c%d ", incidence_matrix->nodes[i]->type, incidence_matrix->nodes[i]->ID);
         }
     }
     printf("\n");
-    reset_exploration(matrix);
+    reset_exploration(incidence_matrix);
 }
 
-void reset_exploration(Matrix* matrix) {
-    for (int i = 0; i < matrix->size; i++) {
-        matrix->nodes[i]->explored = false;
+void reset_exploration(Incidence_Matrix* incidence_matrix) {
+    for (int i = 0; i < incidence_matrix->size; i++) {
+        incidence_matrix->nodes[i]->explored = false;
     }
 }
 
@@ -185,36 +206,36 @@ bool is_usable(Road* road) {
     return false;
 }
 
-void explore_all_nodes_width(Matrix* matrix) {
+void explore_all_nodes_width(Incidence_Matrix* incidence_matrix) {
     ListHead* node_queue = ListInit();
     ListQueue(node_queue, 0);
-    matrix->nodes[0]->explored = true;
+    incidence_matrix->nodes[0]->explored = true;
     int current_node;
     // tant qu'il reste des noeuds à explorer
     while (node_queue->length > 0) {
         current_node = ListPop(node_queue, 0);
         // pour chaque voisin
-        for (int i = 0; i < matrix->size; i++) {
+        for (int i = 0; i < incidence_matrix->size; i++) {
             // qui existe et qui n'est pas exploré
-            if (is_usable(matrix->grid[current_node][i]) && matrix->grid[current_node][i]->to->explored == false) {
+            if (is_usable(incidence_matrix->grid[current_node][i]) && incidence_matrix->grid[current_node][i]->to->explored == false) {
                 ListQueue(node_queue, i);
-                matrix->nodes[i]->explored = true;
+                incidence_matrix->nodes[i]->explored = true;
             }
         }
     }
     ListFree(node_queue);
 }
 
-void print_unaccessible_nodes(Matrix* matrix){
-    explore_all_nodes_width(matrix);
+void print_unaccessible_nodes(Incidence_Matrix* incidence_matrix){
+    explore_all_nodes_width(incidence_matrix);
     printf("The \033[1;31munnaccessible\033[0m nodes are :\n  ⤷ ");
-    for(int i = 0; i < matrix->size; i++){
-        if(matrix->nodes[i]->explored == false){
-            printf("%c%d ", matrix->nodes[i]->type, matrix->nodes[i]->ID);
+    for(int i = 0; i < incidence_matrix->size; i++){
+        if(incidence_matrix->nodes[i]->explored == false){
+            printf("%c%d ", incidence_matrix->nodes[i]->type, incidence_matrix->nodes[i]->ID);
         }
     }
     printf("\n");
-    reset_exploration(matrix);
+    reset_exploration(incidence_matrix);
 }
 
 void print_road_to_secure(Road* road){
@@ -251,12 +272,12 @@ void print_road_to_secure(Road* road){
     }
 }
 
-void print_roads_to_secure(Matrix* matrix){
+void print_roads_to_secure(Incidence_Matrix* incidence_matrix){
     int count = 0;
-    for(int line = 0; line < matrix->size; line++){
-        for(int column = 0; column < matrix->size; column++){
-            if(matrix->grid[line][column] != NULL && matrix->grid[line][column]->to_secure){
-                print_road_to_secure(matrix->grid[line][column]);
+    for(int line = 0; line < incidence_matrix->size; line++){
+        for(int column = 0; column < incidence_matrix->size; column++){
+            if(incidence_matrix->grid[line][column] != NULL && incidence_matrix->grid[line][column]->to_secure){
+                print_road_to_secure(incidence_matrix->grid[line][column]);
                 count++;
             }
         }
@@ -298,11 +319,11 @@ void print_road_created(Road* road){
     }
 }
 
-void print_roads_created(Matrix* matrix){
-    for(int line = 0; line < matrix->size; line++){
-        for(int column = 0; column < matrix->size; column++){
-            if(matrix->grid[line][column] != NULL){
-                print_road_created(matrix->grid[line][column]);
+void print_roads_created(Incidence_Matrix* incidence_matrix){
+    for(int line = 0; line < incidence_matrix->size; line++){
+        for(int column = 0; column < incidence_matrix->size; column++){
+            if(incidence_matrix->grid[line][column] != NULL){
+                print_road_created(incidence_matrix->grid[line][column]);
             }
         }
     }

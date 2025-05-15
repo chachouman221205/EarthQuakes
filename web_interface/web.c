@@ -4,54 +4,73 @@
 
 #include "raylib.h"
 #include "button.h"
+//#include "geometry.h"
+//#include "../graph/graph.h"
 
 #define BUTTON_COLOR GRAY
 
 //------------------------------------------------------------------------------------
-int main(void){
+int tkt(void){
     // Initialization
     //--------------------------------------------------------------------------------------
     int w = 2400 * 0.8;
     int h = 1200 * 0.8;
-    int w2 = 3*w/4;
-    int h2 = 3*h/4;
+    printf("Début");
     InitWindow(w, h, "EarthQuake");
+    printf("Début2");
     
-    Rectangle side_bar = { 0, 0, w/4, h};
+    Rectangle title_bar = {0, 0, w, h/10};
+    Rectangle side_bar = {0, title_bar.height, w/4, h};
+    int shadow_size = 10;
+    Color shadow_color = {0, 0, 0, 150};
+
+    //char* filename;
+    //find_file(filename);
+    //Variables* var = init_variables();
+    //Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
     
     // Buttons
-    bool button_click = false;
+    bool running = false;
     int button_x = side_bar.x + side_bar.width/2;
     int button_width = side_bar.width/2;
     int button_height = h/20;
 
+    Switch start_stop = NewSwitch("start", "stop", button_x, 3*button_height, button_width, button_height, GREEN, RED, &running);
+    start_stop.hover_color_off = DARKGREEN;
+    start_stop.hover_color_on = MAROON;
+
     // Main game loop
     while (!WindowShouldClose()){   // close or esc key
-        Vector2 mousePos = GetMousePosition();
-        //bool hover = CheckCollisionPointRec(mousePos, button);
-        //bool click = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
-
         
-        Button start_button = NewButton("Mission1", button_x, 3*button_height, button_width, button_height, BUTTON_COLOR, NULL);
-        start_button.hover_color = DARKGRAY;
 
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
-            
-            //--- Side Bar ---//
-            DrawRectangleRec(side_bar, LIGHTGRAY);
-            
-                // Title
-            int title_x = w/8; int title_y = h/20; int title_size = 50; char *title = "EarthQuake";
-            DrawText(title,  title_x - strlen(title)*0.3*title_size, title_y - 0.6*title_size, title_size, BLACK);
-            
-                // Buttons
-            DrawButton(start_button);
 
             //--- Main content ---//
             
+            if (running) {
+                // ENZO MET TON CODE ICI
+                //int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+            }
 
+            //--- Side Bar ---//
+            DrawRectangleRec(side_bar, LIGHTGRAY);
+
+                // Shadow
+            DrawRectangleGradientH(side_bar.x + side_bar.width, side_bar.y, shadow_size, side_bar.height, shadow_color, BLANK);
+            
+                // Buttons
+            DrawSwitch(start_stop);
+
+            //--- Title ---//
+            DrawRectangleRec(title_bar, GRAY);
+            int title_size = 50; char *title = "EarthQuake"; int title_x = title_bar.x + title_bar.width/2; int title_y = title_bar.y + title_bar.height/2;
+            DrawText(title,  title_x - strlen(title)*0.3*title_size, title_y - 0.6*title_size, title_size, BLACK);
+
+                // Shadow
+            DrawRectangleGradientV(0, title_bar.height, w, shadow_size, shadow_color, BLANK);
+            
         EndDrawing();
     }
 

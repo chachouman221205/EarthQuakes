@@ -24,7 +24,7 @@ void DrawButton(Button button) {
     DrawRectangleRoundedLines(button.rec, ROUNDNESS, 8, BLACK);
     int size = 20;
     DrawText(button.text, button.x - strlen(button.text)*0.3*size, button.y-0.6*size, size, BLACK);
-    if (button.clicked != NULL) (button.clicked*) = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+    if (button.clicked != NULL) *(button.clicked) = hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
 }
 
 Button NewButton(char text[50], int x, int y, int size_x, int size_y, Color color, bool* clicked) {
@@ -51,4 +51,60 @@ Button NewButtonRec(char text[50], Rectangle rec, Color color, bool* clicked) {
     button.color = color;
     button.clicked = clicked;
     return button;
+}
+
+
+typedef struct Switch {
+    char text_off[50];
+    char text_on[50];
+    int x;
+    int y;
+    int size_x;
+    int size_y;
+    Rectangle rec;
+    Color color_off;
+    Color hover_color_off;
+    Color color_on;
+    Color hover_color_on;
+    bool* state;
+} Switch;
+
+void DrawSwitch(Switch s) {
+    Vector2 mousePos = GetMousePosition();
+    bool hover = CheckCollisionPointRec(mousePos, s.rec);
+    Color col;
+    char* t;
+    if (*(s.state)) {
+        col = hover ? s.hover_color_on : s.color_on;
+        t = s.text_on;
+    } else {
+        col = hover ? s.hover_color_off : s.color_off;
+        t = s.text_off;
+    }
+    DrawRectangleRounded(s.rec, ROUNDNESS, 8, col);
+    DrawRectangleRoundedLines(s.rec, ROUNDNESS, 8, BLACK);
+    int size = 20;
+    DrawText(t, s.x - strlen(t)*0.3*size, s.y-0.6*size, size, BLACK);
+    
+    if (hover && IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+        if (hover) {
+            *(s.state) = !(*(s.state));
+        }
+    }
+}
+
+
+Switch NewSwitch(char text_off[50], char text_on[50], int x, int y, int size_x, int size_y, Color color_off, Color color_on, bool* state) {
+    Switch s;
+    strcpy(s.text_on, text_on);
+    strcpy(s.text_off, text_off);
+    s.x = x;
+    s.y = y;
+    s.size_x = size_x;
+    s.size_y = size_y;
+    s.rec = (Rectangle) {s.x-s.size_x/2, s.y-s.size_y/2, s.size_x, s.size_y};
+    s.color_on = color_on;
+    s.color_off = color_off;
+    s.state = state;
+    return s;
 }

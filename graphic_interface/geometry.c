@@ -115,7 +115,7 @@ void show_road(Road* road , int** sommets){
 }
 
 int** Coordonate_node(Incidence_Matrix* incidence_matrix , int width , int height , int widthT , int heightT){
-    srand(time(NULL));
+    srand(incidence_matrix->size);
     int** Coords = malloc(incidence_matrix->size * sizeof(int*));
     for (int i = 0; i < incidence_matrix->size; i++) {
         Coords[i] = malloc(2*sizeof(int));

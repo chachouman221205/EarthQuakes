@@ -43,7 +43,7 @@ int main(){
     int rand_size = (rand() % max_size);
     if(rand_size < min_size) rand_size = min_size;
     
-    rand_size = 50;
+    rand_size = 10;
     
     printf("\n\033[1;35mMATRIX SIZE :\033[0m %d", rand_size);
 

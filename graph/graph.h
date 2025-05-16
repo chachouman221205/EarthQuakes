@@ -82,4 +82,6 @@ void print_roads_to_secure(Incidence_Matrix* incidence_matrix);
 void print_road_created(Road* road);
 void print_roads_created(Incidence_Matrix* incidence_matrix);
 
+void Earthquake(Incidence_Matrix* incidence_matrix);
+
 #endif

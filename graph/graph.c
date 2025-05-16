@@ -340,3 +340,24 @@ void print_roads_created(Incidence_Matrix* incidence_matrix){
 }
 
 
+void Earthquake(Incidence_Matrix* incidence_matrix){
+    srand(time(NULL));
+    int random;
+    for (int i=0 ; i< incidence_matrix->size ; i++){
+        random = rand() % 5;
+        if (random == 5){
+            incidence_matrix->nodes[i]->current_capacity[5]=0; //manière actuel de détruire une ville
+        }
+    }
+    for (int ligne = 0 ; ligne < incidence_matrix->size ; ligne ++){
+        for (int colone = 0 ; colone < incidence_matrix->size ; colone ++){
+            if (incidence_Matrix->grid[ligne][colone] =! NULL){
+                random = rand() % 5;
+                if (random ==5){
+                    incidence_Matrix->grid[ligne][colone]->usable=false;
+                }
+            }
+        }
+    }
+
+}

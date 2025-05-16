@@ -6,7 +6,7 @@
 #include "../graph/graph.h"
 #include "geometry.h"
 #include "raylib.h"
-#include <time.h>
+#include "raylib_utils.h"
 
 #define TOOL_TIP_COLOR ((Color) {0,0,0,150})
 
@@ -73,19 +73,32 @@ void free_way(Way* r) {
     }
 }*/
 
-void show_road(Road* road , int** sommets){
-    if(road->is_created == true){
-        DrawLine(sommets[road->from->ID][0], sommets[road->from->ID][1],sommets[road->to->ID][0], sommets[road->to->ID][1], YELLOW);
+void show_road(Road* road , int** sommets, Color col){
+    Vector2 start = (Vector2) {sommets[road->from->ID][0], sommets[road->from->ID][1]};
+    Vector2 end = (Vector2) {sommets[road->to->ID][0], sommets[road->to->ID][1]};
+    float thick = 2;
+    float arrow_head_size = 10;
+    bool hover = CheckCollisionPointLine(GetMousePosition(), start, end, 5);
+
+    if (hover) {
+        col = brightness(col, 0.7);
+        thick = 5;
+        arrow_head_size = 15;
     }
-    else if(road->to_secure == true){
-        DrawLine(sommets[road->from->ID][0], sommets[road->from->ID][1],sommets[road->to->ID][0], sommets[road->to->ID][1], BLUE);
-    }
-    else if(road->usable == false){
-        DrawLine(sommets[road->from->ID][0], sommets[road->from->ID][1],sommets[road->to->ID][0], sommets[road->to->ID][1], RED);
-    }
-    else {
-        DrawLine(sommets[road->from->ID][0], sommets[road->from->ID][1],sommets[road->to->ID][0], sommets[road->to->ID][1], GREEN);
-    }
+
+
+
+    DrawLineEx(start, end, thick, col);
+
+    // vecteur qui permet de dessiner les détails des flèches
+    Vector2 sized = scale((Vector2) {sommets[road->to->ID][0]-sommets[road->from->ID][0], sommets[road->to->ID][1]-sommets[road->from->ID][1]}, arrow_head_size);
+    Vector2 rotate1 = rotate(sized, 10);
+    Vector2 rotate2 = rotate(sized, -10);
+
+    DrawLineEx(end, (Vector2) {sommets[road->to->ID][0] + rotate1.x, sommets[road->to->ID][1] + rotate1.y}, thick, col);
+    DrawLineEx(end, (Vector2) {sommets[road->to->ID][0] + rotate2.x, sommets[road->to->ID][1] + rotate2.y}, thick, col);
+
+    return;
 }
 
 int** Coordonate_node(Incidence_Matrix* incidence_matrix , int width , int height , int widthT , int heightT){
@@ -165,7 +178,18 @@ void show(Incidence_Matrix* incidence_matrix , int** sommets){
     for(int line = 0; line < incidence_matrix->size; line++){
         for(int column = 0; column < incidence_matrix->size; column++){
             if(incidence_matrix->grid[line][column] != NULL){
-                show_road(incidence_matrix->grid[line][column] , sommets);
+                if(incidence_matrix->grid[line][column]->is_created == true){
+                    show_road(incidence_matrix->grid[line][column], sommets, YELLOW);
+                }
+                else if(incidence_matrix->grid[line][column]->to_secure == true){
+                    show_road(incidence_matrix->grid[line][column], sommets, BLUE);
+                }
+                else if(incidence_matrix->grid[line][column]->usable == false){
+                    show_road(incidence_matrix->grid[line][column], sommets, RED);
+                }
+                else {
+                    show_road(incidence_matrix->grid[line][column], sommets, GREEN);
+                }
             }
         }
     }

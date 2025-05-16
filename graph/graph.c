@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <time.h>
 
 #include "graph.h"
 #include "linked_list.h"
@@ -351,10 +352,10 @@ void Earthquake(Incidence_Matrix* incidence_matrix){
     }
     for (int ligne = 0 ; ligne < incidence_matrix->size ; ligne ++){
         for (int colone = 0 ; colone < incidence_matrix->size ; colone ++){
-            if (incidence_Matrix->grid[ligne][colone] =! NULL){
+            if (incidence_matrix->grid[ligne][colone] != NULL){
                 random = rand() % 5;
                 if (random ==5){
-                    incidence_Matrix->grid[ligne][colone]->usable=false;
+                    incidence_matrix->grid[ligne][colone]->usable=false;
                 }
             }
         }

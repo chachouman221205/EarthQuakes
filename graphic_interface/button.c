@@ -2,16 +2,9 @@
 #include <stdio.h>
 
 #include "raylib.h"
+#include "raylib_utils.h"
 
 #define ROUNDNESS 0.4f
-
-Color brightness(Color col, float brightness){
-    int r = (int) col.r * brightness;
-    int g = (int) col.g * brightness;
-    int b = (int) col.b * brightness;
-
-    return (Color) {r,g,b,col.a};
-}
 
 typedef struct Button {
     char text[50];

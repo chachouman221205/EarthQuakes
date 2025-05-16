@@ -1,8 +1,6 @@
 #include "graph.h"
 
-void Mission1(int question, char* graph) {
-    Variables* var = init_variables();
-    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, graph);
+void Mission1(int question, Variables* var, Incidence_Matrix* mat) {
     switch(question) {
         case 0:
             print_damage(mat);
@@ -23,14 +21,9 @@ void Mission1(int question, char* graph) {
             printf("ERROR\n");
             break;
     }
-    free_incidence_matrix_content(mat);
-    free_incidence_matrix(mat);
-    free_variables_struct(var);
 }
 
-void Mission2(char* graph) {
-    Variables* var = init_variables();
-    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, graph);
+void Mission2(Variables* var, Incidence_Matrix* mat) {
 
     int n;
     int _;
@@ -41,15 +34,9 @@ void Mission2(char* graph) {
         print_path(mat, &groups[i], &_);
         printf("\n");
     }
-
-    free_incidence_matrix_content(mat);
-    free_incidence_matrix(mat);
-    free_variables_struct(var);
 }
 
-void Mission3(int question, char* graph) {
-    Variables* var = init_variables();
-    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, graph);
+void Mission3(int question, Variables* var, Incidence_Matrix* mat) {
 
     switch (question) {
         case 1: {
@@ -59,7 +46,7 @@ void Mission3(int question, char* graph) {
             if((int)node < 1 || (int)node > mat->size){
                 printf("\033[0;31mERROR : Invalid node number\033[0m\n");
                 while(getchar() != '\n');
-                return Mission3(question, graph);
+                return Mission3(question, var, mat);
             }
             ListHead* path = find_path_to(mat, node-1);
             if (path == NULL) {
@@ -83,31 +70,18 @@ void Mission3(int question, char* graph) {
             break;
         }
     }
-    free_incidence_matrix_content(mat);
-    free_incidence_matrix(mat);
-    free_variables_struct(var);
 }
 
-void Mission4(char* graph) {
-    Variables* var = init_variables();
-    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, graph);
+void Mission4(Variables* var, Incidence_Matrix* mat) {
 
     mark_secure_roads(mat);
     print_roads_to_secure(mat);
 
-    free_incidence_matrix_content(mat);
-    free_incidence_matrix(mat);
-    free_variables_struct(var);
 }
 
-void Bonus1(char* graph) {
-    Variables* var = init_variables();
-    Incidence_Matrix* mat = init_incidence_matrix_from_file(var, graph);
+void Bonus1(Variables* var, Incidence_Matrix* mat) {
 
     find_road_to_create(mat);
     print_roads_created(mat);
 
-    free_incidence_matrix_content(mat);
-    free_incidence_matrix(mat);
-    free_variables_struct(var);
 }

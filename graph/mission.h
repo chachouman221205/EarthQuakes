@@ -1,10 +1,10 @@
+#include "graph.h"
 
-void Mission1(int question, char* graph);
+void Mission1(int question, Variables* var, Incidence_Matrix* mat);
 
-void Mission2(char* graph);
+void Mission2(Variables* var, Incidence_Matrix* mat);
+void Mission3(int question, Variables* var, Incidence_Matrix* mat);
 
-void Mission3(int question, char* graph);
+void Mission4(Variables* var, Incidence_Matrix* mat);
 
-void Mission4(char* graph);
-
-void Bonus1(char* graph);
+void Bonus1(Variables* var, Incidence_Matrix* mat);

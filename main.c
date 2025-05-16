@@ -15,7 +15,7 @@ int main(){
     // Mission1(0, filename);
     // Mission2(filename);
     // Mission3(1, filename);
-    Mission4(filename);
+    // Mission4(filename);
     // Bonus1(filename);
 
     app_start(filename);

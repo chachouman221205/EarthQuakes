@@ -1,4 +1,5 @@
 MAIN_FILE = main.c
+CONSOLE_FILE = console.c
 OUTPUT = EarthQuake.exe
 #WEB_OUTPUT = /home/chachou/WebHub/EarthQuake/index.js
 
@@ -12,6 +13,7 @@ OBJ_DIR = obj
 
 $(OUTPUT): obj
 	$(COMPILER) $(PARAMS) -o $(OUTPUT) $(MAIN_FILE) $(OBJ_DIR)/*.o
+	$(COMPILER) $(PARAMS) -o Console.exe $(CONSOLE_FILE) $(OBJ_DIR)/*.o
 	make clean
 
 $(OBJ_DIR)/mission.o: graph/mission.c

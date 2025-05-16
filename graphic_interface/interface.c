@@ -30,11 +30,17 @@ void app_start(char* filename){
 
     Switch start_stop = NewSwitch("start", "stop", button_x, 3*button_height, button_width, button_height, GREEN, RED, &running);
 
+    bool reset = false;
+    Button reset_positions = NewButton("reset positions", button_x, 5*button_height, button_width, button_height, GRAY, &reset);
+
     bool show_secure = false;
-    Switch secure_rodes = NewSwitch("show roads to secure", "hide roads to secure", button_x, 5*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
+    Switch secure_rodes = NewSwitch("show roads to secure", "hide roads to secure", button_x, 7*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
 
     Variables* var = init_variables();
     Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
+
+    int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+    int dragged_node = -1;
 
     // Main game loop
     while (!WindowShouldClose()){   // close or esc key
@@ -47,12 +53,42 @@ void app_start(char* filename){
             //--- Main content ---//
             
             if (running) {
-                // ENZO MET TON CODE ICI
-                int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) { // node dragging
+                    for (int k = 0; k < mat->size; k++) {
+                        if (CheckCollisionPointCircle(GetMousePosition(), (Vector2) {coords_sommets[k][0], coords_sommets[k][1]}, 10)) {
+                            dragged_node = k;
+                        }
+                    }
+                }
+
+                if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+                    dragged_node = -1;
+                }
+
+                if (dragged_node != -1) {
+                    Vector2 mouse = GetMousePosition();
+                    coords_sommets[dragged_node][0] = mouse.x;
+                    coords_sommets[dragged_node][1] = mouse.y;
+                }
+
+
+
                 show(mat, coords_sommets);
+
+                if (reset) {
+                    coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+                }
 
                 if (show_secure) {
                     mark_secure_roads(mat);
+                } else {
+                    for (int i = 0; i < mat->size; i++) {
+                        for (int j = 0; j < mat->size; j++) {
+                            if (mat->grid[i][j] != NULL) {
+                                mat->grid[i][j]->to_secure = false;
+                            }
+                        }
+                    }
                 }
 
             }
@@ -65,6 +101,7 @@ void app_start(char* filename){
             
                 // Buttons
             DrawSwitch(start_stop);
+            DrawButton(reset_positions);
             DrawSwitch(secure_rodes);
 
             //--- Title ---//

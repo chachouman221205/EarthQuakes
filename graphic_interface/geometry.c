@@ -111,9 +111,29 @@ void show_path(int** sommets, ListHead* path, Color col) {
 }
 
 void show_node_tool_tip(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
+    int tool_tip_x = sommets[k][0];
+    int tool_tip_y = sommets[k][1];
+    char type[30];
+    switch (incidence_matrix->nodes[k]->type) {
+        case 'C':
+            strcpy(type, "City");
+            break;
+        case 'H':
+            strcpy(type, "Hospital");
+            break;
+        case 'W':
+            strcpy(type, "Warehouse");
+            break;
+        default:
+            strcpy(type, "Unknown");
+    }
+    sprintf(type + strlen(type), " %d", incidence_matrix->nodes[k]->ID);
+
     show_path(sommets, find_path_to(incidence_matrix, k), BLACK);
-    DrawRectangle(sommets[k][0], sommets[k][1], 70, 100, TOOL_TIP_COLOR);
+    DrawRectangle(tool_tip_x, tool_tip_y, 70, 100, TOOL_TIP_COLOR);
     // Afficher le texte décrivant chaque sommet
+
+    DrawText(type, tool_tip_x+5, tool_tip_y+10, 20, WHITE);
 }
 
 void show_node(Incidence_Matrix* incidence_matrix, int** sommets, int k) {

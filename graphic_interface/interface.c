@@ -29,8 +29,9 @@ void app_start(char* filename){
     int button_height = h/20;
 
     Switch start_stop = NewSwitch("start", "stop", button_x, 3*button_height, button_width, button_height, GREEN, RED, &running);
-    start_stop.hover_color_off = DARKGREEN;
-    start_stop.hover_color_on = MAROON;
+
+    bool show_secure = false;
+    Switch secure_rodes = NewSwitch("show roads to secure", "hide roads to secure", button_x, 5*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
 
     Variables* var = init_variables();
     Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
@@ -49,6 +50,11 @@ void app_start(char* filename){
                 // ENZO MET TON CODE ICI
                 int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
                 show(mat, coords_sommets);
+
+                if (show_secure) {
+                    mark_secure_roads(mat);
+                }
+
             }
 
             //--- Side Bar ---//
@@ -59,6 +65,7 @@ void app_start(char* filename){
             
                 // Buttons
             DrawSwitch(start_stop);
+            DrawSwitch(secure_rodes);
 
             //--- Title ---//
             DrawRectangleRec(title_bar, GRAY);

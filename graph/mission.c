@@ -34,6 +34,10 @@ void Mission2(Variables* var, Incidence_Matrix* mat) {
         print_path(mat, &groups[i], &_);
         printf("\n");
     }
+
+    for (int i = 0; i < n; i++) {
+        ListFree(&groups[i]);
+    }
 }
 
 void Mission3(int question, Variables* var, Incidence_Matrix* mat) {

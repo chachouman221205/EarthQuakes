@@ -303,6 +303,7 @@ ListHead* find_connected_groups(Incidence_Matrix* incidence_matrix, int* group_c
         _nodes[i] = i;
     }
     ListHead* nodes = ListFromArray(_nodes, incidence_matrix->size); // Liste des noeuds toujours disponibles
+    free(_nodes);
 
     ListHead* groups = NULL;
     ListHead* current_group;
@@ -333,6 +334,9 @@ ListHead* find_connected_groups(Incidence_Matrix* incidence_matrix, int* group_c
             }
         }
     }
+
+    ListFree(nodes);
+    free_incidence_matrix(incidence_matrix);
     return groups;
 }
 

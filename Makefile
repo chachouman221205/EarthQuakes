@@ -12,8 +12,8 @@ PARAMS = -Wall -Wfatal-errors -Werror -g -lraylib -lm
 OBJ_DIR = obj
 
 $(OUTPUT): obj
-	$(COMPILER) $(PARAMS) -o $(OUTPUT) $(MAIN_FILE) $(OBJ_DIR)/*.o
 	$(COMPILER) $(PARAMS) -o Console.exe $(CONSOLE_FILE) $(OBJ_DIR)/*.o
+	$(COMPILER) $(PARAMS) -o $(OUTPUT) $(MAIN_FILE) $(OBJ_DIR)/*.o
 	make clean
 
 $(OBJ_DIR)/mission.o: graph/mission.c

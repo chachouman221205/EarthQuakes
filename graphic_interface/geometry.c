@@ -74,34 +74,6 @@ void free_way(Way* r) {
 }*/
 
 void show_road(Road* road , int** sommets){
-    char type1[20], type2[20];
-    switch (road->from->type) {
-        case 'C':
-            strcpy(type1, "City");
-            break;
-        case 'H':
-            strcpy(type1, "Hospital");
-            break;
-        case 'W':
-            strcpy(type1, "Warehouse");
-            break;
-        default:
-            strcpy(type1, "Unknown");
-    }
-    switch (road->to->type) {
-        case 'C':
-            strcpy(type2, "City");
-            break;
-        case 'H':
-            strcpy(type2, "Hospital");
-            break;
-        case 'W':
-            strcpy(type2, "Warehouse");
-            break;
-        default:
-            strcpy(type2, "Unknown");
-    }
-
     if(road->is_created == true){
         DrawLine(sommets[road->from->ID][0], sommets[road->from->ID][1],sommets[road->to->ID][0], sommets[road->to->ID][1], YELLOW);
     }
@@ -145,9 +117,24 @@ void show_node_tool_tip(Incidence_Matrix* incidence_matrix, int** sommets, int k
 }
 
 void show_node(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
+    char type[30];
+    switch (incidence_matrix->nodes[k]->type) {
+        case 'C':
+            strcpy(type, "City");
+            break;
+        case 'H':
+            strcpy(type, "Hospital");
+            break;
+        case 'W':
+            strcpy(type, "Warehouse");
+            break;
+        default:
+            strcpy(type, "Unknown");
+    }
+    sprintf(type + strlen(type), " %d", incidence_matrix->nodes[k]->ID);
     Vector2 center = {sommets[k][0], sommets[k][1]};
     DrawCircle(sommets[k][0], sommets[k][1], 3, VIOLET);
-    DrawText("node", sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
+    DrawText(type, sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
 
     if (CheckCollisionPointCircle(GetMousePosition(), center, 10)) {
         show_node_tool_tip(incidence_matrix, sommets, k);

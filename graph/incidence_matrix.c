@@ -422,9 +422,10 @@ void verif_city_reparation(Incidence_Matrix* incidence_matrix){
 
 void repare_city(Incidence_Matrix* incidence_matrix){
     int time = 0;
+    int timeBeforeTruck = 0;
     while ( citys_is_repared(incidence_matrix) != true){ // tant que toute les villes ne sont pas réparés
 
-        // il faut maintenant envoyer des camions pour aprovisioner les villes en matériaux 
+        // il fautenvoyer des  camions pour aprovisioner les villes en matériaux 
         // on verifie si on a des camion libre 
         // si oui on l'envoie ravitailler X ville dans le besoin 
         // On trace son trajet 
@@ -433,7 +434,19 @@ void repare_city(Incidence_Matrix* incidence_matrix){
 
         // augementer le temps de 1 à chauqe "tick"
 
+        if (timeBeforeTruck <= 0){  // manière frauduleuse deréparer les villes (code temporaire)
+            for (int i = 0 ; i < incidence_matrix->size; i++){
+                if  (incidence_matrix->nodes[i]->Is_repared == false){
+                    incidence_matrix->nodes[i]->current_capacity[4] = 100;
+                    timeBeforeTruck = 2* incidence_matrix->nodes[i]->distance_to_origin + 1;
+                    i= incidence_matrix->size ;
+                }
+            }
+
+        }
+
         verif_city_reparation(incidence_matrix); // actualise l'état des villes 
+        timeBeforeTruck--;
         time++;
     }
     printf("\nIt took %d ticks to repair all roads\n" , time);

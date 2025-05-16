@@ -8,6 +8,8 @@
 #include "raylib.h"
 #include <time.h>
 
+#define TOOL_TIP_COLOR ((Color) {0,0,0,150})
+
 Way* init_way(Road e) {
     Way* w = malloc(sizeof(Way));
     if(w == NULL){
@@ -126,7 +128,31 @@ int** Coordonate_node(Incidence_Matrix* incidence_matrix , int width , int heigh
             Coords[i][1] = (heightT - height)  + (rand() % height);
         }
     return Coords;
-} 
+}
+
+void show_path(int** sommets, ListHead* path, Color col) {
+    ListNode* ptr = path->next;
+    while (ptr != NULL && ptr->next != NULL) {
+        DrawLine(sommets[ptr->data][0], sommets[ptr->data][1], sommets[ptr->next->data][0], sommets[ptr->next->data][1], col);
+        ptr = ptr->next;
+    }
+}
+
+void show_node_tool_tip(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
+    show_path(sommets, find_path_to(incidence_matrix, k), BLACK);
+    DrawRectangle(sommets[k][0], sommets[k][1], 70, 100, TOOL_TIP_COLOR);
+    // Afficher le texte décrivant chaque sommet
+}
+
+void show_node(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
+    Vector2 center = {sommets[k][0], sommets[k][1]};
+    DrawCircle(sommets[k][0], sommets[k][1], 3, VIOLET);
+    DrawText("node", sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
+
+    if (CheckCollisionPointCircle(GetMousePosition(), center, 10)) {
+        show_node_tool_tip(incidence_matrix, sommets, k);
+    }
+}
 
 void show(Incidence_Matrix* incidence_matrix , int** sommets){
     for(int line = 0; line < incidence_matrix->size; line++){
@@ -137,8 +163,7 @@ void show(Incidence_Matrix* incidence_matrix , int** sommets){
         }
     }
     for (int k = 0 ; k < incidence_matrix->size ; k++){
-            DrawCircle(sommets[k][0], sommets[k][1], 3, VIOLET);
-            DrawText("node", sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
+        show_node(incidence_matrix, sommets, k);
     }
 }
 

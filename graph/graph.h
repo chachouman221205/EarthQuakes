@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "incidence_matrix.h"
+#include "mission.h"
 
 typedef struct Road Road;
 

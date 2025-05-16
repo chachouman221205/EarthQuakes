@@ -5,6 +5,14 @@
 
 #define ROUNDNESS 0.4f
 
+Color brightness(Color col, float brightness){
+    int r = (int) col.r * brightness;
+    int g = (int) col.g * brightness;
+    int b = (int) col.b * brightness;
+
+    return (Color) {r,g,b,col.a};
+}
+
 typedef struct Button {
     char text[50];
     int x;
@@ -63,9 +71,7 @@ typedef struct Switch {
     int size_y;
     Rectangle rec;
     Color color_off;
-    Color hover_color_off;
     Color color_on;
-    Color hover_color_on;
     bool* state;
 } Switch;
 
@@ -75,14 +81,14 @@ void DrawSwitch(Switch s) {
     Color col;
     char* t;
     if (*(s.state)) {
-        col = hover ? s.hover_color_on : s.color_on;
+        col = hover ? brightness(s.color_on, 0.7) : s.color_on;
         t = s.text_on;
     } else {
-        col = hover ? s.hover_color_off : s.color_off;
+        col = hover ? brightness(s.color_off, 0.7) : s.color_off;
         t = s.text_off;
     }
-    DrawRectangleRounded(s.rec, ROUNDNESS, 8, col);
-    DrawRectangleRoundedLines(s.rec, ROUNDNESS, 8, BLACK);
+    DrawRectangleRounded(s.rec, ROUNDNESS, 1, col);
+    DrawRectangleRoundedLines(s.rec, ROUNDNESS, 1, BLACK);
     int size = 20;
     DrawText(t, s.x - strlen(t)*0.3*size, s.y-0.6*size, size, BLACK);
     

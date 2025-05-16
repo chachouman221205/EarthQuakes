@@ -338,6 +338,10 @@ void mark_secure_roads(Incidence_Matrix* incidence_matrix) {
 
         }
 
+        if (i_min == 0 && j_min == 0) {
+            break;
+        }
+
         tree_size++;
         tree = realloc(tree, (tree_size) * sizeof(Node));
         if (tree == NULL) {

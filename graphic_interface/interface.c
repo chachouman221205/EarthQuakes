@@ -18,7 +18,8 @@ void app_start(char* filename){
     InitWindow(w, h, filename);
     
     Rectangle title_bar = {0, 0, w, h/10};
-    Rectangle side_bar = {0, title_bar.height, w/4, h};
+    Rectangle side_bar = {0, title_bar.height, w/3, h};
+    Rectangle draw_area = {side_bar.width, title_bar.height, w-side_bar.width, h-title_bar.height};
     int shadow_size = 10;
     Color shadow_color = {0, 0, 0, 150};
     
@@ -34,7 +35,7 @@ void app_start(char* filename){
     Button reset_positions = NewButton("reset positions", button_x, 5*button_height, button_width, button_height, GRAY, &reset);
 
     bool show_secure = false;
-    Switch secure_rodes = NewSwitch("show roads to secure", "hide roads to secure", button_x, 7*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
+    Switch secure_roads = NewSwitch("show roads to secure", "hide roads to secure", button_x, 7*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
 
     Variables* var = init_variables();
     Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
@@ -60,7 +61,6 @@ void app_start(char* filename){
                         }
                     }
                 }
-
                 if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
                     dragged_node = -1;
                 }
@@ -70,6 +70,26 @@ void app_start(char* filename){
                     coords_sommets[dragged_node][0] = mouse.x;
                     coords_sommets[dragged_node][1] = mouse.y;
                 }
+
+                // correction des nodes en dehors de l'espace
+                for (int k = 0; k < mat->size; k++) {
+                    if (coords_sommets[k][0] < draw_area.x) {
+                        coords_sommets[k][0] = draw_area.x;
+                    }
+                    if (coords_sommets[k][0] > draw_area.x + draw_area.width) {
+                        coords_sommets[k][0] = draw_area.x + draw_area.width;
+                    }
+                    if (coords_sommets[k][1] < draw_area.y) {
+                        coords_sommets[k][1] = draw_area.y;
+                    }
+                    if (coords_sommets[k][1] > draw_area.y + draw_area.height) {
+                        coords_sommets[k][1] = draw_area.y + draw_area.height;
+                    }
+                }
+
+
+                update_accessibility(mat);
+
 
 
 
@@ -102,7 +122,7 @@ void app_start(char* filename){
                 // Buttons
             DrawSwitch(start_stop);
             DrawButton(reset_positions);
-            DrawSwitch(secure_rodes);
+            DrawSwitch(secure_roads);
 
             //--- Title ---//
             DrawRectangleRec(title_bar, GRAY);

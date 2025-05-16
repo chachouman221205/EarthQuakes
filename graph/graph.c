@@ -199,6 +199,15 @@ void reset_exploration(Incidence_Matrix* incidence_matrix) {
     }
 }
 
+void update_accessibility(Incidence_Matrix* incidence_matrix) {
+    reset_exploration(incidence_matrix);
+    for (int i = 0; i < incidence_matrix->size; i++) {
+        incidence_matrix->nodes[i]->accessible = false;
+    }
+
+    explore_all_nodes_width(incidence_matrix);
+}
+
 bool is_usable(Road* road) {
     if (road != NULL) {
         return road->usable && (road->current_capacity > 0);
@@ -220,6 +229,7 @@ void explore_all_nodes_width(Incidence_Matrix* incidence_matrix) {
             if (is_usable(incidence_matrix->grid[current_node][i]) && incidence_matrix->grid[current_node][i]->to->explored == false) {
                 ListQueue(node_queue, i);
                 incidence_matrix->nodes[i]->explored = true;
+                incidence_matrix->nodes[i]->accessible = true;
             }
         }
     }

@@ -15,6 +15,7 @@ typedef struct Node {
     char type;
 
     bool explored;
+    bool accessible;
     
     unsigned int distance_to_origin;
     int max_capacity_to_origin;
@@ -73,6 +74,7 @@ void explore_all_nodes_width(Incidence_Matrix* incidence_matrix);
 void print_all_path_from_origin(Incidence_Matrix* incidence_matrix);
 void print_unaccessible_nodes(Incidence_Matrix* incidence_matrix);
 void reset_exploration(Incidence_Matrix* incidence_matrix);
+void update_accessibility(Incidence_Matrix* incidence_matrix);
 
 void print_road_to_secure(Road* road);
 void print_roads_to_secure(Incidence_Matrix* incidence_matrix);

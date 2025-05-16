@@ -133,7 +133,7 @@ void show_node_tool_tip(Incidence_Matrix* incidence_matrix, int** sommets, int k
     DrawRectangle(tool_tip_x, tool_tip_y, 70, 100, TOOL_TIP_COLOR);
     // Afficher le texte décrivant chaque sommet
 
-    DrawText(type, tool_tip_x+5, tool_tip_y+10, 20, WHITE);
+    DrawText(type, tool_tip_x+5, tool_tip_y+10, 20, incidence_matrix->nodes[k]->accessible ? GREEN : RED);
 }
 
 void show_node(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
@@ -153,7 +153,7 @@ void show_node(Incidence_Matrix* incidence_matrix, int** sommets, int k) {
     }
     sprintf(type + strlen(type), " %d", incidence_matrix->nodes[k]->ID);
     Vector2 center = {sommets[k][0], sommets[k][1]};
-    DrawCircle(sommets[k][0], sommets[k][1], 3, VIOLET);
+    DrawCircle(sommets[k][0], sommets[k][1], 3, incidence_matrix->nodes[k]->accessible ? GREEN : RED);
     DrawText(type, sommets[k][0] - 15 ,sommets[k][1] + 5, 6, VIOLET);
 
     if (CheckCollisionPointCircle(GetMousePosition(), center, 10)) {

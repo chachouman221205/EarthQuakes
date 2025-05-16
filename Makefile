@@ -3,7 +3,7 @@ OUTPUT = EarthQuake.exe
 #WEB_OUTPUT = /home/chachou/WebHub/EarthQuake/index.js
 
 COMPILER = gcc
-PARAMS = -Wall -Wfatal-errors -Werror -g -lraylib
+PARAMS = -Wall -Wfatal-errors -Werror -g -lraylib -lm
 #WEB_COMPILER = emcc
 #WEB_PARAMS = -I/home/chachou/raylib/src -L/home/chachou/raylib/build_web/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -s FULL_ES2=1
 
@@ -44,12 +44,16 @@ $(OBJ_DIR)/geometry.o: graphic_interface/geometry.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c graphic_interface/geometry.c -o $@
 
+$(OBJ_DIR)/raylib_utils.o: graphic_interface/raylib_utils.c
+	@mkdir -p $(OBJ_DIR)
+	$(COMPILER) $(PARAMS) -c graphic_interface/raylib_utils.c -o $@
+
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(OBJ_DIR)
 	$(COMPILER) $(PARAMS) -c $< -o $@
 
-obj: $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o $(OBJ_DIR)/interface.o $(OBJ_DIR)/button.o $(OBJ_DIR)/geometry.o $(OBJ_DIR)/mission.o
+obj: $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o $(OBJ_DIR)/interface.o $(OBJ_DIR)/button.o $(OBJ_DIR)/geometry.o $(OBJ_DIR)/mission.o $(OBJ_DIR)/raylib_utils.o
 
 test: obj
 	$(COMPILER) $(PARAMS) -o test/gen_files/file_gen.exe test/gen_files/file_gen.c $(OBJ_DIR)/graph.o $(OBJ_DIR)/incidence_matrix.o $(OBJ_DIR)/linked_list.o

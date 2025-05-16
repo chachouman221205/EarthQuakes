@@ -354,11 +354,11 @@ void Earthquake(Incidence_Matrix* incidence_matrix){
         for (int colone = 0 ; colone < incidence_matrix->size ; colone ++){
             if (incidence_matrix->grid[ligne][colone] != NULL){
                 random = rand() % 5;
-                if (random ==5){
+                if (random == 0){
                     incidence_matrix->grid[ligne][colone]->usable=false;
+                    update_origin_distances(incidence_matrix, incidence_matrix->grid[ligne][colone]->to->ID);
                 }
             }
         }
     }
-
 }

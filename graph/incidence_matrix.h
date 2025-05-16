@@ -26,6 +26,7 @@ void free_incidence_matrix(Incidence_Matrix* incidence_matrix);
 
 int calculate_origin_path(Incidence_Matrix* incidence_matrix, int node, int* distance);
 void calculate_origin_distances(Incidence_Matrix* incidence_matrix);
+void update_origin_distances(Incidence_Matrix* incidence_matrix, int start_node);
 ListHead* find_path_to(Incidence_Matrix* incidence_matrix, int node);
 void print_path(Incidence_Matrix* incidence_matrix, ListHead* path, int* length);
 

@@ -192,6 +192,51 @@ void calculate_origin_distances(Incidence_Matrix* incidence_matrix) {
     reset_exploration(incidence_matrix);
 }
 
+void update_origin_distances(Incidence_Matrix* incidence_matrix, int start_node) {
+    ListHead* node_queue = ListInit();
+    ListQueue(node_queue, start_node);
+    int current_node = start_node;
+    // tant qu'il reste des noeuds à explorer
+    while (node_queue->length > 0) {
+        current_node = ListPop(node_queue, 0);
+
+        // pour chaque voisin
+        for (int i = 0; i < incidence_matrix->size; i++) {
+            // qui existe et qui n'est pas exploré
+            if (incidence_matrix->grid[current_node][i] != NULL && incidence_matrix->nodes[i]->explored == false) {
+                ListQueue(node_queue, i);
+                incidence_matrix->nodes[i]->explored = true;
+            }
+        }
+
+        int calculated_distance;
+        int node_towards_origin = calculate_origin_path(incidence_matrix, current_node, &calculated_distance);
+        if (node_towards_origin == -1) { // Aucun chemin ne peut être calculé
+            continue;
+        }
+        // Si aucun chemin n'a été calculé, ou si la distance n'est pas la même, ou si le prochain noeud n'est pas le même
+        if (incidence_matrix->nodes[current_node]->towards_origin == NULL
+            || calculated_distance != incidence_matrix->nodes[current_node]->distance_to_origin
+            || node_towards_origin != incidence_matrix->nodes[current_node]->towards_origin->from->ID
+        ) {
+            incidence_matrix->nodes[current_node]->distance_to_origin = calculated_distance;
+            incidence_matrix->nodes[current_node]->towards_origin = incidence_matrix->grid[node_towards_origin][current_node];
+
+            // Marquer les voisins pour qu'ils soient recalculés
+            for (int i = 0; i < incidence_matrix->size; i++) {
+                if (incidence_matrix->grid[current_node][i] != NULL && !ListContains(node_queue, i)) {
+                    ListQueue(node_queue, i);
+                }
+            }
+        }
+
+
+    }
+    printf("\n");
+    ListFree(node_queue);
+    reset_exploration(incidence_matrix);
+}
+
 ListHead* find_path_to(Incidence_Matrix* incidence_matrix, int node) {
     ListHead* path = ListInit();
     ListQueue(path, node);

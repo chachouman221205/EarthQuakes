@@ -1,5 +1,8 @@
 #include "raylib.h"
 
+#define TOOL_TIP_COLOR ((Color) {0,0,0,150})
+
+
 typedef struct Button {
     char text[50];
     int x;

@@ -198,3 +198,10 @@ void show(Incidence_Matrix* incidence_matrix , int** sommets){
     }
 }
 
+void draw_group(int** coords, ListHead* head) {
+    int k;
+    while (head->length > 0) {
+        k = ListPop(head, 0);
+        DrawCircle(coords[k][0], coords[k][1], 6, VIOLET);
+    }
+}

@@ -6,6 +6,7 @@
 #include "button.h"
 #include "geometry.h"
 #include "../graph/graph.h"
+#include "raylib_utils.h"
 
 #define BUTTON_COLOR GRAY
 
@@ -34,14 +35,22 @@ void app_start(char* filename){
     bool reset = false;
     Button reset_positions = NewButton("reset positions", button_x, 5*button_height, button_width, button_height, GRAY, &reset);
 
+    bool earth_quake = false;
+    Button trigger_EQ = NewButton("make an earth quake", button_x, 7*button_height, button_width, button_height, GRAY, &earth_quake);
+
     bool show_secure = false;
-    Switch secure_roads = NewSwitch("show roads to secure", "hide roads to secure", button_x, 7*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
+    Switch secure_roads = NewSwitch("show roads to secure", "hide roads to secure", button_x, 9*button_height, button_width, button_height, GRAY, BLUE, &show_secure);
+
+    bool find_connected_nodes = false;
+    Switch find_connected_nodes_button = NewSwitch("find all nodes of a group", "cancel", button_x, 11*button_height, button_width, button_height, GRAY, brightness(RED, 1), &find_connected_nodes);
 
     Variables* var = init_variables();
     Incidence_Matrix* mat = init_incidence_matrix_from_file(var, filename);
 
     int** coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
     int dragged_node = -1;
+    int n_group;
+    ListHead* groups;
 
     // Main game loop
     while (!WindowShouldClose()){   // close or esc key
@@ -91,12 +100,14 @@ void app_start(char* filename){
                 update_accessibility(mat);
 
 
-
-
                 show(mat, coords_sommets);
 
                 if (reset) {
                     coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
+                }
+
+                if (earth_quake) {
+                    Earthquake(mat);
                 }
 
                 if (show_secure) {
@@ -111,6 +122,33 @@ void app_start(char* filename){
                     }
                 }
 
+                if (find_connected_nodes){
+                    DrawRectangleV(GetMousePosition(), (Vector2) {180, 40}, TOOL_TIP_COLOR);
+                    DrawText("Hover over a point to\nsee all connected nodes", GetMousePosition().x + 20, GetMousePosition().y, 10, WHITE);
+                    for (int i = 0; i < mat->size; i++) {
+                        if (CheckCollisionPointCircle(GetMousePosition(), (Vector2) {coords_sommets[i][0], coords_sommets[i][1]}, 10)) {
+                            // find group of points
+
+                            groups = find_connected_groups(mat, &n_group);
+                            for (int j = 0; j < n_group; j++) {
+                                if (ListContains(&groups[j], i)) {
+                                    draw_group(coords_sommets, &groups[j]);
+                                }
+                            }
+                        }
+                    }
+                }
+            } else {
+                // Reset de la simulation
+
+                free_incidence_matrix_content(mat);
+                free_incidence_matrix(mat);
+                free_variables_struct(var);
+
+                var = init_variables();
+                mat = init_incidence_matrix_from_file(var, filename);
+
+                coords_sommets = Coordonate_node(mat, w-side_bar.width, h-title_bar.height, w, h);
             }
 
             //--- Side Bar ---//
@@ -121,8 +159,10 @@ void app_start(char* filename){
             
                 // Buttons
             DrawSwitch(start_stop);
+            DrawButton(trigger_EQ);
             DrawButton(reset_positions);
             DrawSwitch(secure_roads);
+            DrawSwitch(find_connected_nodes_button);
 
             //--- Title ---//
             DrawRectangleRec(title_bar, GRAY);

@@ -1,11 +1,11 @@
+#ifndef DRAW
+#define DRAW
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include "raylib.h"
-
-#ifndef DRAW
-#define DRAW
-
+#include "../graph/linked_list.h"
 
 typedef struct Node Node;
 typedef struct Road Road;
@@ -28,6 +28,6 @@ typedef struct Way{
 void show_road(Road* road , int** sommets, Color col);
 int** Coordonate_node(Incidence_Matrix* Incidence_Matrix , int weight , int high , int weightT , int highT);
 void show(Incidence_Matrix* Incidence_Matrix , int** sommets);
-
+void draw_group(int** coords, ListHead* head);
 
 #endif
